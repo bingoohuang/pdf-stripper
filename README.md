@@ -9,11 +9,6 @@ strip structured info from pdf
 ![image](https://user-images.githubusercontent.com/1940588/45659529-96079c80-bb27-11e8-97ff-277bb39a701d.png)
 
 第一页采用基于位置的文本提取器PDFLayoutTextStripper来识别，然后使用正则表达式`\b([^\s\d]+)[\s\r\n]+(\d?\d)\b`来获取数据。
-
-
-![image](https://user-images.githubusercontent.com/1940588/45659559-b46d9800-bb27-11e8-8cab-567cf8473e58.png)
-
-第二页则采用文档生成拦截器，拦截指定字号的文本与长方形(rect)，根据顺序来获取其相关性。
 ```
 调适:98
 抱负:73
@@ -43,7 +38,12 @@ strip structured info from pdf
 商业:79
 美感:38
 科学:86
+```
 
+![image](https://user-images.githubusercontent.com/1940588/45659559-b46d9800-bb27-11e8-8cab-567cf8473e58.png)
+
+第二页则采用文档生成拦截器，拦截指定字号的文本与长方形(rect)，根据顺序来获取其相关性。
+```
 效度:4
 调适.同理心:4
 调适.不焦虑:4

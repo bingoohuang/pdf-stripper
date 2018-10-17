@@ -25,7 +25,7 @@ public class PDFLayoutTextStripper extends PDFTextStripper {
     public PDFLayoutTextStripper() throws IOException {
         super();
         this.previousTextPosition = null;
-        this.textLineList = new ArrayList<TextLine>();
+        this.textLineList = new ArrayList<>();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class PDFLayoutTextStripper extends PDFTextStripper {
             this.setCurrentPageWidth(pageRectangle.getWidth());
             super.processPage(page);
             this.previousTextPosition = null;
-            this.textLineList = new ArrayList<TextLine>();
+            this.textLineList = new ArrayList<>();
         }
     }
 

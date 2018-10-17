@@ -33,14 +33,14 @@ import java.util.regex.Pattern;
 public class Demo {
     @SneakyThrows
     public static void main(String[] args) {
-        System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
 
-        @Cleanup val fis = new FileInputStream("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
+
+
+
 //        @Cleanup val fis = new FileInputStream("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
 //        @Cleanup val fis = new FileInputStream("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
-        @Cleanup val doc = PDDocument.load(fis);
-        String text = extractTextInLayout(doc);
-        System.out.println(text);
+
+
     }
 
     @SneakyThrows
@@ -103,10 +103,15 @@ public class Demo {
 //        Files.copy(xmlInputStream, Paths.get("hanery.xml"));
     }
 
-    private static String extractTextInLayout(PDDocument doc) throws IOException {
-        PDFTextStripper pdfTextStripper = new PDFLayoutTextStripper();
+    private static String extractTextInLayout(PDDocument doc, int... pageIndices) throws IOException {
+        val pdfTextStripper = new PDFLayoutTextStripper();
+
+        val pageDocument = new PDDocument();
+        for (val pageIndex : pageIndices) {
+            pageDocument.addPage(doc.getPage(pageIndex));
+        }
+
         return pdfTextStripper.getText(doc);
-//        writeFile(string, "hanergy2.txt");
     }
 
     private static void extractAllText(PDDocument doc) throws IOException {

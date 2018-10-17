@@ -22,6 +22,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,6 +33,18 @@ import java.util.regex.Pattern;
 public class Demo {
     @SneakyThrows
     public static void main(String[] args) {
+        System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
+
+        @Cleanup val fis = new FileInputStream("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
+//        @Cleanup val fis = new FileInputStream("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
+//        @Cleanup val fis = new FileInputStream("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
+        @Cleanup val doc = PDDocument.load(fis);
+        String text = extractTextInLayout(doc);
+        System.out.println(text);
+    }
+
+    @SneakyThrows
+    public static void main1(String[] args) {
         System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
 
         @Cleanup val is = Demo.class.getClassLoader().getResourceAsStream("hanergy.pdf");
@@ -90,10 +103,10 @@ public class Demo {
 //        Files.copy(xmlInputStream, Paths.get("hanery.xml"));
     }
 
-    private static void extractTextInLayout(PDDocument doc) throws IOException {
+    private static String extractTextInLayout(PDDocument doc) throws IOException {
         PDFTextStripper pdfTextStripper = new PDFLayoutTextStripper();
-        val string = pdfTextStripper.getText(doc);
-        writeFile(string, "hanergy2.txt");
+        return pdfTextStripper.getText(doc);
+//        writeFile(string, "hanergy2.txt");
     }
 
     private static void extractAllText(PDDocument doc) throws IOException {

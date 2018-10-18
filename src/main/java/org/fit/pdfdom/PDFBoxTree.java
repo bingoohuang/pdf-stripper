@@ -513,6 +513,8 @@ public abstract class PDFBoxTree extends PDFTextStripper {
     }
 
     protected void processImageOperation(List<COSBase> arguments) throws IOException {
+        if (!pdfListener.createHtml()) return;
+
         COSName objectName = (COSName) arguments.get(0);
         PDXObject xobject = getResources().getXObject(objectName);
         if (xobject instanceof PDImageXObject) {

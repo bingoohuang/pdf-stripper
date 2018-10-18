@@ -13,7 +13,7 @@ public class HogonTest {
     @Test @SneakyThrows
     public void page0Scores() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/Hogan/Flash_SimpChinese.pdf");
-        val text = PdfStripper.stripText(is, PdfPageSelect.includePages(0));
+        val text = PdfStripper.stripText(is, PdfPagesSelect.includePages(0));
         val textMatcher = new TextMatcher(text);
 
         List<ValuesItem> items = textMatcher.searchPattern("(\\S+)\\s+(\\d+)", ValuesItem.class,
@@ -54,7 +54,7 @@ public class HogonTest {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/Hogan/Flash_SimpChinese.pdf");
 
         HogonPdfListener pdfListener = new HogonPdfListener();
-        PdfStripper.stripCustom(is, PdfPageSelect.includePages(1), pdfListener);
+        PdfStripper.stripCustom(is, PdfPagesSelect.includePages(1), pdfListener);
         assertThat(pdfListener.itemScores()).isEqualTo("效度:4\n" +
                 "调适.同理心:4\n" +
                 "调适.不焦虑:4\n" +

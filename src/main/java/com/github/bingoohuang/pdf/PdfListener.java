@@ -9,4 +9,8 @@ public interface PdfListener {
     default void process(BoxStyle curstyle, String text) {
 
     }
+
+    default boolean createHtml() {
+        return false;
+    }
 }

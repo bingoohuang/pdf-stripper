@@ -1,40 +1,29 @@
 package com.github.bingoohuang.pdf;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.CharSink;
-import com.google.common.io.Files;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.apache.commons.io.output.NullWriter;
-import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.graphics.PDXObject;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
 import org.fit.pdfdom.PDFDomTree;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 public class Demo {
+    @Test @Ignore
     @SneakyThrows
-    public static void main1(String[] args) {
-        System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
-
-        @Cleanup val is = Demo.class.getClassLoader().getResourceAsStream("hanergy.pdf");
+    public void test() {
+        @Cleanup val is = Util.loadClassPathRes("hanergy.pdf");
         @Cleanup val doc = PDDocument.load(is);
 
         Pattern itemScorePattern = Pattern.compile("\\b([^\\s\\d]+)[\\s\\\r\\n]+(\\d?\\d)\\b");
@@ -62,59 +51,8 @@ public class Demo {
 
         String itemScores = parser.getItemScores();
         System.out.println(itemScores);
-
-
-//         val contentStream = new PDPageContentStream(doc, doc.getPage(1));
-
-//        //Drawing a rectangle
-//        contentStream.addRect(200, 650, 100, 100);
-//        contentStream.setNonStrokingColor(Color.DARK_GRAY);
-//        //Drawing a rectangle
-//        contentStream.fill();
-//        //Closing the ContentStream object
-//        contentStream.close();
-//        //Saving the document
-//        File file1 = new File("colorbox.pdf");
-//        doc.save(file1);
-
-//        convertImage(doc.getPage(1));
-
-//        extractTextInLayout(doc);
-
-//        extractText(doc);
-//        extractAllText(doc);
-
-//        val catalog = doc.getDocumentCatalog();
-//        val metadata = catalog.getMetadata();
-//        val xmlInputStream = metadata.createInputStream();
-//        Files.copy(xmlInputStream, Paths.get("hanery.xml"));
     }
 
-    private static String extractTextInLayout(PDDocument doc, int... pageIndices) throws IOException {
-        val pdfTextStripper = new PDFLayoutTextStripper();
-
-        val pageDocument = new PDDocument();
-        for (val pageIndex : pageIndices) {
-            pageDocument.addPage(doc.getPage(pageIndex));
-        }
-
-        return pdfTextStripper.getText(doc);
-    }
-
-    private static void extractAllText(PDDocument doc) throws IOException {
-        val tStripper = new PDFTextStripper();
-        String pdfFileInText = tStripper.getText(doc);
-
-        String fileName = "hanergy.txt";
-        writeFile(pdfFileInText, fileName);
-        return;
-    }
-
-    private static void writeFile(String pdfFileInText, String fileName) throws IOException {
-        File file = new File(fileName);
-        CharSink sink = Files.asCharSink(file, Charsets.UTF_8);
-        sink.write(pdfFileInText);
-    }
 
     private static void extractText(PDDocument doc) throws IOException {
         for (PDPage page : doc.getPages()) {
@@ -136,32 +74,6 @@ public class Demo {
                 System.out.println(text);
             }
         }
-    }
-
-    public static void convertImage(PDPage pdPage) {
-        PDResources pdResources = pdPage.getResources();
-        Iterable<COSName> iterable = pdResources.getXObjectNames();
-        AtomicInteger seq = new AtomicInteger(0);
-        iterable.forEach(t -> {
-            try {
-                System.out.println(t.getName());
-                if (pdResources.isImageXObject(t)) {
-                    System.out.println("COSName " + t.getName() + " isImageXObject");
-                    PDXObject pdXObject = pdResources.getXObject(t);
-                    PDImageXObject pdImageXObject = (PDImageXObject) pdXObject;
-                    String suffix = pdImageXObject.getSuffix();
-                    System.out.println("Height:" + pdImageXObject.getHeight() + "Width:" + pdImageXObject.getWidth() + "Suffix:" + suffix);
-                    BufferedImage image = pdImageXObject.getImage();
-                    ImageIO.write(image, suffix, new File(seq.incrementAndGet() + "." + suffix));
-                } else {
-                    System.out.println("COSName " + t.getName() + " isOtherXObject");
-                }
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-        });
     }
 
 

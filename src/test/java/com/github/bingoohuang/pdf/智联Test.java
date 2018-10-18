@@ -14,35 +14,52 @@ public class 智联Test {
     @Test @SneakyThrows
     public void 职业价值观测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
-        val text = PdfStripper.stripText(is);
+        val text = PdfStripper.stripText(is, PdfStripper.PdfPageSelect.excludePages(1, 2, 3));
         val textMatcher = new TextMatcher(text);
         assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
         assertThat(textMatcher.findLineLabelText("测试日期：")).isEqualTo("2016-06-12");
 
+        val sb = new StringBuilder();
         textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)",
-                groups -> System.out.println("name:" + groups[0] + ", score:" + groups[1]),
+                groups -> sb.append(groups[0]).append(":").append(groups[1]).append("\n"),
                 TextMatcherOption.builder().rangeOpen("3  详细结果").rangeClose("©智联测评版权所有").build());
+
+        assertThat(sb.toString()).isEqualTo(
+                "薪酬福利:8.3\n" +
+                "工作稳定:6.1\n" +
+                "公平公正:3.5\n" +
+                "工作强度:3.3\n" +
+                "同事关系:5.7\n" +
+                "服务他人:4.8\n" +
+                "上级支持:4.7\n" +
+                "他人认可:4.9\n" +
+                "管理他人:4.8\n" +
+                "独立自主:4.4\n" +
+                "获得成就:8.6\n" +
+                "晋升机会:6.5\n" +
+                "培训机会:3.9\n" +
+                "施展才华:3.2\n");
 
         List<ValuesItem> items = textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)", ValuesItem.class,
                 TextMatcherOption.builder().rangeOpen("3  详细结果").rangeClose("©智联测评版权所有").build());
         assertThat(items.toString()).isEqualTo("[" +
-                "智联Test.ValuesItem(name=薪酬福利, score=8.3), " +
-                "智联Test.ValuesItem(name=工作稳定, score=6.1), " +
-                "智联Test.ValuesItem(name=公平公正, score=3.5), " +
-                "智联Test.ValuesItem(name=工作强度, score=3.3), " +
+                "ValuesItem(name=薪酬福利, score=8.3), " +
+                "ValuesItem(name=工作稳定, score=6.1), " +
+                "ValuesItem(name=公平公正, score=3.5), " +
+                "ValuesItem(name=工作强度, score=3.3), " +
 
-                "智联Test.ValuesItem(name=同事关系, score=5.7), " +
-                "智联Test.ValuesItem(name=服务他人, score=4.8), " +
-                "智联Test.ValuesItem(name=上级支持, score=4.7), " +
+                "ValuesItem(name=同事关系, score=5.7), " +
+                "ValuesItem(name=服务他人, score=4.8), " +
+                "ValuesItem(name=上级支持, score=4.7), " +
 
-                "智联Test.ValuesItem(name=他人认可, score=4.9), " +
-                "智联Test.ValuesItem(name=管理他人, score=4.8), " +
-                "智联Test.ValuesItem(name=独立自主, score=4.4), " +
+                "ValuesItem(name=他人认可, score=4.9), " +
+                "ValuesItem(name=管理他人, score=4.8), " +
+                "ValuesItem(name=独立自主, score=4.4), " +
 
-                "智联Test.ValuesItem(name=获得成就, score=8.6), " +
-                "智联Test.ValuesItem(name=晋升机会, score=6.5), " +
-                "智联Test.ValuesItem(name=培训机会, score=3.9), " +
-                "智联Test.ValuesItem(name=施展才华, score=3.2)]");
+                "ValuesItem(name=获得成就, score=8.6), " +
+                "ValuesItem(name=晋升机会, score=6.5), " +
+                "ValuesItem(name=培训机会, score=3.9), " +
+                "ValuesItem(name=施展才华, score=3.2)]");
 
         val t2 = textMatcher.findLineLabelText("作答时间：");
         assertThat(t2).isEqualTo("8分钟35秒");
@@ -54,21 +71,10 @@ public class 智联Test {
         assertThat(t5).isEqualTo("100.00");
     }
 
-    @Data
-    public static class ValuesItem implements PatternApplyAware {
-        private String name;
-        private String score;
-
-        @Override public void apply(String[] groups) {
-            this.name = groups[0];
-            this.score = groups[1];
-        }
-    }
-
     @Test @SneakyThrows
     public void 情绪管理能力测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
-        val text = PdfStripper.stripText(is);
+        val text = PdfStripper.stripText(is, PdfStripper.PdfPageSelect.allPages());
         val textMatcher = new TextMatcher(text);
         assertThat(textMatcher.findLineLabelText("Respondent", new TextMatcherOption("："))).isEqualTo("张晓平");
         assertThat(textMatcher.findLineLabelText("Date：")).isEqualTo("2016-05-25");
@@ -105,7 +111,7 @@ public class 智联Test {
     @Test @SneakyThrows
     public void 职业行为风险测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
-        val text = PdfStripper.stripText(is);
+        val text = PdfStripper.stripText(is, PdfStripper.PdfPageSelect.allPages());
         val textMatcher = new TextMatcher(text);
 
         assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");

@@ -10,4 +10,5 @@ public interface PatternApplyAware {
      * @param patternGroups 正则匹配捕获子分组
      */
     void apply(String[] patternGroups);
+
 }

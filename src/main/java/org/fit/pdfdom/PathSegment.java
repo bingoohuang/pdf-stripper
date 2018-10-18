@@ -1,5 +1,6 @@
 package org.fit.pdfdom;
 
+import com.github.bingoohuang.pdf.PdfRect;
 import lombok.Data;
 
 

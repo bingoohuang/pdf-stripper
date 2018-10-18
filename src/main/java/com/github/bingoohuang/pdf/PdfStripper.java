@@ -1,78 +1,71 @@
 package com.github.bingoohuang.pdf;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.common.primitives.Ints;
-import lombok.*;
+import lombok.Cleanup;
+import lombok.SneakyThrows;
+import lombok.val;
+import org.apache.commons.io.output.NullWriter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.fit.pdfdom.PDFDomTree;
 
-import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class PdfStripper {
     static {
         System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
     }
 
-    @Value @RequiredArgsConstructor
-    public static class PdfPageSelect {
-        private final Set<Integer> pageIndices;
-        private final boolean included;
+    /**
+     * 自定义提取。
+     *
+     * @param is          PDF输入流
+     * @param pageSelect  指定页面
+     * @param pdfListener 监听器
+     */
+    @SneakyThrows
+    public static void stripCustom(InputStream is, PdfPageSelect pageSelect, PdfListener pdfListener) {
+        @Cleanup val original = PDDocument.load(is);
+        @Cleanup val doc = pageSelect.getPDDocument(original);
 
-        public boolean included(int pageIndex) {
-            return pageIndices.isEmpty() || included == pageIndices.contains(pageIndex);
-        }
+        val tree = new PDFDomTree();
+        tree.setPdfListener(pdfListener);
 
-        public static PdfPageSelect allPages() {
-            return new PdfPageSelect(Sets.newHashSet(), true);
-        }
-
-        public static PdfPageSelect includePages(int... pageIndices) {
-            return new PdfPageSelect(IntStream.of(pageIndices).boxed().collect(Collectors.toSet()), true);
-        }
-
-        public static PdfPageSelect excludePages(int... pageIndices) {
-            return new PdfPageSelect(IntStream.of(pageIndices).boxed().collect(Collectors.toSet()), false);
-        }
+        Writer output = pageSelect.isDebug()
+                ? new PrintWriter("debug" + System.currentTimeMillis() + ".html", "utf-8")
+                : new NullWriter();
+        tree.writeText(doc, output);
+        output.close();
     }
 
     /**
      * 从PDF中提取布局好的文本。
      *
-     * @param is          PDF输入流
-     * @param pageIndices 指定页面，不指定时全部页
+     * @param is         PDF输入流
+     * @param pageSelect 指定页面
      * @return 布局好的文本
      */
     @SneakyThrows
-    public static String stripText(InputStream is, PdfPageSelect pageIndices) {
-        @Cleanup val doc = PDDocument.load(is);
-        if (pageIndices.getPageIndices().isEmpty())
-            return new PDFLayoutTextStripper().getText(doc);
+    public static String stripText(InputStream is, PdfPageSelect pageSelect) {
+        @Cleanup val original = PDDocument.load(is);
+        @Cleanup val doc = pageSelect.getPDDocument(original);
 
-        @Cleanup val pageDoc = new PDDocument();
-        for (int pageIndex = 0, pageCount = doc.getNumberOfPages(); pageIndex < pageCount; ++pageIndex) {
-            if (pageIndices.included(pageIndex)) {
-                pageDoc.addPage(doc.getPage(pageIndex));
-            }
-        }
-        return new PDFLayoutTextStripper().getText(pageDoc);
+        return new PDFLayoutTextStripper().getText(doc);
     }
 
 
-    @Value @AllArgsConstructor
-    public static class PdfImage {
-        private final BufferedImage image;
-        private final String name;
-        private final String suffix;
-        private final int height;
-        private final int width;
-    }
-
+    /**
+     * 提取图片。
+     *
+     * @param is           PDF输入流
+     * @param pageIndex    指定页面索引
+     * @param imageIndices 图片序号
+     * @return 图片列表
+     */
     @SneakyThrows
     public static List<PdfImage> stripImages(InputStream is, int pageIndex, int... imageIndices) {
         @Cleanup val doc = PDDocument.load(is);

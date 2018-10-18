@@ -1,7 +1,7 @@
 package org.fit.pdfdom;
 
+import com.github.bingoohuang.pdf.PdfRect;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.text.TextPosition;
@@ -291,13 +291,6 @@ public class PDFDomTree extends PDFBoxTree {
         return el;
     }
 
-    protected String lastText = null;
-    protected String preText = null;
-    protected StringBuilder itemScores = new StringBuilder();
-
-    public String getItemScores() {
-        return itemScores.toString();
-    }
 
     /**
      * Creates an element that represents a single positioned box containing the specified text string.
@@ -310,23 +303,8 @@ public class PDFDomTree extends PDFBoxTree {
         Text text = doc.createTextNode(data);
         el.appendChild(text);
 
-        if (pdfRects.size() == 4) {
-            int scores = 0;
-            for (val rect : pdfRects) {
-                if (!"#e6e7e8".equals(rect.getFcolor())) ++scores;
-            }
+        if (pdfListener != null) pdfListener.process(curstyle, data);
 
-            itemScores.append((lastText == null ? "" : (lastText + ".")) + (preText == null ? "" : preText) + data + ":" + scores);
-            itemScores.append("\n");
-            pdfRects.clear();
-            preText = null;
-        } else {
-            if (Math.abs(curstyle.getFontSize() - 10) < 0.1) {
-                lastText = data;
-            } else if (Math.abs(curstyle.getFontSize() - 8) < 0.1) {
-                preText = data;
-            }
-        }
         return el;
     }
 

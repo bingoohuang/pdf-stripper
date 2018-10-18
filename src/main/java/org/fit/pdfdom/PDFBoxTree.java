@@ -1,6 +1,8 @@
 package org.fit.pdfdom;
 
-import com.google.common.collect.Lists;
+import com.github.bingoohuang.pdf.PdfRect;
+import com.github.bingoohuang.pdf.PdfListener;
+import lombok.Setter;
 import org.apache.pdfbox.contentstream.operator.Operator;
 import org.apache.pdfbox.contentstream.operator.color.*;
 import org.apache.pdfbox.contentstream.operator.state.*;
@@ -149,7 +151,8 @@ public abstract class PDFBoxTree extends PDFTextStripper {
      * Current graphics path
      */
     protected List<PathSegment> graphicsPath;
-    protected List<PdfRect> pdfRects = Lists.newArrayList();
+
+    @Setter protected PdfListener pdfListener;
 
     /**
      * The style of the future box being modified by the operators
@@ -397,8 +400,6 @@ public abstract class PDFBoxTree extends PDFTextStripper {
     @Override
     protected void processOperator(Operator operator, List<COSBase> arguments)
             throws IOException {
-        if (getCurrentPageNo() != 2) return;
-
         String operation = operator.getName();
         /*System.out.println("Operator: " + operation + ":" + arguments.size());
         if (operation.equals("sc") || operation.equals("cs"))
@@ -458,7 +459,7 @@ public abstract class PDFBoxTree extends PDFTextStripper {
                     float height = getLength(arguments.get(3));
 
                     PdfRect rect = new PdfRect(x, y, width, height);
-                    pdfRects.add(rect);
+                    if (pdfListener != null) pdfListener.process(rect);
 
                     float[] p1 = transformPosition(x, y);
                     float[] p2 = transformPosition(x + width, y + height);

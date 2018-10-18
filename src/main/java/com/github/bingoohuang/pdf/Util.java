@@ -15,7 +15,7 @@ public class Util {
     }
 
     @SneakyThrows
-    public static void saveImage(PdfStripper.PdfImage pdfImage) {
+    public static void saveImage(PdfImage pdfImage) {
         ImageIO.write(pdfImage.getImage(), pdfImage.getSuffix(), new File(pdfImage.getName() + "." + pdfImage.getSuffix()));
     }
 

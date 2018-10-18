@@ -1,5 +1,6 @@
 package org.fit.pdfdom;
 
+import lombok.Data;
 import org.fit.pdfdom.resource.EmbedAsBase64Handler;
 import org.fit.pdfdom.resource.HtmlResourceHandler;
 import org.fit.pdfdom.resource.IgnoreResourceHandler;
@@ -7,6 +8,7 @@ import org.fit.pdfdom.resource.SaveResourceToDirHandler;
 
 import java.io.File;
 
+@Data
 public class PDFDomTreeConfig {
     private HtmlResourceHandler imageHandler;
     private HtmlResourceHandler fontHandler;
@@ -34,19 +36,4 @@ public class PDFDomTreeConfig {
     private PDFDomTreeConfig() {
     }
 
-    public HtmlResourceHandler getImageHandler() {
-        return imageHandler;
-    }
-
-    public void setImageHandler(HtmlResourceHandler imageHandler) {
-        this.imageHandler = imageHandler;
-    }
-
-    public HtmlResourceHandler getFontHandler() {
-        return fontHandler;
-    }
-
-    public void setFontHandler(HtmlResourceHandler fontHandler) {
-        this.fontHandler = fontHandler;
-    }
 }

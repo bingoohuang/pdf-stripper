@@ -80,7 +80,7 @@ public class PDFDomTree extends PDFBoxTree {
     /**
      * Creates a new PDF DOM parser.
      *
-     * @throws IOException
+     * @throws IOException IOException
      */
     public PDFDomTree() throws IOException {
         super();
@@ -90,7 +90,8 @@ public class PDFDomTree extends PDFBoxTree {
     /**
      * Creates a new PDF DOM parser.
      *
-     * @throws IOException
+     * @param config PDFDomTreeConfig
+     * @throws IOException IOException
      */
     public PDFDomTree(PDFDomTreeConfig config) throws IOException {
         this();
@@ -192,7 +193,7 @@ public class PDFDomTree extends PDFBoxTree {
      *
      * @param doc the source document
      * @return a DOM Document representing the DOM tree
-     * @throws IOException
+     * @throws IOException IOException
      */
     public Document createDOM(PDDocument doc) throws IOException {
         /* We call the original PDFTextStripper.writeText but nothing should
@@ -297,6 +298,7 @@ public class PDFDomTree extends PDFBoxTree {
     public String getItemScores() {
         return itemScores.toString();
     }
+
     /**
      * Creates an element that represents a single positioned box containing the specified text string.
      *
@@ -314,7 +316,7 @@ public class PDFDomTree extends PDFBoxTree {
                 if (!"#e6e7e8".equals(rect.getFcolor())) ++scores;
             }
 
-            itemScores.append((lastText == null ? "" : (lastText + ".")) + (preText == null ? "" : preText) +  data + ":" + scores);
+            itemScores.append((lastText == null ? "" : (lastText + ".")) + (preText == null ? "" : preText) + data + ":" + scores);
             itemScores.append("\n");
             pdfRects.clear();
             preText = null;

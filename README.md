@@ -1,4 +1,11 @@
 # pdf-stripper
+
+[![Build Status](https://travis-ci.org/bingoohuang/pdf-stripper.svg?branch=master)](https://travis-ci.org/bingoohuang/pdf-stripper)
+[![Coverage Status](https://coveralls.io/repos/github/bingoohuang/pdf-stripper/badge.svg?branch=master)](https://coveralls.io/github/bingoohuang/pdf-stripper?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.bingoohuang/pdf-stripper/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.github.bingoohuang/pdf-stripper/)
+[![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
+
 strip structured info from pdf
 
 ## PDF 分析的过程

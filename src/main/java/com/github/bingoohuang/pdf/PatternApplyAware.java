@@ -1,5 +1,13 @@
 package com.github.bingoohuang.pdf;
 
+/**
+ * 正则匹配捕获子分组应用器。
+ */
 public interface PatternApplyAware {
-    void apply(String[] groups);
+    /**
+     * 应用正则匹配捕获子分组内容。
+     *
+     * @param patternGroups 正则匹配捕获子分组
+     */
+    void apply(String[] patternGroups);
 }

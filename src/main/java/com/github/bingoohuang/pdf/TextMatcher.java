@@ -1,95 +1,155 @@
 package com.github.bingoohuang.pdf;
 
 import com.google.common.collect.Lists;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.objenesis.ObjenesisStd;
 
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 文本匹配器。从文本中抓取符合要求的内容。
+ */
+@RequiredArgsConstructor
 public class TextMatcher {
+    /*
+    需要匹配的文本。
+     */
     private final String text;
 
-    public TextMatcher(String text) {
-        this.text = text;
+    /**
+     * 查找单个行标签匹配文本。
+     *
+     * @param label 文本标签
+     * @return 匹配文本
+     */
+    public String findLineLabelText(String label) {
+        return findLineLabelText(label, TextMatcherOption.builder().build());
     }
 
-    public String findLineLabelText(String label) {
-        return findLineLabelText(label, null);
-    }
-    
-    public String findLineLabelText(String label, String stripChars) {
-        int labelPos = text.indexOf(label);
+    /**
+     * 查找单个行标签匹配文本。
+     *
+     * @param label  文本标签
+     * @param option 匹配选项
+     * @return 匹配文本
+     */
+    public String findLineLabelText(String label, TextMatcherOption option) {
+        val range = option.locateRange(text);
+
+        int labelPos = text.indexOf(label, range.getLeft());
         if (labelPos < 0) return "";
 
         int fromIndex = labelPos + label.length();
         int endPos = text.indexOf("\n", fromIndex);
+        if (endPos >= range.getRight()) endPos = range.getRight();
 
         val labelText = endPos < 0 ? text.substring(fromIndex) : text.substring(fromIndex, endPos);
 
-        return StringUtils.trim(StringUtils.strip(StringUtils.trim(labelText), stripChars));
+        return option.strip(labelText);
     }
 
-    public <T> List<T> searchPattern(String pattern, Class<T> itemClass) {
-        if (!PatternApplyAware.class.isAssignableFrom(itemClass)) {
-            throw new RuntimeException(itemClass + " required to implement PatternApplyAware");
-        }
+    /**
+     * 在文本中搜索指定正则模式的文本。
+     *
+     * @param pattern      正则模式
+     * @param patternApply 模式捕获应用器
+     */
+    public void searchPattern(String pattern, PatternApplyAware patternApply) {
+        searchPattern(pattern, patternApply, TextMatcherOption.builder().build());
+    }
 
-        val instantiator = new ObjenesisStd().getInstantiatorOf(itemClass);
-        Pattern p = Pattern.compile(pattern);
-        Matcher m = p.matcher(text);
-        List<T> items = Lists.newArrayList();
+    /**
+     * 在文本中搜索指定正则模式的文本。
+     *
+     * @param pattern      正则模式
+     * @param patternApply 模式捕获应用器
+     * @param option       匹配选项
+     */
+    public void searchPattern(String pattern, PatternApplyAware patternApply, TextMatcherOption option) {
+        val range = option.locateRange(text);
+        val rangedText = text.substring(range.getLeft(), range.getRight());
+
+        val p = Pattern.compile(pattern);
+        val m = p.matcher(rangedText);
         while (m.find()) {
             int groupCount = m.groupCount();
-            String[] groups = new String[groupCount];
+            val groups = new String[groupCount];
             for (int i = 0; i < groupCount; ++i) {
                 groups[i] = m.group(i + 1);
             }
 
-            T item = instantiator.newInstance();
-            ((PatternApplyAware) item).apply(groups);
-
-            items.add(item);
+            patternApply.apply(groups);
         }
+    }
+
+    /**
+     * 在文本中搜索指定正则模式的文本。
+     *
+     * @param pattern   正则模式
+     * @param itemClass 匹配JavaBean类型
+     * @param <T>       匹配JavaBean泛型
+     * @return 匹配JavaBean列表
+     */
+    public <T extends PatternApplyAware> List<T> searchPattern(String pattern, Class<T> itemClass) {
+        return searchPattern(pattern, itemClass, TextMatcherOption.builder().build());
+    }
+
+    /**
+     * 在文本中搜索指定正则模式的文本。
+     *
+     * @param pattern   正则模式
+     * @param itemClass 匹配JavaBean类型
+     * @param <T>       匹配JavaBean泛型
+     * @param option    匹配选项
+     * @return 匹配JavaBean列表
+     */
+    public <T extends PatternApplyAware> List<T> searchPattern(String pattern, Class<T> itemClass, TextMatcherOption option) {
+        val instantiator = new ObjenesisStd().getInstantiatorOf(itemClass);
+        val items = Lists.<T>newArrayList();
+
+        searchPattern(pattern, groups -> {
+            T item = instantiator.newInstance();
+            item.apply(groups);
+            items.add(item);
+        }, option);
 
         return items;
     }
 
     private static Pattern BlankPattern = Pattern.compile("\\s*(\\S+)");
 
-    public String findLabelText(String label, String rangeOpenKey, String rangeCloseKey) {
-        val range = locateRange(rangeOpenKey, rangeCloseKey);
-
+    /**
+     * 查找标签匹配文本。
+     *
+     * @param label  文本标签
+     * @param option 匹配选项
+     * @return 匹配文本
+     */
+    public String findLabelText(String label, TextMatcherOption option) {
+        val range = option.locateRange(text);
         int pos = text.indexOf(label, range.getLeft());
         if (pos < 0) return "";
-        if (pos >= range.getRight()) return "";
+        if (pos >= range.getRight()) pos = range.getRight();
 
-        String sub = text.substring(pos + label.length(), range.getRight());
-        Matcher matcher = BlankPattern.matcher(sub);
+        val sub = text.substring(pos + label.length(), range.getRight());
+        val striped = option.strip(sub);
+        val matcher = BlankPattern.matcher(striped);
         return matcher.find() ? matcher.group(1) : "";
     }
 
-    public String findPatternText(String pattern, String rangeOpenKey, String rangeCloseKey) {
-        val range = locateRange(rangeOpenKey, rangeCloseKey);
-
-        String sub = text.substring(range.getLeft(), range.getRight());
-        Matcher matcher = Pattern.compile(pattern).matcher(sub);
+    /**
+     * 查找模式匹配的整个文本。
+     *
+     * @param pattern 正则模式
+     * @param option  匹配选项
+     * @return 匹配文本
+     */
+    public String findPatternText(String pattern, TextMatcherOption option) {
+        val range = option.locateRange(text);
+        val sub = text.substring(range.getLeft(), range.getRight());
+        val matcher = Pattern.compile(pattern).matcher(sub);
         return matcher.find() ? matcher.group() : "";
-    }
-
-    private Pair<Integer, Integer> locateRange(String rangeOpenKey, String rangeCloseKey) {
-        int start = StringUtils.isNotEmpty(rangeOpenKey) ? text.indexOf(rangeOpenKey) : 0;
-        if (start < 0) start = 0;
-
-        int end = text.length();
-        if (StringUtils.isNoneEmpty(rangeCloseKey)) {
-            int close = text.indexOf(rangeCloseKey, start);
-            if (close >= 0) end = close;
-        }
-
-        return Pair.of(start, end);
     }
 }

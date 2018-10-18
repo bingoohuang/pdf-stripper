@@ -1,6 +1,5 @@
 package com.github.bingoohuang.pdf;
 
-
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -14,7 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class PDFLayoutTextStripper extends PDFTextStripper {
-
     public static final boolean DEBUG = false;
     public static final int OUTPUT_SPACE_CHARACTER_WIDTH_IN_PT = 4;
 
@@ -336,7 +334,6 @@ class Character {
 
 
 class CharacterFactory {
-
     private TextPosition previousTextPosition;
     private boolean firstCharacterOfLineFound;
     private boolean isCharacterPartOfPreviousWord;
@@ -410,8 +407,7 @@ class CharacterFactory {
 
     private char getCharacterFromTextPosition(final TextPosition textPosition) {
         String string = textPosition.getUnicode();
-        char character = string.charAt(0);
-        return character;
+        return string.charAt(0);
     }
 
     private TextPosition getPreviousTextPosition() {

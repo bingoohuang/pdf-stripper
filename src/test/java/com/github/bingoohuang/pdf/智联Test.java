@@ -1,0 +1,164 @@
+package com.github.bingoohuang.pdf;
+
+import lombok.Cleanup;
+import lombok.Data;
+import lombok.SneakyThrows;
+import lombok.val;
+import org.junit.Test;
+
+import java.util.List;
+
+import static com.google.common.truth.Truth.assertThat;
+
+public class 智联Test {
+    @Test @SneakyThrows
+    public void 职业价值观测验() {
+        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
+        val text = PdfStripper.stripText(is);
+        val textMatcher = new TextMatcher(text);
+        assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
+        assertThat(textMatcher.findLineLabelText("测试日期：")).isEqualTo("2016-06-12");
+
+        textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)",
+                groups -> System.out.println("name:" + groups[0] + ", score:" + groups[1]),
+                TextMatcherOption.builder().rangeOpen("3  详细结果").rangeClose("©智联测评版权所有").build());
+
+        List<ValuesItem> items = textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)", ValuesItem.class,
+                TextMatcherOption.builder().rangeOpen("3  详细结果").rangeClose("©智联测评版权所有").build());
+        assertThat(items.toString()).isEqualTo("[" +
+                "智联Test.ValuesItem(name=薪酬福利, score=8.3), " +
+                "智联Test.ValuesItem(name=工作稳定, score=6.1), " +
+                "智联Test.ValuesItem(name=公平公正, score=3.5), " +
+                "智联Test.ValuesItem(name=工作强度, score=3.3), " +
+
+                "智联Test.ValuesItem(name=同事关系, score=5.7), " +
+                "智联Test.ValuesItem(name=服务他人, score=4.8), " +
+                "智联Test.ValuesItem(name=上级支持, score=4.7), " +
+
+                "智联Test.ValuesItem(name=他人认可, score=4.9), " +
+                "智联Test.ValuesItem(name=管理他人, score=4.8), " +
+                "智联Test.ValuesItem(name=独立自主, score=4.4), " +
+
+                "智联Test.ValuesItem(name=获得成就, score=8.6), " +
+                "智联Test.ValuesItem(name=晋升机会, score=6.5), " +
+                "智联Test.ValuesItem(name=培训机会, score=3.9), " +
+                "智联Test.ValuesItem(name=施展才华, score=3.2)]");
+
+        val t2 = textMatcher.findLineLabelText("作答时间：");
+        assertThat(t2).isEqualTo("8分钟35秒");
+        val t3 = textMatcher.findLineLabelText("正常与否", new TextMatcherOption(":：", "参考时间", "选项分布"));
+        assertThat(t3).isEqualTo("正常");
+        val t4 = textMatcher.findLineLabelText("正常与否", new TextMatcherOption(":：", "选项分布", "作答完整性"));
+        assertThat(t4).isEqualTo("正常");
+        val t5 = textMatcher.findLineLabelText("完成率", new TextMatcherOption(":：", "全部题数", "%"));
+        assertThat(t5).isEqualTo("100.00");
+    }
+
+    @Data
+    public static class ValuesItem implements PatternApplyAware {
+        private String name;
+        private String score;
+
+        @Override public void apply(String[] groups) {
+            this.name = groups[0];
+            this.score = groups[1];
+        }
+    }
+
+    @Test @SneakyThrows
+    public void 情绪管理能力测验() {
+        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
+        val text = PdfStripper.stripText(is);
+        val textMatcher = new TextMatcher(text);
+        assertThat(textMatcher.findLineLabelText("Respondent", new TextMatcherOption("："))).isEqualTo("张晓平");
+        assertThat(textMatcher.findLineLabelText("Date：")).isEqualTo("2016-05-25");
+
+        val t1 = textMatcher.findLabelText("很高", new TextMatcherOption("2.1  情绪管理能力", "的情绪管理能力在人群中"));
+        assertThat(t1).isEqualTo("5.5");
+        val s1 = textMatcher.findLabelText("很高", new TextMatcherOption("2.2  积极情绪指数", "的积极情绪指数"));
+        assertThat(s1).isEqualTo("4.8");
+
+        val s2 = textMatcher.findLabelText("很高", new TextMatcherOption("3.1  自我情绪认知", "的自我情绪认知"));
+        assertThat(s2).isEqualTo("6.7");
+        val s3 = textMatcher.findLabelText("很高", new TextMatcherOption("3.2  自我情绪激励", "的自我情绪激励"));
+        assertThat(s3).isEqualTo("5.9");
+        val s4 = textMatcher.findLabelText("很高", new TextMatcherOption("3.3  自我情绪调控", "的自我情绪调控"));
+        assertThat(s4).isEqualTo("4.7");
+
+        val b0 = textMatcher.findLabelText("很高", new TextMatcherOption("4.1 他人情绪感知", "的他人情绪感知"));
+        assertThat(b0).isEqualTo("5");
+        val b1 = textMatcher.findLabelText("很高", new TextMatcherOption("4.2 他人情绪激励", "的他人情绪激励"));
+        assertThat(b1).isEqualTo("5.8");
+        val b2 = textMatcher.findLabelText("很高", new TextMatcherOption("4.3 人际关系处理", "的人际关系处理"));
+        assertThat(b2).isEqualTo("5.5");
+
+        val t2 = textMatcher.findLineLabelText("作答时间：");
+        assertThat(t2).isEqualTo("7分钟22秒");
+        val t3 = textMatcher.findLineLabelText("正常与否", new TextMatcherOption(":：", "参考时间", "选项分布"));
+        assertThat(t3).isEqualTo("正常");
+        val t4 = textMatcher.findLineLabelText("正常与否", new TextMatcherOption(":：", "选项分布", "作答题数"));
+        assertThat(t4).isEqualTo("正常");
+        val t5 = textMatcher.findLineLabelText("完成率", new TextMatcherOption(":：", "全部题数", "%"));
+        assertThat(t5).isEqualTo("100.00");
+    }
+
+    @Test @SneakyThrows
+    public void 职业行为风险测验() {
+        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
+        val text = PdfStripper.stripText(is);
+        val textMatcher = new TextMatcher(text);
+
+        assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
+        assertThat(textMatcher.findLineLabelText("测试日期：")).isEqualTo("2016-06-12");
+
+        List<RiskItem> riskItems = textMatcher.searchPattern("(\\S+)：([高中低])\\s*(-?\\d+)", RiskItem.class);
+        assertThat(riskItems.toString()).isEqualTo("[" +
+                "智联Test.RiskItem(name=焦虑不安, level=低, score=0), " +
+                "智联Test.RiskItem(name=抑郁消沉, level=低, score=0), " +
+                "智联Test.RiskItem(name=偏执多疑, level=低, score=0), " +
+                "智联Test.RiskItem(name=冷漠孤僻, level=低, score=-14), " +
+                "智联Test.RiskItem(name=特立独行, level=低, score=0), " +
+                "智联Test.RiskItem(name=冲动暴躁, level=低, score=0), " +
+                "智联Test.RiskItem(name=喜怒无常, level=低, score=0), " +
+                "智联Test.RiskItem(name=社交回避, level=低, score=0), " +
+                "智联Test.RiskItem(name=僵化固执, level=低, score=0), " +
+                "智联Test.RiskItem(name=依赖顺从, level=低, score=-12), " +
+                "智联Test.RiskItem(name=夸张做作, level=低, score=-12), " +
+                "智联Test.RiskItem(name=狂妄自恋, level=低, score=0), " +
+                "智联Test.RiskItem(name=压力耐受, level=低, score=54), " +
+                "智联Test.RiskItem(name=积极乐观, level=低, score=58), " +
+                "智联Test.RiskItem(name=合理自信, level=中, score=68), " +
+                "智联Test.RiskItem(name=坚韧不拔, level=低, score=42)]");
+
+        val t1 = textMatcher.findLabelText("正常与否：", new TextMatcherOption("作答时间", "称许性"));
+        assertThat(t1).isEqualTo("正常");
+
+        val t2 = textMatcher.findLabelText("共计", new TextMatcherOption("作答时间", "称许性"));
+        assertThat(t2).isEqualTo("16分钟");
+        val t3 = textMatcher.findPatternText("\\d+秒", new TextMatcherOption("作答时间", "称许性"));
+        assertThat(t3).isEqualTo("45秒");
+
+        val t4 = textMatcher.findLabelText("正常与否", new TextMatcherOption(":：", "称许性", "选项分布"));
+        assertThat(t4).isEqualTo("正常");
+
+        val t5 = textMatcher.findLabelText("正常与否", new TextMatcherOption(":：", "选项分布", "作答完整性"));
+        assertThat(t5).isEqualTo("正常");
+
+        val t6 = textMatcher.findLabelText("完成率", new TextMatcherOption(":：", "作答题数", "%"));
+        assertThat(t6).isEqualTo("100");
+
+    }
+
+    @Data
+    public static class RiskItem implements PatternApplyAware {
+        private String name;
+        private String level; // 高中低
+        private int score;
+
+        @Override public void apply(String[] groups) {
+            this.name = groups[0];
+            this.level = groups[1];
+            this.score = Integer.parseInt(groups[2]);
+        }
+    }
+}

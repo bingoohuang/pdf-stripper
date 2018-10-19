@@ -1,9 +1,9 @@
 package com.github.bingoohuang.pdf;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.Value;
 
-@Data @RequiredArgsConstructor public class PdfRect {
+@Value
+public class PdfRect {
     private final float x, y, width, height;
-    private String fcolor;
+    private final String fcolor;
 }

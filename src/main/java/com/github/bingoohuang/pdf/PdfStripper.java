@@ -8,7 +8,6 @@ import lombok.val;
 import org.apache.commons.io.output.NullWriter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.fit.pdfdom.PDFDomTree;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,8 +45,7 @@ public class PdfStripper {
     public static void stripCustom(PDDocument pdDoc, PdfPagesSelect pageSelect, PdfListener pdfListener) {
         @Cleanup val doc = pageSelect.getPDDocument(pdDoc);
 
-        val tree = new PDFDomTree();
-        tree.setPdfListener(pdfListener);
+        val tree = new PdfDom(pdfListener);
 
         Writer output = pdfListener.createHtml()
                 ? new PrintWriter("debug" + System.currentTimeMillis() + ".html", "utf-8")

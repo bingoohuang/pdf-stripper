@@ -6,7 +6,7 @@
 
     <groupId>com.github.bingoohuang</groupId>
     <artifactId>pdf-stripper</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
@@ -45,6 +45,11 @@
     </developers>
     
     <dependencies>
+        <dependency>
+            <groupId>net.sf.cssbox</groupId>
+            <artifactId>pdf2dom</artifactId>
+            <version>1.7</version>
+        </dependency>
         <dependency>
             <groupId>com.github.bingoohuang</groupId>
             <artifactId>java-utils</artifactId>

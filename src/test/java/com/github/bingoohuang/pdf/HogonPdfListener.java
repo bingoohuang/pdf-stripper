@@ -6,11 +6,12 @@ import lombok.val;
 import org.fit.pdfdom.BoxStyle;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HogonPdfListener implements PdfListener {
     private String lastText = null;
     private String preText = null;
-    private StringBuilder itemScores = new StringBuilder();
+    private List<HogonItem> itemScores = Lists.newArrayList();
     private List<PdfRect> pdfRects = Lists.newArrayList();
 
     @Override public void process(PdfRect rect) {
@@ -19,14 +20,16 @@ public class HogonPdfListener implements PdfListener {
 
     @Override public void process(BoxStyle curstyle, String text) {
         if (pdfRects.size() == 4) {
+            val scope = lastText == null ? "" : lastText;
+            val item = (preText == null ? "" : preText) + text;
             val scores = pdfRects.stream().filter(x -> !Str.anyOf(x.getFcolor(), "#e6e7e8", "#e5e6e7")).count();
-            itemScores.append((lastText == null ? "" : (lastText + ".")) + (preText == null ? "" : preText) + text + ":" + scores);
-            itemScores.append("\n");
+            itemScores.add(new HogonItem(scope, item, (int) scores));
             preText = null;
         } else {
-            if (curstyle.getFontSize() >= 9.0f && curstyle.getFontSize() <= 10.0f) {
+            val fontSize = curstyle.getFontSize();
+            if (fontSize >= 9.0f && fontSize <= 10.0f) {
                 lastText = text;
-            } else if (Math.abs(curstyle.getFontSize() - 8) < 0.1) {
+            } else if (Math.abs(fontSize - 8) < 0.1) {
                 preText = text;
             }
         }
@@ -35,6 +38,8 @@ public class HogonPdfListener implements PdfListener {
     }
 
     public String itemScores() {
-        return itemScores.toString();
+        return itemScores.stream().map(HogonItem::toString).collect(Collectors.joining("\n"));
     }
+
+
 }

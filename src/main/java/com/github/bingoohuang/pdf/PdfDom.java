@@ -18,6 +18,7 @@ public class PdfDom extends PDFDomTree {
     public PdfDom(PdfListener pdfListener) throws IOException, ParserConfigurationException {
         super();
         this.pdfListener = pdfListener;
+        this.setDisableImages(!pdfListener.createHtml());
     }
 
     @Override

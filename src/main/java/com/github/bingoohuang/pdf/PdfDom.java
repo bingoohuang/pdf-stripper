@@ -1,6 +1,5 @@
 package com.github.bingoohuang.pdf;
 
-import lombok.Setter;
 import lombok.val;
 import org.apache.pdfbox.contentstream.operator.Operator;
 import org.apache.pdfbox.cos.COSBase;
@@ -12,19 +11,17 @@ import java.io.IOException;
 import java.util.List;
 
 public class PdfDom extends PDFDomTree {
-    @Setter private final PdfListener pdfListener;
+    private final PdfListener pdfListener;
     private boolean isRectangle = false;
 
     public PdfDom(PdfListener pdfListener) throws IOException, ParserConfigurationException {
-        super();
         this.pdfListener = pdfListener;
-        this.setDisableImages(!pdfListener.createHtml());
+        setDisableImages(!pdfListener.createHtml());
     }
 
     @Override
     protected void processOperator(Operator operator, List<COSBase> arguments) throws IOException {
         super.processOperator(operator, arguments);
-
         isRectangle = operator.getName().equals("re") && !disableGraphics && arguments.size() == 4;
     }
 
@@ -45,9 +42,8 @@ public class PdfDom extends PDFDomTree {
             val fcolor = style.substring(start, end);
 
             pdfListener.process(new PdfRect(x, y, width, height, fcolor));
+            isRectangle = false;
         }
-
-        isRectangle = false;
 
         return el;
     }

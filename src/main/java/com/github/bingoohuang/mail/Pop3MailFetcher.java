@@ -38,7 +38,8 @@ public class Pop3MailFetcher {
         return fetchInboxMessages(inbox);
     }
 
-    private List<Pop3MailMessage> fetchInboxMessages(Folder inbox) throws MessagingException {
+    @SneakyThrows
+    private List<Pop3MailMessage> fetchInboxMessages(Folder inbox) {
         int end = matcher.messageEnd();
         if (end < 0) end = inbox.getMessageCount();
 
@@ -112,7 +113,7 @@ public class Pop3MailFetcher {
             return (String) p.getContent();
         }
 
-        if (p.isMimeType("multipart/alternative")) {
+        if (p.isMimeType("multipart/*")) {
             // prefer html text over plain text
             Multipart mp = (Multipart) p.getContent();
             String text = null;
@@ -128,14 +129,6 @@ public class Pop3MailFetcher {
                 }
             }
             return text;
-        }
-
-        if (p.isMimeType("multipart/*")) {
-            Multipart mp = (Multipart) p.getContent();
-            for (int i = 0; i < mp.getCount(); i++) {
-                String s = getText(mp.getBodyPart(i));
-                if (s != null) return s;
-            }
         }
 
         return null;

@@ -1,37 +1,32 @@
 package com.github.bingoohuang.pdf;
 
 import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-@Value @Builder
+@Value @Builder @RequiredArgsConstructor
 public class TextMatcherOption {
     private final String stripChars;
-    private final String rangeOpen;
-    private final String rangeClose;
+    private final String startAnchor;
+    private final String endAnchor;
 
     public TextMatcherOption(String stripChars) {
         this(stripChars, null, null);
     }
 
-    public TextMatcherOption(String rangeOpen, String rangeClose) {
-        this(null, rangeOpen, rangeClose);
-    }
-
-    public TextMatcherOption(String stripChars, String rangeOpen, String rangeClose) {
-        this.stripChars = stripChars;
-        this.rangeOpen = rangeOpen;
-        this.rangeClose = rangeClose;
+    public TextMatcherOption(String startAnchor, String endAnchor) {
+        this(null, startAnchor, endAnchor);
     }
 
     public Pair<Integer, Integer> locateRange(String text) {
-        int start = StringUtils.isNotEmpty(rangeOpen) ? text.indexOf(rangeOpen) : 0;
-        start = start <= 0 ? 0 : start + rangeOpen.length();
+        int start = StringUtils.isNotEmpty(startAnchor) ? text.indexOf(startAnchor) : 0;
+        start = start <= 0 ? 0 : start + startAnchor.length();
 
         int end = text.length();
-        if (StringUtils.isNotEmpty(rangeClose)) {
-            int close = text.indexOf(rangeClose, start);
+        if (StringUtils.isNotEmpty(endAnchor)) {
+            int close = text.indexOf(endAnchor, start);
             if (close >= 0) end = close;
         }
 

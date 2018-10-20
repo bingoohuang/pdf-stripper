@@ -22,7 +22,7 @@ public class 智联Test {
         val sb = new StringBuilder();
         textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)",
                 groups -> sb.append(groups[0]).append(":").append(groups[1]).append("\n"),
-                TextMatcherOption.builder().rangeOpen("3  详细结果").rangeClose("©智联测评版权所有").build());
+                TextMatcherOption.builder().startAnchor("3  详细结果").endAnchor("©智联测评版权所有").build());
 
         assertThat(sb.toString()).isEqualTo(
                 "薪酬福利:8.3\n" +
@@ -41,7 +41,7 @@ public class 智联Test {
                 "施展才华:3.2\n");
 
         List<ValuesItem> items = textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)", ValuesItem.class,
-                TextMatcherOption.builder().rangeOpen("3  详细结果").rangeClose("©智联测评版权所有").build());
+                TextMatcherOption.builder().startAnchor("3  详细结果").endAnchor("©智联测评版权所有").build());
         assertThat(items.toString()).isEqualTo("[" +
                 "ValuesItem(name=薪酬福利, score=8.3), " +
                 "ValuesItem(name=工作稳定, score=6.1), " +

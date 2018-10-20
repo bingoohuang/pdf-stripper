@@ -46,7 +46,7 @@ public class Pop3MailFetcherTest {
         val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.includePages(0));
         val textMatcher = new TextMatcher(text);
         val items = textMatcher.searchPattern("(\\S+)\\s+(\\d+)", ValuesItem.class,
-                TextMatcherOption.builder().rangeOpen("简报").rangeClose("©").build());
+                TextMatcherOption.builder().startAnchor("简报").endAnchor("©").build());
 
         assertThat(items.toString()).isEqualTo("[" +
                 "ValuesItem(name=调适, score=44), " +

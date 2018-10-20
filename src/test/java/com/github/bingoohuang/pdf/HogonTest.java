@@ -17,7 +17,7 @@ public class HogonTest {
         val textMatcher = new TextMatcher(text);
 
         List<ValuesItem> items = textMatcher.searchPattern("(\\S+)\\s+(\\d+)", ValuesItem.class,
-                TextMatcherOption.builder().rangeOpen("简报").rangeClose("©").build());
+                TextMatcherOption.builder().startAnchor("简报").endAnchor("©").build());
         assertThat(items.toString()).isEqualTo("[" +
                 "ValuesItem(name=调适, score=98), " +
                 "ValuesItem(name=抱负, score=73), " +

@@ -6,7 +6,7 @@ import lombok.Value;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-@Value @Builder @RequiredArgsConstructor
+@Builder @RequiredArgsConstructor
 public class TextMatcherOption {
     private final String stripChars;
     private final String startAnchor;

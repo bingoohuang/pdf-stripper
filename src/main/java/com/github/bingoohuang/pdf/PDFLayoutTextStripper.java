@@ -128,11 +128,10 @@ public class PDFLayoutTextStripper extends PDFTextStripper {
         if (textYPosition > previousTextYPosition && (textYPosition - previousTextYPosition > 5.5)) {
             val height = textPosition.getHeight();
             int numberOfLines = (int) (Math.floor(textYPosition - previousTextYPosition) / height);
-            numberOfLines = Math.max(1, numberOfLines - 1); // exclude current new line
-            return numberOfLines;
-        } else {
-            return 0;
+            return Math.max(1, numberOfLines - 1);
         }
+
+        return 0;
     }
 
     private TextLine addNewLine() {
@@ -173,20 +172,18 @@ class TextLine {
         val isCharacterAtTheBeginningOfNewLine = character.isCharacterAtTheBeginningOfNewLine();
         val isCharacterCloseToPreviousWord = character.isCharacterCloseToPreviousWord();
 
-        if (!this.indexIsInBounds(index)) {
-            return -1;
-        } else {
-            if (isCharacterPartOfPreviousWord && !isCharacterAtTheBeginningOfNewLine) {
-                index = this.findMinimumIndexWithSpaceCharacterFromIndex(index);
-            } else if (isCharacterCloseToPreviousWord) {
-                if (this.line.charAt(index) != SPACE_CHARACTER) {
-                    index += 1;
-                } else {
-                    index = this.findMinimumIndexWithSpaceCharacterFromIndex(index) + 1;
-                }
+        if (!this.indexIsInBounds(index)) return -1;
+
+        if (isCharacterPartOfPreviousWord && !isCharacterAtTheBeginningOfNewLine) {
+            index = this.findMinimumIndexWithSpaceCharacterFromIndex(index);
+        } else if (isCharacterCloseToPreviousWord) {
+            if (this.line.charAt(index) != SPACE_CHARACTER) {
+                index += 1;
+            } else {
+                index = this.findMinimumIndexWithSpaceCharacterFromIndex(index) + 1;
             }
-            return this.getNextValidIndex(index, isCharacterPartOfPreviousWord);
         }
+        return this.getNextValidIndex(index, isCharacterPartOfPreviousWord);
     }
 
     private boolean isSpaceCharacterAtIndex(int index) {
@@ -194,8 +191,7 @@ class TextLine {
     }
 
     private boolean isNewIndexGreaterThanLastIndex(int index) {
-        int lastIndex = this.getLastIndex();
-        return (index > lastIndex);
+        return index > this.getLastIndex();
     }
 
     private int getNextValidIndex(int index, boolean isCharacterPartOfPreviousWord) {
@@ -220,7 +216,7 @@ class TextLine {
     }
 
     private boolean indexIsInBounds(int index) {
-        return (index >= 0 && index < this.lineLength);
+        return index >= 0 && index < this.lineLength;
     }
 
     private void completeLineWithSpaces() {
@@ -236,7 +232,8 @@ class Character {
     @Getter private boolean characterAtTheBeginningOfNewLine;
     @Getter private boolean characterCloseToPreviousWord;
 
-    Character(char characterValue, int index, boolean isCharacterPartOfPreviousWord, boolean isFirstCharacterOfAWord, boolean isCharacterAtTheBeginningOfNewLine, boolean isCharacterPartOfASentence) {
+    Character(char characterValue, int index, boolean isCharacterPartOfPreviousWord,
+              boolean isFirstCharacterOfAWord, boolean isCharacterAtTheBeginningOfNewLine, boolean isCharacterPartOfASentence) {
         this.characterValue = characterValue;
         this.index = index;
         this.characterPartOfPreviousWord = isCharacterPartOfPreviousWord;
@@ -297,15 +294,12 @@ class CharacterFactory {
         val previousTextPosition = this.getPreviousTextPosition();
         if (previousTextPosition.getUnicode().equals(" ")) return false;
 
-        val numberOfSpaces = this.numberOfSpacesBetweenTwoCharacters(previousTextPosition, textPosition);
-        return numberOfSpaces <= 1;
+        return this.numberOfSpacesBetweenTwoCharacters(previousTextPosition, textPosition) <= 1;
     }
 
     private double numberOfSpacesBetweenTwoCharacters(final TextPosition textPosition1, final TextPosition textPosition2) {
-        val previousTextXPosition = textPosition1.getX();
-        val previousTextWidth = textPosition1.getWidth();
-        val previousTextEndXPosition = (previousTextXPosition + previousTextWidth);
-        return (double) Math.abs(Math.round(textPosition2.getX() - previousTextEndXPosition));
+        val textEndXPosition1 = (textPosition1.getX() + textPosition1.getWidth());
+        return (double) Math.abs(Math.round(textPosition2.getX() - textEndXPosition1));
     }
 
 }

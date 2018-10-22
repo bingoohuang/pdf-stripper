@@ -9,7 +9,6 @@ import org.apache.commons.io.output.NullWriter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -104,7 +103,8 @@ public class PdfStripper {
      * @param imageIndices 图片序号
      * @return 图片列表
      */
-    public static List<PdfImage> stripImages(PDDocument pdDoc, int pageIndex, int[] imageIndices) throws IOException {
+    @SneakyThrows
+    public static List<PdfImage> stripImages(PDDocument pdDoc, int pageIndex, int[] imageIndices) {
         val page = pdDoc.getPage(pageIndex);
 
         val images = Lists.<PdfImage>newArrayList();

@@ -14,7 +14,7 @@ public class 智联Test {
     @Test @SneakyThrows
     public void 职业价值观测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
-        val text = PdfStripper.stripText(is, PdfPagesSelect.excludePages(1, 2, 3));
+        val text = PdfStripper.stripText(is, PdfPagesSelect.offPages(1, 2, 3));
         val textMatcher = new TextMatcher(text);
         assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
         assertThat(textMatcher.findLineLabelText("测试日期：")).isEqualTo("2016-06-12");
@@ -22,26 +22,26 @@ public class 智联Test {
         val sb = new StringBuilder();
         textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)",
                 groups -> sb.append(groups[0]).append(":").append(groups[1]).append("\n"),
-                TextMatcherOption.builder().startAnchor("3  详细结果").endAnchor("©智联测评版权所有").build());
+                new TextMatcherOption("3  详细结果", "©智联测评版权所有"));
 
         assertThat(sb.toString()).isEqualTo(
                 "薪酬福利:8.3\n" +
-                "工作稳定:6.1\n" +
-                "公平公正:3.5\n" +
-                "工作强度:3.3\n" +
-                "同事关系:5.7\n" +
-                "服务他人:4.8\n" +
-                "上级支持:4.7\n" +
-                "他人认可:4.9\n" +
-                "管理他人:4.8\n" +
-                "独立自主:4.4\n" +
-                "获得成就:8.6\n" +
-                "晋升机会:6.5\n" +
-                "培训机会:3.9\n" +
-                "施展才华:3.2\n");
+                        "工作稳定:6.1\n" +
+                        "公平公正:3.5\n" +
+                        "工作强度:3.3\n" +
+                        "同事关系:5.7\n" +
+                        "服务他人:4.8\n" +
+                        "上级支持:4.7\n" +
+                        "他人认可:4.9\n" +
+                        "管理他人:4.8\n" +
+                        "独立自主:4.4\n" +
+                        "获得成就:8.6\n" +
+                        "晋升机会:6.5\n" +
+                        "培训机会:3.9\n" +
+                        "施展才华:3.2\n");
 
         List<ValuesItem> items = textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)", ValuesItem.class,
-                TextMatcherOption.builder().startAnchor("3  详细结果").endAnchor("©智联测评版权所有").build());
+                new TextMatcherOption("3  详细结果", "©智联测评版权所有"));
         assertThat(items.toString()).isEqualTo("[" +
                 "ValuesItem(name=薪酬福利, score=8.3), " +
                 "ValuesItem(name=工作稳定, score=6.1), " +

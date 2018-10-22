@@ -1,12 +1,12 @@
 package com.github.bingoohuang.pdf;
 
 import com.google.common.primitives.Ints;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
 import lombok.val;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-@Value @Builder
+@AllArgsConstructor @Builder
 public class PdfPagesSelect {
     private final int[] pageIndices;
     private final boolean excluded;
@@ -19,11 +19,11 @@ public class PdfPagesSelect {
         return new PdfPagesSelect(new int[0], false);
     }
 
-    public static PdfPagesSelect includePages(int... pageIndices) {
+    public static PdfPagesSelect onPages(int... pageIndices) {
         return new PdfPagesSelect(pageIndices, false);
     }
 
-    public static PdfPagesSelect excludePages(int... pageIndices) {
+    public static PdfPagesSelect offPages(int... pageIndices) {
         return new PdfPagesSelect(pageIndices, true);
     }
 
@@ -31,10 +31,8 @@ public class PdfPagesSelect {
         if (pageIndices.length == 0) return doc;
 
         val pageDoc = new PDDocument();
-        for (int pageIndex = 0, pageCount = doc.getNumberOfPages(); pageIndex < pageCount; ++pageIndex) {
-            if (included(pageIndex)) {
-                pageDoc.addPage(doc.getPage(pageIndex));
-            }
+        for (int i = 0, ii = doc.getNumberOfPages(); i < ii; ++i) {
+            if (included(i)) pageDoc.addPage(doc.getPage(i));
         }
 
         return pageDoc;

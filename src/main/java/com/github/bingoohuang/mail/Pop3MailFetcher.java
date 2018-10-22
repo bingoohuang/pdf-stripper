@@ -11,6 +11,7 @@ import org.jsoup.Jsoup;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 import java.util.List;
 import java.util.Properties;
@@ -65,7 +66,7 @@ public class Pop3MailFetcher {
                     .subject(subject)
                     .from(from)
                     .sendDateTime(sendDateTime)
-                    .content(getText(message))
+                    .content(getTextFromMessage(message))
                     .attachments(attachments)
                     .build());
         }
@@ -99,38 +100,33 @@ public class Pop3MailFetcher {
         return attachments;
     }
 
-
-    /**
-     * Return the primary text content of the message.
-     */
     @SneakyThrows
-    private static String getText(Part p) {
-        if (p.isMimeType("text/html")) {
-            return Jsoup.parse((String) p.getContent()).text();
+    private String getTextFromMessage(Message message) {
+        if (message.isMimeType("text/plain")) {
+            return message.getContent().toString();
+        } else if (message.isMimeType("multipart/*")) {
+            return getTextFromMimeMultipart((MimeMultipart) message.getContent());
         }
 
-        if (p.isMimeType("text/*")) {
-            return (String) p.getContent();
-        }
+        return "";
+    }
 
-        if (p.isMimeType("multipart/*")) {
-            // prefer html text over plain text
-            Multipart mp = (Multipart) p.getContent();
-            String text = null;
-            for (int i = 0; i < mp.getCount(); i++) {
-                Part bp = mp.getBodyPart(i);
-                if (bp.isMimeType("text/plain")) {
-                    if (text == null) text = getText(bp);
-                } else if (bp.isMimeType("text/html")) {
-                    String s = getText(bp);
-                    if (s != null) return Jsoup.parse(s).text();
-                } else {
-                    return getText(bp);
-                }
+    @SneakyThrows
+    private String getTextFromMimeMultipart(MimeMultipart mimeMultipart) {
+        val result = new StringBuilder();
+        for (int i = 0, ii = mimeMultipart.getCount(); i < ii; i++) {
+            val bodyPart = mimeMultipart.getBodyPart(i);
+            if (bodyPart.isMimeType("text/plain")) {
+                result.append("\n").append(bodyPart.getContent());
+                break; // without break same text appears twice in my tests
+            } else if (bodyPart.isMimeType("text/html")) {
+                String html = (String) bodyPart.getContent();
+                result.append("\n").append(Jsoup.parse(html).text());
+            } else if (bodyPart.getContent() instanceof MimeMultipart) {
+                result.append(getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent()));
             }
-            return text;
         }
 
-        return null;
+        return result.toString();
     }
 }

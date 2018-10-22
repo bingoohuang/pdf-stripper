@@ -5,6 +5,7 @@ import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.junit.Test;
 
 import java.util.List;
@@ -33,6 +34,11 @@ public class Pop3MailFetcherTest {
         assertThat(messages).hasSize(1);
         val message = messages.get(0);
 
+        assertThat(message.getFrom()).isNotEmpty();
+        assertThat(message.getSubject()).isNotEmpty();
+        assertThat(message.getMessageNumber()).isEqualTo(3);
+        assertThat(message.getSendDateTime()).isLessThan(DateTime.now());
+
         val contentMatcher = new TextMatcher(message.getContent());
         val userId = contentMatcher.findLabelText("User ID",
                 new TextMatcherOption(":", null, "Group Name"));
@@ -42,8 +48,9 @@ public class Pop3MailFetcherTest {
         assertThat(message.getAttachments()).hasSize(1);
 
         val pdf = message.getAttachments().get(0);
+        assertThat(pdf.getFileName()).contains("EcHPIHDSMVPIFR-Global");
         @Cleanup val pdDoc = PdfStripper.loadPdDocument(pdf.getInputStream());
-        val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.includePages(0));
+        val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.onPages(0));
         val textMatcher = new TextMatcher(text);
         val items = textMatcher.searchPattern("(\\S+)\\s+(\\d+)", ValuesItem.class,
                 TextMatcherOption.builder().startAnchor("简报").endAnchor("©").build());
@@ -79,7 +86,7 @@ public class Pop3MailFetcherTest {
                 "ValuesItem(name=科学, score=93)]");
 
         val pdfListener = new HogonPdfListener();
-        PdfStripper.stripCustom(pdDoc, PdfPagesSelect.includePages(1), pdfListener);
+        PdfStripper.stripCustom(pdDoc, PdfPagesSelect.onPages(1), pdfListener);
 
         assertThat(pdfListener.itemScores()).isEqualTo("效度:4\n" +
                 "调适.同理心:3\n" +

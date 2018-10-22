@@ -21,7 +21,11 @@ public class 智联Test {
 
         val sb = new StringBuilder();
         textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)",
-                groups -> sb.append(groups[0]).append(":").append(groups[1]).append("\n"),
+                new PatternApplyAware() {
+                    @Override public void apply(String[] groups) {
+                        sb.append(groups[0]).append(":").append(groups[1]).append("\n");
+                    }
+                },
                 new TextMatcherOption("3  详细结果", "©智联测评版权所有"));
 
         assertThat(sb.toString()).isEqualTo(
@@ -75,6 +79,7 @@ public class 智联Test {
     public void 情绪管理能力测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
         val text = PdfStripper.stripText(is, PdfPagesSelect.allPages());
+
         val textMatcher = new TextMatcher(text);
         assertThat(textMatcher.findLineLabelText("Respondent", new TextMatcherOption("："))).isEqualTo("张晓平");
         assertThat(textMatcher.findLineLabelText("Date：")).isEqualTo("2016-05-25");

@@ -104,12 +104,11 @@ public class PdfStripper {
      * @return 图片列表
      */
     @SneakyThrows
-    public static List<PdfImage> stripImages(PDDocument pdDoc, int pageIndex, int[] imageIndices) {
+    public static List<PdfImage> stripImages(PDDocument pdDoc, int pageIndex, int... imageIndices) {
         val page = pdDoc.getPage(pageIndex);
-
         val images = Lists.<PdfImage>newArrayList();
-
         val resources = page.getResources();
+
         int imageIndex = 0;
         for (val xobj : resources.getXObjectNames()) {
             if (resources.isImageXObject(xobj)) {

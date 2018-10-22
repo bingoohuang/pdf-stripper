@@ -8,6 +8,150 @@
 
 strip structured info from pdf
 
+## PDF 信息提取
+### 文本提取
+
+```java
+@Cleanup val is = new FileInputStream("演示.pdf");
+val text = PdfStripper.stripText(is, PdfPagesSelect.allPages());
+
+```
+
+### 文本关键值获取
+
+#### 从整个文本中搜索提取指定标签锚定的值（正行模式），例如：
+<pre>
+ 测试者： 张晓平                                                                              
+ 企业用户： 智联测评                                                                               
+ 测评项目： 样本报告                                                                               
+ 测试日期： 2016-06-12                                                                         
+ 测试有效性： 比较可信    
+</pre>
+
+```java
+val textMatcher = new TextMatcher(text);
+assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
+assertThat(textMatcher.findLineLabelText("企业用户：")).isEqualTo("智联测评");
+assertThat(textMatcher.findLineLabelText("测试日期：")).isEqualTo("2016-06-12");
+
+```
+
+#### 从整个文本搜索指定标签锚定的值，例如：
+<pre>
+ 情绪管理能力                                                                                                                              
+                                                                                                                                                    
+维度含义：                                                                                                        
+   个体对自身和他人情绪进行有效认知或感知、激励和调控，充分挖掘和培养驾驭情绪                                                                     
+的能力，包括自我情绪管理能力和他人情绪管理能力。                                                                                     
+                                                                                                             
+                                                                                                             
+                                                                                                             
+                                                                                                             
+                                                                                                             
+               很低                 较低            中等             较高             很高                             
+                                                                                                                                                    
+                                                                                            5.5  
+
+     总体而言，张晓平的情绪管理能力在人群中处于中等水平，说明其情绪管理能力尚可。                
+</pre>
+
+取到5.5，我们以`很高`作为标签锚点，去搜索5.5这个值。
+
+```java
+val textMatcher = new TextMatcher(text);
+val t1 = textMatcher.findLabelText("很高", new TextMatcherOption("2.1  情绪管理能力", "的情绪管理能力在人群中"));
+assertThat(t1).isEqualTo("5.5");
+```
+
+#### 从整个文本中搜索指定正则模式，提取所需信息，例如：
+<pre>
+   安全稳定型方面的职业价值观特点                                                                                                                                                                                                                                                
+                                                                                                                                      
+                                                   　薪酬福利：薪酬福利与我的能力和付出相匹配，令我满意。                                                        
+   薪酬福利       　                     8.3            　价值特征：关注工作支付给自己的薪资待遇，喜欢有较高经济回报的工作环境和岗位。                                            
+                                                                                                                                                                                                                                                                           
+   工作稳定       　               6.1                  　工作稳定：我能和工作单位达成稳定的雇佣关系。                                                            
+                                                   　价值特征：较为关注工作的稳定性和持久性，不会太乐意接受变数或挑战性较大的工作。                                           
+                                                                                                                                      
+   公平公正       　         3.5                        　公平公正：我能够在单位中获得公平公正的对待。                                                            
+                                                   　价值特征：不太关注自己所在的组织是否具备完善的制度和公正的工作氛围，且在体制不太完善的组织中                                    
+                                                   能较快适应。                                                                             
+   工作强度       　         3.3                                                                                                                                                                                                                                                                                                                                                                                
+                                                  　工作强度：我的工作内容充实、饱满。                                                                 
+                                                   　价值特征：喜欢相对较为轻松的工作，不希望因工作强度给自己太多的压力。                                                
+                                                                                                                                                     
+                                                                                                                                      
+                                                                                                                                      
+ ©智联测评版权所有                                                                                         - 第  4 页/共   6  页  - 
+</pre>
+
+```java
+@Data
+public class ValuesItem implements PatternApplyAware {
+    private String name;
+    private String score;
+
+    @Override public void apply(String[] groups) {
+        this.name = groups[0];
+        this.score = groups[1];
+    }
+}
+
+List<ValuesItem> items = textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)", ValuesItem.class,
+                new TextMatcherOption("3  详细结果", "©智联测评版权所有"));
+assertThat(items.toString()).isEqualTo("[" +
+        "ValuesItem(name=薪酬福利, score=8.3), " +
+        "ValuesItem(name=工作稳定, score=6.1), " +
+        "ValuesItem(name=公平公正, score=3.5), " +
+        "ValuesItem(name=工作强度, score=3.3)]");
+
+
+// 或者
+val sb = new StringBuilder();
+textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)",
+        new PatternApplyAware() {
+            @Override public void apply(String[] groups) {
+                sb.append(groups[0]).append(":").append(groups[1]).append("\n");
+            }
+        },
+        new TextMatcherOption("3  详细结果", "©智联测评版权所有"));
+
+assertThat(sb.toString()).isEqualTo(
+        "薪酬福利:8.3\n" +
+                "工作稳定:6.1\n" +
+                "公平公正:3.5\n" +
+                "工作强度:3.3\n");
+```
+
+### 图片提取
+
+```java
+@Cleanup val is = new FileInputStream("演示.pdf");
+List<PdfImage> pdfImages = PdfStripper.stripImages(is, 3, 3);
+assertThat(pdfImages).hasSize(1);
+val pdfImage = pdfImages.get(0);
+assertThat(pdfImage.getName()).isEqualTo("Im37");
+assertThat(pdfImage.getSuffix()).isEqualTo("jpg");
+assertThat(pdfImage.getImage()).isNotNull();
+assertThat(pdfImage.getHeight()).isGreaterThan(0);
+assertThat(pdfImage.getWidth()).isGreaterThan(0);
+
+Util.saveImage(pdfImage);
+```
+
+### 自定义提取
+
+参考HogonPdfListener实现。
+
+```java
+HogonPdfListener pdfListener = new HogonPdfListener();
+PdfStripper.stripCustom(is, PdfPagesSelect.onPages(1), pdfListener);
+assertThat(pdfListener.itemScores()).isEqualTo("效度:4\n" +
+        "调适.同理心:4\n" +
+        "调适.不焦虑:4\n" +
+        "调适.不内疚:4\n");
+```
+
 ## PDF 分析的过程
 1. 观察PDF的结构
 2. 使用[PDF2HTML工具](http://cssbox.sourceforge.net/pdf2dom/download.php)，生成HTML页面，分析DOM结构

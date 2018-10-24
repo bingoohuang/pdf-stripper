@@ -59,7 +59,7 @@ public class Pop3MailFetcherTest {
 
         val pdf = message.getAttachments().get(0);
         assertThat(pdf.getFileName()).contains("EcHPIHDSMVPIFR-Global");
-        @Cleanup val pdDoc = PdfStripper.loadPdDocument(pdf.getInputStream());
+        @Cleanup val pdDoc = Util.loadPdf(pdf.getInputStream());
         val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.onPages(0));
         val textMatcher = new TextMatcher(text);
         val items = textMatcher.searchPattern("(\\S+)\\s+(\\d+)", ValuesItem.class,

@@ -13,7 +13,7 @@ public class ImageTest {
     @Test @SneakyThrows
     public void test() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
-        List<PdfImage> pdfImages = PdfStripper.stripImages(is, 3, 3);
+        List<PdfImage> pdfImages = PdfStripper.stripImages(Util.loadPdf(is), 3, 3);
         assertThat(pdfImages).hasSize(1);
         val pdfImage = pdfImages.get(0);
         assertThat(pdfImage.getName()).isEqualTo("Im37");

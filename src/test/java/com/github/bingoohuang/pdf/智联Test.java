@@ -14,7 +14,7 @@ public class 智联Test {
     @Test @SneakyThrows
     public void 职业价值观测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
-        val text = PdfStripper.stripText(is, PdfPagesSelect.offPages(1, 2, 3));
+        val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.offPages(1, 2, 3));
         val textMatcher = new TextMatcher(text);
         assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
         assertThat(textMatcher.findLineLabelText("测试日期：")).isEqualTo("2016-06-12");
@@ -78,7 +78,7 @@ public class 智联Test {
     @Test @SneakyThrows
     public void 情绪管理能力测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
-        val text = PdfStripper.stripText(is, PdfPagesSelect.allPages());
+        val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.allPages());
 
         val textMatcher = new TextMatcher(text);
         assertThat(textMatcher.findLineLabelText("Respondent", new TextMatcherOption("："))).isEqualTo("张晓平");
@@ -116,7 +116,7 @@ public class 智联Test {
     @Test @SneakyThrows
     public void 职业行为风险测验兵进黄() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/兵进黄_职业行为风险测验.pdf");
-        val text = PdfStripper.stripText(is, PdfPagesSelect.allPages());
+        val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.allPages());
         val textMatcher = new TextMatcher(text);
 
         assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("兵进黄");
@@ -163,7 +163,7 @@ public class 智联Test {
     @Test @SneakyThrows
     public void 职业行为风险测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
-        val text = PdfStripper.stripText(is, PdfPagesSelect.allPages());
+        val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.allPages());
         val textMatcher = new TextMatcher(text);
 
         assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");

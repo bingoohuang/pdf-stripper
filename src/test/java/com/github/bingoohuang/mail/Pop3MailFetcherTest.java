@@ -6,6 +6,7 @@ import lombok.SneakyThrows;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -13,6 +14,15 @@ import java.util.List;
 import static com.google.common.truth.Truth.assertThat;
 
 public class Pop3MailFetcherTest {
+    @Test @SneakyThrows @Ignore
+    public void hogon() {
+        val mailFetcher = new Pop3MailFetcher(new MailMatcher() {
+        });
+
+        List<Pop3MailMessage> messages = mailFetcher.fetchMails();
+        System.out.println(messages);
+    }
+
     @Test @SneakyThrows
     public void test() {
         val mailFetcher = new Pop3MailFetcher("pop.ym.163.com", "110",

@@ -20,9 +20,17 @@ import java.util.Properties;
 public class Pop3MailFetcher {
     private final String host;
     private final String port;
-    private final String userName;
+    private final String username;
     private final String password;
     private final MailMatcher matcher;
+
+    public Pop3MailFetcher(MailMatcher matcher) {
+        this.host = MailConfig.get("host");
+        this.port = MailConfig.get("port");
+        this.username = MailConfig.get("username");
+        this.password = MailConfig.get("password");
+        this.matcher = matcher;
+    }
 
     @SneakyThrows
     public List<Pop3MailMessage> fetchMails() {
@@ -32,7 +40,7 @@ public class Pop3MailFetcher {
         val session = Session.getDefaultInstance(properties);
 
         @Cleanup val store = session.getStore("pop3");
-        store.connect(userName, password);
+        store.connect(username, password);
         @Cleanup val inbox = store.getFolder("INBOX");
         inbox.open(Folder.READ_ONLY);
 

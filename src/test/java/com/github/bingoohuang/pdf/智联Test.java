@@ -114,6 +114,53 @@ public class 智联Test {
     }
 
     @Test @SneakyThrows
+    public void 职业行为风险测验兵进黄() {
+        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/兵进黄_职业行为风险测验.pdf");
+        val text = PdfStripper.stripText(is, PdfPagesSelect.allPages());
+        val textMatcher = new TextMatcher(text);
+
+        assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("兵进黄");
+        assertThat(textMatcher.findLineLabelText("测试日期：")).isEqualTo("2018-10-23");
+
+        List<RiskItem> riskItems = textMatcher.searchPattern("(\\S+)：([高中低])\\s*(-?\\d+)", RiskItem.class);
+        assertThat(riskItems.toString()).isEqualTo("[" +
+                "智联Test.RiskItem(name=焦虑不安, level=中, score=-58), " +
+                "智联Test.RiskItem(name=抑郁消沉, level=高, score=-58), " +
+                "智联Test.RiskItem(name=偏执多疑, level=高, score=-71), " +
+                "智联Test.RiskItem(name=冷漠孤僻, level=中, score=-43), " +
+                "智联Test.RiskItem(name=特立独行, level=高, score=-100), " +
+                "智联Test.RiskItem(name=冲动暴躁, level=高, score=-86), " +
+                "智联Test.RiskItem(name=喜怒无常, level=中, score=-44), " +
+                "智联Test.RiskItem(name=社交回避, level=高, score=-71), " +
+                "智联Test.RiskItem(name=僵化固执, level=高, score=-50), " +
+                "智联Test.RiskItem(name=依赖顺从, level=低, score=-38), " +
+                "智联Test.RiskItem(name=夸张做作, level=高, score=-100), " +
+                "智联Test.RiskItem(name=狂妄自恋, level=低, score=-33), " +
+                "智联Test.RiskItem(name=压力耐受, level=低, score=34), " +
+                "智联Test.RiskItem(name=积极乐观, level=高, score=72), " +
+                "智联Test.RiskItem(name=合理自信, level=低, score=48), " +
+                "智联Test.RiskItem(name=坚韧不拔, level=中, score=44)]");
+
+        val t1 = textMatcher.findLabelText("正常与否：", new TextMatcherOption("作答时间", "称许性"));
+        assertThat(t1).isEqualTo("正常");
+
+        val t2 = textMatcher.findLabelText("共计", new TextMatcherOption("作答时间", "称许性"));
+        assertThat(t2).isEqualTo("4分钟");
+        val t3 = textMatcher.findPatternText("\\d+秒", new TextMatcherOption("作答时间", "称许性"));
+        assertThat(t3).isEqualTo("45秒");
+
+        val t4 = textMatcher.findLabelText("正常与否", new TextMatcherOption(":：", "称许性", "选项分布"));
+        assertThat(t4).isEqualTo("正常");
+
+        val t5 = textMatcher.findLabelText("正常与否", new TextMatcherOption(":：", "选项分布", "作答完整性"));
+        assertThat(t5).isEqualTo("正常");
+
+        val t6 = textMatcher.findLabelText("完成率", new TextMatcherOption(":：", "作答题数", "%"));
+        assertThat(t6).isEqualTo("100.00");
+
+    }
+
+    @Test @SneakyThrows
     public void 职业行为风险测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
         val text = PdfStripper.stripText(is, PdfPagesSelect.allPages());

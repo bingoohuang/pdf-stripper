@@ -1,6 +1,5 @@
 package com.github.bingoohuang.mail;
 
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
@@ -23,33 +22,28 @@ import static javax.mail.internet.InternetAddress.parse;
 /**
  * SMTP邮件发送器。
  */
-@RequiredArgsConstructor
 public class MailSender {
-    private final String host;
-    private final String port;
     private final String fromEmail;
     private final String username;
     private final String password;
+    private final Properties properties = new Properties();
 
     public MailSender() {
-        this.host = MailConfig.get("smtp.host");
-        this.port = StringUtils.defaultString(MailConfig.get("smtp.port"), "25");
-        this.fromEmail = MailConfig.get("fromEmail");
-        this.username = MailConfig.get("username");
-        this.password = MailConfig.get("password");
+        val env = MailConfig.getEnv();
+        env.stringPropertyNames().forEach(k -> {
+            if (k.startsWith("mail.smtp.")) properties.put(k, env.getProperty(k));
+        });
+
+        if (!properties.containsKey("mail.smtp.port"))
+            properties.put("mail.smtp.port", "25");
+
+        username = MailConfig.get("username");
+        password = MailConfig.get("password");
+        fromEmail = env.getProperty("fromEmail", username);
     }
 
     @SneakyThrows
     public void send(MailMessage mailMessage) {
-        val properties = new Properties() {{
-            put("mail.smtp.host", host);
-            put("mail.smtp.port", port);
-            put("mail.smtp.connectiontimeout", "10000");
-            put("mail.smtp.timeout", "10000");
-            put("mail.smtp.auth", "true");
-            put("mail.smtp.starttls.enable", "true");
-        }};
-
         val session = Session.getInstance(properties, new Authenticator() {
             @Override
             public PasswordAuthentication getPasswordAuthentication() {
@@ -82,7 +76,6 @@ public class MailSender {
 
         for (val x : mailMessage.getAttachments()) {
             val attachPart = new MimeBodyPart();
-
             attachPart.setContent(x.getBytes(), x.getContentType());
             attachPart.setFileName(x.getOriginalFilename());
             attachPart.setDisposition(ATTACHMENT);

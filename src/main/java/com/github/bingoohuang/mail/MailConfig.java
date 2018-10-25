@@ -8,4 +8,8 @@ public interface MailConfig {
     static String get(String name) {
         return env.getProperty(name);
     }
+
+    static Properties getEnv() {
+        return env;
+    }
 }

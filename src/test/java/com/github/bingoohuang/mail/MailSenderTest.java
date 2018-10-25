@@ -17,8 +17,7 @@ public class MailSenderTest {
     @Test @Ignore
     public void sendHtml() {
         new MailSender().send(MailMessage.builder()
-                .to("huangjb@raiyee.com")
-                .cc("bingoohuang@dingtalk.com")
+                .to("bingoohuang@dingtalk.com")
                 .subject("黄进兵测试HTML")
                 .content("<!doctype html>" +
                         "<html>" +

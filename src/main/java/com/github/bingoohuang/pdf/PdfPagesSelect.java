@@ -50,8 +50,8 @@ public class PdfPagesSelect {
     /**
      * 获取指定页面的PDDocument对象。
      *
-     * @param doc
-     * @return
+     * @param doc PDF文档对象
+     * @return 过滤好的PDF文档对象
      */
     public PDDocument getPDDocument(PDDocument doc) {
         if (pageIndices.length == 0) return doc;

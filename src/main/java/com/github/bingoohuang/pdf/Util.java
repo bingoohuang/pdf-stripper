@@ -14,6 +14,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class Util {
+
     /**
      * 从输入流装载PDF文档对象。
      *
@@ -34,6 +35,11 @@ public class Util {
     @SneakyThrows
     public static PDDocument loadPdf(byte[] bytes) {
         return PDDocument.load(bytes);
+    }
+
+    public static File loadClasspathFile(String classpath) {
+        val filePath = Util.class.getResource("/").getPath() + classpath;
+        return new File(filePath);
     }
 
     /**

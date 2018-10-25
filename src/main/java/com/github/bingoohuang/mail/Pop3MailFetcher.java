@@ -16,6 +16,11 @@ import javax.mail.internet.MimeUtility;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * POP3 邮箱收取。
+ * <p>
+ * https://user-images.githubusercontent.com/1940588/47476178-c098f380-d851-11e8-8338-11c32d6fa6f2.png
+ */
 @RequiredArgsConstructor
 public class Pop3MailFetcher {
     private final String host;
@@ -26,7 +31,7 @@ public class Pop3MailFetcher {
 
     public Pop3MailFetcher(MailMatcher matcher) {
         this.host = MailConfig.get("host");
-        this.port = MailConfig.get("port");
+        this.port = StringUtils.defaultIfEmpty(MailConfig.get("port"), "110");
         this.username = MailConfig.get("username");
         this.password = MailConfig.get("password");
         this.matcher = matcher;
@@ -91,7 +96,8 @@ public class Pop3MailFetcher {
             for (int j = 0; j < multi.getCount(); j++) {
                 val bodyPart = multi.getBodyPart(j);
                 val partFileName = bodyPart.getFileName();
-                if (!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) || StringUtils.isBlank(partFileName)) {
+                if (!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition())
+                        || StringUtils.isBlank(partFileName)) {
                     continue; // dealing with attachments only
                 }
 

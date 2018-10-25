@@ -10,13 +10,14 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Properties;
 
 import static com.google.common.truth.Truth.assertThat;
 
-public class Pop3MailFetcherTest {
+public class MailFetcherTest {
     @Test @SneakyThrows @Ignore
     public void hogon() {
-        val mailFetcher = new Pop3MailFetcher(new MailMatcher() {
+        val mailFetcher = new MailFetcher(new MailMatcher() {
         });
 
         List<Pop3MailMessage> messages = mailFetcher.fetchMails();
@@ -25,8 +26,14 @@ public class Pop3MailFetcherTest {
 
     @Test @SneakyThrows
     public void test() {
-        val mailFetcher = new Pop3MailFetcher("pop.ym.163.com", "110",
-                "hn.test@raiyee.com", "E5540A062508", new MailMatcher() {
+        val prop = new Properties();
+        prop.put("mail.pop3.host", "pop.ym.163.com");
+        prop.put("mail.pop3.port", "110");
+        prop.put("mail.pop3.username", "hn.test@raiyee.com");
+        prop.put("mail.pop3.password", "E5540A062508");
+        // 更多属性设置请参见 https://javaee.github.io/javamail/docs/api/com/sun/mail/pop3/package-summary.html
+
+        val mailFetcher = new MailFetcher(prop, new MailMatcher() {
             @Override public int messageStart() {
                 return 3;
             }

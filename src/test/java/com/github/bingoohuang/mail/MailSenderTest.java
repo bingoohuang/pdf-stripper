@@ -1,10 +1,33 @@
 package com.github.bingoohuang.mail;
 
 import com.github.bingoohuang.pdf.Util;
+import lombok.val;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.Properties;
+
 public class MailSenderTest {
+    @Test @Ignore
+    public void sendText0() {
+        val prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.ym.163.com");
+        prop.put("mail.smtp.port", "25");
+        prop.put("mail.smtp.username", "hn.test@raiyee.com");
+        prop.put("mail.smtp.password", "E5540A062508");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.connectiontimeout", "10000");
+        prop.put("mail.smtp.timeout", "10000");
+        // 更多属性设置请参见 https://javaee.github.io/javamail/docs/api/com/sun/mail/smtp/package-summary.html
+
+
+        new MailSender(prop).send(MailMessage.builder()
+                .to("bingoohuang@dingtalk.com")
+                .subject("黄进兵测试")
+                .content("你好，黄进兵。我就是小测试一下")
+                .build());
+    }
+
     @Test @Ignore
     public void sendText() {
         new MailSender().send(MailMessage.builder()
@@ -18,7 +41,7 @@ public class MailSenderTest {
     public void sendHtml() {
         new MailSender().send(MailMessage.builder()
                 .to("bingoohuang@dingtalk.com")
-                .subject("黄进兵测试HTML")
+                .subject("黄进兵测试HTML2018-10-25 19:45:16")
                 .content("<!doctype html>" +
                         "<html>" +
                         "<head>" +

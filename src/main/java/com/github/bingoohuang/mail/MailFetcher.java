@@ -2,7 +2,6 @@ package com.github.bingoohuang.mail;
 
 import com.google.common.collect.Lists;
 import lombok.Cleanup;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
@@ -21,27 +20,38 @@ import java.util.Properties;
  * <p>
  * https://user-images.githubusercontent.com/1940588/47476178-c098f380-d851-11e8-8338-11c32d6fa6f2.png
  */
-@RequiredArgsConstructor
-public class Pop3MailFetcher {
-    private final String host;
-    private final String port;
+public class MailFetcher {
+    private final Properties properties;
     private final String username;
     private final String password;
     private final MailMatcher matcher;
 
-    public Pop3MailFetcher(MailMatcher matcher) {
-        this.host = MailConfig.get("host");
-        this.port = StringUtils.defaultIfEmpty(MailConfig.get("port"), "110");
-        this.username = MailConfig.get("username");
-        this.password = MailConfig.get("password");
+    public MailFetcher(Properties properties, MailMatcher matcher) {
+        this.properties = properties;
+        this.username = properties.getProperty("mail.pop3.username");
+        this.password = properties.getProperty("mail.pop3.password");
         this.matcher = matcher;
+
+        val portKey = "mail.pop3.port";
+        if (!this.properties.containsKey(portKey)) this.properties.put(portKey, "110");
+    }
+
+    public MailFetcher(MailMatcher matcher) {
+        this(createProp(), matcher);
+    }
+
+    private static Properties createProp() {
+        val prop = new Properties();
+        val env = MailConfig.getEnv();
+        env.stringPropertyNames().forEach(k -> {
+            if (k.startsWith("mail.pop3.")) prop.put(k, env.getProperty(k));
+        });
+
+        return prop;
     }
 
     @SneakyThrows
     public List<Pop3MailMessage> fetchMails() {
-        val properties = new Properties();
-        properties.put("mail.pop3.host", host);
-        properties.put("mail.pop3.port", port);
         val session = Session.getDefaultInstance(properties);
 
         @Cleanup val store = session.getStore("pop3");

@@ -23,23 +23,33 @@ import static javax.mail.internet.InternetAddress.parse;
  * SMTP邮件发送器。
  */
 public class MailSender {
-    private final String fromEmail;
+    private final Properties properties;
     private final String username;
     private final String password;
-    private final Properties properties = new Properties();
+    private final String fromEmail;
+
+    public MailSender(Properties properties) {
+        this.properties = properties;
+        this.username = properties.getProperty("mail.smtp.username");
+        this.password = properties.getProperty("mail.smtp.password");
+        this.fromEmail = properties.getProperty("mail.smtp.fromEmail", this.username);
+
+        val portKey = "mail.smtp.port";
+        if (!this.properties.containsKey(portKey)) this.properties.put(portKey, "25");
+    }
 
     public MailSender() {
+        this(createProp());
+    }
+
+    private static Properties createProp() {
+        val prop = new Properties();
         val env = MailConfig.getEnv();
         env.stringPropertyNames().forEach(k -> {
-            if (k.startsWith("mail.smtp.")) properties.put(k, env.getProperty(k));
+            if (k.startsWith("mail.smtp.")) prop.put(k, env.getProperty(k));
         });
 
-        if (!properties.containsKey("mail.smtp.port"))
-            properties.put("mail.smtp.port", "25");
-
-        username = MailConfig.get("username");
-        password = MailConfig.get("password");
-        fromEmail = env.getProperty("fromEmail", username);
+        return prop;
     }
 
     @SneakyThrows

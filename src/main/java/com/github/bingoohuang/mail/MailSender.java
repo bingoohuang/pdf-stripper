@@ -44,6 +44,8 @@ public class MailSender {
         val properties = new Properties() {{
             put("mail.smtp.host", host);
             put("mail.smtp.port", port);
+            put("mail.smtp.connectiontimeout", "10000");
+            put("mail.smtp.timeout", "10000");
             put("mail.smtp.auth", "true");
             put("mail.smtp.starttls.enable", "true");
         }};

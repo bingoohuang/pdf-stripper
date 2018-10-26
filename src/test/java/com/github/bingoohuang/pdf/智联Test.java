@@ -16,6 +16,34 @@ import static com.google.common.truth.Truth.assertThat;
 
 public class 智联Test {
     @Test @SneakyThrows
+    public void 职业价值观测验hjson() {
+        val hjson = Util.loadClasspathResAsString("智联.职业价值观测验.hjson");
+        val json = JsonValue.readHjson(hjson).toString();
+        val config = JSON.parseObject(json, TextTripperConfig.class);
+
+        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
+        List<TextItem> items = PdfStripper.strip(Util.loadPdf(is), config);
+        assertThat(items.toString()).isEqualTo("[" +
+                "TextItem(name=有效性, value=比较可信, desc=null), " +
+                "TextItem(name=测试开始时间, value=2016/6/12 16:39:06, desc=null), " +
+                "TextItem(name=测试完成时间, value=2016/6/12 16:56:33, desc=null), " +
+                "TextItem(name=薪酬福利, value=8.3, desc=null), " +
+                "TextItem(name=工作稳定, value=6.1, desc=null), " +
+                "TextItem(name=公平公正, value=3.5, desc=null), " +
+                "TextItem(name=工作强度, value=3.3, desc=null), " +
+                "TextItem(name=同事关系, value=5.7, desc=null), " +
+                "TextItem(name=服务他人, value=4.8, desc=null), " +
+                "TextItem(name=上级支持, value=4.7, desc=null), " +
+                "TextItem(name=他人认可, value=4.9, desc=null), " +
+                "TextItem(name=管理他人, value=4.8, desc=null), " +
+                "TextItem(name=独立自主, value=4.4, desc=null), " +
+                "TextItem(name=获得成就, value=8.6, desc=null), " +
+                "TextItem(name=晋升机会, value=6.5, desc=null), " +
+                "TextItem(name=培训机会, value=3.9, desc=null), " +
+                "TextItem(name=施展才华, value=3.2, desc=null)]");
+    }
+
+    @Test @SneakyThrows
     public void 职业价值观测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
         val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.offPages(1, 2, 3));
@@ -25,11 +53,7 @@ public class 智联Test {
 
         val sb = new StringBuilder();
         textMatcher.searchPattern("(\\S+)[　\\s]+(\\d+(?>\\.\\d+)?)",
-                new PatternApplyAware() {
-                    @Override public void apply(String[] groups) {
-                        sb.append(groups[0]).append(":").append(groups[1]).append("\n");
-                    }
-                },
+                groups -> sb.append(groups[0]).append(":").append(groups[1]).append("\n"),
                 new TextMatcherOption("3  详细结果", "©智联测评版权所有"));
 
         assertThat(sb.toString()).isEqualTo(
@@ -79,6 +103,20 @@ public class 智联Test {
         assertThat(t5).isEqualTo("100.00");
     }
 
+
+    @Test @SneakyThrows
+    public void 情绪管理能力测验hjson() {
+        val hjson = Util.loadClasspathResAsString("智联.情绪管理能力测验.hjson");
+        val json = JsonValue.readHjson(hjson).toString();
+        val config = JSON.parseObject(json, TextTripperConfig.class);
+
+        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
+        List<TextItem> items = PdfStripper.strip(Util.loadPdf(is), config);
+        assertThat(items.toString()).isEqualTo("[TextItem(name=有效性, value=比较可信, desc=null), " +
+                "TextItem(name=测试开始时间, value=2016/5/25 14:54:20, desc=null), " +
+                "TextItem(name=测试完成时间, value=2016/5/25 15:01:45, desc=null)]");
+    }
+
     @Test @SneakyThrows
     public void 情绪管理能力测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
@@ -121,7 +159,6 @@ public class 智联Test {
     public void 职业行为风险测验兵进黄() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/兵进黄_职业行为风险测验.pdf");
         val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.allPages());
-        System.out.println(text);
         val textMatcher = new TextMatcher(text);
 
         assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("兵进黄");
@@ -165,14 +202,38 @@ public class 智联Test {
     }
 
     @Test @SneakyThrows
-    public void xx() {
+    public void 职业行为风险测验hjson() {
         val hjson = Util.loadClasspathResAsString("智联.职业行为风险测验.hjson");
         val json = JsonValue.readHjson(hjson).toString();
         val config = JSON.parseObject(json, TextTripperConfig.class);
 
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
         List<TextItem> items = PdfStripper.strip(Util.loadPdf(is), config);
-        System.out.println(items);
+        assertThat(items.toString()).isEqualTo("[" +
+                "TextItem(name=结果可参考性, value=高, desc=null), " +
+                "TextItem(name=职业行为风险等级, value=低风险低防御, desc=null), " +
+                "TextItem(name=焦虑不安, value=0, desc=低), " +
+                "TextItem(name=抑郁消沉, value=0, desc=低), " +
+                "TextItem(name=偏执多疑, value=0, desc=低), " +
+                "TextItem(name=冷漠孤僻, value=-14, desc=低), " +
+                "TextItem(name=特立独行, value=0, desc=低), " +
+                "TextItem(name=冲动暴躁, value=0, desc=低), " +
+                "TextItem(name=喜怒无常, value=0, desc=低), " +
+                "TextItem(name=社交回避, value=0, desc=低), " +
+                "TextItem(name=僵化固执, value=0, desc=低), " +
+                "TextItem(name=依赖顺从, value=-12, desc=低), " +
+                "TextItem(name=夸张做作, value=-12, desc=低), " +
+                "TextItem(name=狂妄自恋, value=0, desc=低), " +
+                "TextItem(name=压力耐受, value=54, desc=低), " +
+                "TextItem(name=积极乐观, value=58, desc=低), " +
+                "TextItem(name=合理自信, value=68, desc=中), " +
+                "TextItem(name=坚韧不拔, value=42, desc=低), " +
+                "TextItem(name=称许性, value=正常, desc=null), " +
+                "TextItem(name=选项分布, value=正常, desc=null), " +
+                "TextItem(name=完成率, value=100%, desc=null), " +
+                "TextItem(name=测试开始时间, value=2016-06-12 17:04, desc=null), " +
+                "TextItem(name=测试完成时间, value=2016-06-13 9:39, desc=null), " +
+                "TextItem(name=作答时间, value=16分钟45秒, desc=null)]");
     }
 
     @Test @SneakyThrows

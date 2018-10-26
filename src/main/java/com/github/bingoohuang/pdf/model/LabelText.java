@@ -9,4 +9,5 @@ public class LabelText {
     private String startAnchor;
     private String endAnchor;
     private boolean temp;
+    private String options;
 }

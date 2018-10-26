@@ -1,8 +1,12 @@
 package com.github.bingoohuang.pdf;
 
+import com.alibaba.fastjson.JSON;
+import com.github.bingoohuang.pdf.model.TextItem;
+import com.github.bingoohuang.pdf.model.TextTripperConfig;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
+import org.hjson.JsonValue;
 import org.junit.Test;
 
 import java.util.List;
@@ -10,6 +14,45 @@ import java.util.List;
 import static com.google.common.truth.Truth.assertThat;
 
 public class HogonTest {
+    @Test @SneakyThrows
+    public void page0ScoresHjson() {
+        val hjson = Util.loadClasspathResAsString("HOGON.hjson");
+        val json = JsonValue.readHjson(hjson).toString();
+        val config = JSON.parseObject(json, TextTripperConfig.class);
+
+        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/Hogan/Flash_SimpChinese.pdf");
+        List<TextItem> items = PdfStripper.strip(Util.loadPdf(is), config);
+        assertThat(items.toString()).isEqualTo("[" +
+                "TextItem(name=调适, value=98, desc=null), " +
+                "TextItem(name=抱负, value=73, desc=null), " +
+                "TextItem(name=社交, value=74, desc=null), " +
+                "TextItem(name=人际敏感度, value=69, desc=null), " +
+                "TextItem(name=审慎, value=72, desc=null), " +
+                "TextItem(name=好奇, value=90, desc=null), " +
+                "TextItem(name=学习方式, value=73, desc=null), " +
+                "TextItem(name=激动, value=99, desc=null), " +
+                "TextItem(name=多疑, value=99, desc=null), " +
+                "TextItem(name=谨慎, value=86, desc=null), " +
+                "TextItem(name=内敛, value=93, desc=null), " +
+                "TextItem(name=消极, value=97, desc=null), " +
+                "TextItem(name=自大, value=43, desc=null), " +
+                "TextItem(name=狡猾, value=49, desc=null), " +
+                "TextItem(name=戏剧化, value=34, desc=null), " +
+                "TextItem(name=幻想, value=96, desc=null), " +
+                "TextItem(name=苛求, value=38, desc=null), " +
+                "TextItem(name=恭顺, value=5, desc=null), " +
+                "TextItem(name=认可, value=22, desc=null), " +
+                "TextItem(name=权力, value=86, desc=null), " +
+                "TextItem(name=享乐, value=98, desc=null), " +
+                "TextItem(name=利他, value=96, desc=null), " +
+                "TextItem(name=归属, value=94, desc=null), " +
+                "TextItem(name=传统, value=36, desc=null), " +
+                "TextItem(name=保障, value=40, desc=null), " +
+                "TextItem(name=商业, value=79, desc=null), " +
+                "TextItem(name=美感, value=38, desc=null), " +
+                "TextItem(name=科学, value=86, desc=null)]");
+    }
+
     @Test @SneakyThrows
     public void page0Scores() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/Hogan/Flash_SimpChinese.pdf");
@@ -47,6 +90,89 @@ public class HogonTest {
                 "ValuesItem(name=商业, score=79), " +
                 "ValuesItem(name=美感, score=38), " +
                 "ValuesItem(name=科学, score=86)]");
+    }
+
+    @Test @SneakyThrows
+    public void page1Scores0() {
+        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/Hogan/HF322468-EcHPIHDSMVPIFR-Global.pdf");
+
+        HogonPdfListener pdfListener = new HogonPdfListener();
+        PdfStripper.stripCustom(Util.loadPdf(is), PdfPagesSelect.onPages(1), pdfListener);
+        assertThat(pdfListener.itemScores()).isEqualTo("效度:4\n" +
+                "调适.同理心:3\n" +
+                "调适.不焦虑:3\n" +
+                "调适.不内疚:1\n" +
+                "调适.冷静:3\n" +
+                "调适.性情平和:4\n" +
+                "调适.无抱怨:4\n" +
+                "调适.信赖他人:3\n" +
+                "调适.依附感:2\n" +
+                "抱负.好竞争:1\n" +
+                "抱负.自信:1\n" +
+                "抱负.成就感:2\n" +
+                "抱负.领导力:1\n" +
+                "抱负.认同:4\n" +
+                "抱负.无社交焦虑:2\n" +
+                "社交.喜欢派对:0\n" +
+                "社交.喜欢人群:0\n" +
+                "社交.寻求体验:3\n" +
+                "社交.表现欲:3\n" +
+                "社交.风趣:0\n" +
+                "人际敏感度.容易相处:2\n" +
+                "人际敏感度.敏感:2\n" +
+                "人际敏感度.关怀:2\n" +
+                "人际敏感度.喜欢他人:0\n" +
+                "人际敏感度.无恶意:4\n" +
+                "审慎.循规蹈矩:3\n" +
+                "审慎.精通掌握:3\n" +
+                "审慎.尽责:4\n" +
+                "审慎.不独立自主:4\n" +
+                "审慎.计划性:4\n" +
+                "审慎.控制冲动:3\n" +
+                "审慎.避免麻烦:2\n" +
+                "好奇.科学能力:4\n" +
+                "好奇.好奇心:2\n" +
+                "好奇.寻求刺激:4\n" +
+                "好奇.智力游戏:4\n" +
+                "好奇.想出主意:3\n" +
+                "好奇.文化:4\n" +
+                "学习方式.教育:4\n" +
+                "学习方式.数学能力:4\n" +
+                "学习方式.记忆力:3\n" +
+                "学习方式.阅读:4\n" +
+                "激动.情绪无常:2\n" +
+                "激动.容易失望:2\n" +
+                "激动.缺乏目标:3\n" +
+                "多疑.愤世嫉俗:2\n" +
+                "多疑.不信任/猜忌:3\n" +
+                "多疑.记仇:2\n" +
+                "谨慎.回避:4\n" +
+                "谨慎.胆怯:4\n" +
+                "谨慎.不果断坚决:4\n" +
+                "内敛.内向:4\n" +
+                "内敛.不善交际:4\n" +
+                "内敛.强硬:4\n" +
+                "消极.消极抵抗:4\n" +
+                "消极.不被赏识:2\n" +
+                "消极.容易激怒:2\n" +
+                "自大.特权:3\n" +
+                "自大.过度自信:3\n" +
+                "自大.自认天资聪颖:2\n" +
+                "狡猾.爱冒险:1\n" +
+                "狡猾.冲动:1\n" +
+                "狡猾.工于心计:3\n" +
+                "戏剧化.在公众场合自信:1\n" +
+                "戏剧化.容易分心:1\n" +
+                "戏剧化.自我炫耀:1\n" +
+                "幻想.想法怪异:2\n" +
+                "幻想.异常敏感:2\n" +
+                "幻想.创造性思维:2\n" +
+                "苛求.高标准:3\n" +
+                "苛求.完美主义:2\n" +
+                "苛求.有条理:2\n" +
+                "恭顺.优柔寡断:3\n" +
+                "恭顺.阿谀奉承:3\n" +
+                "恭顺.顺从依赖:2");
     }
 
     @Test @SneakyThrows
@@ -129,57 +255,7 @@ public class HogonTest {
                 "苛求.有条理:2\n" +
                 "恭顺.优柔寡断:1\n" +
                 "恭顺.阿谀奉承:2\n" +
-                "恭顺.顺从依赖:1\n" +
-                "认可.生活方式:1\n" +
-                "认可.信念:2\n" +
-                "认可.职业偏好:0\n" +
-                "认可.反感:1\n" +
-                "认可.偏好的共事者:4\n" +
-                "权力.生活方式:4\n" +
-                "权力.信念:4\n" +
-                "权力.职业偏好:3\n" +
-                "权力.反感:3\n" +
-                "权力.偏好的共事者:4\n" +
-                "享乐.生活方式:4\n" +
-                "享乐.信念:4\n" +
-                "享乐.职业偏好:3\n" +
-                "享乐.反感:4\n" +
-                "享乐.偏好的共事者:4\n" +
-                "利他.生活方式:4\n" +
-                "利他.信念:4\n" +
-                "利他.职业偏好:3\n" +
-                "利他.反感:4\n" +
-                "利他.偏好的共事者:4\n" +
-                "归属.生活方式:4\n" +
-                "归属.信念:4\n" +
-                "归属.职业偏好:4\n" +
-                "归属.反感:4\n" +
-                "归属.偏好的共事者:3\n" +
-                "传统.生活方式:3\n" +
-                "传统.信念:1\n" +
-                "传统.职业偏好:3\n" +
-                "传统.反感:2\n" +
-                "传统.偏好的共事者:2\n" +
-                "保障.生活方式:3\n" +
-                "保障.信念:2\n" +
-                "保障.职业偏好:4\n" +
-                "保障.反感:1\n" +
-                "保障.偏好的共事者:3\n" +
-                "商业.生活方式:2\n" +
-                "商业.信念:4\n" +
-                "商业.职业偏好:4\n" +
-                "商业.反感:2\n" +
-                "商业.偏好的共事者:4\n" +
-                "美感.生活方式:0\n" +
-                "美感.信念:3\n" +
-                "美感.职业偏好:4\n" +
-                "美感.反感:3\n" +
-                "美感.偏好的共事者:2\n" +
-                "科学.生活方式:3\n" +
-                "科学.信念:4\n" +
-                "科学.职业偏好:4\n" +
-                "科学.反感:4\n" +
-                "科学.偏好的共事者:3");
+                "恭顺.顺从依赖:1");
     }
 
 }

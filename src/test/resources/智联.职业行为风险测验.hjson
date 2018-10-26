@@ -1,10 +1,9 @@
+# 验证https://hjson.org/try.html
 {
   stripChars: ":：，"
   rules: [
     {
-      pages: [
-        1
-      ],
+      pages: [ 1 ],
       lineLabelTexts: [
        {
           label: 结果可参考性
@@ -13,9 +12,7 @@
       ]
     },
     {
-      pages: [
-        3
-      ],
+      pages: [ 3 ],
       labelTexts: [
         {
           label: 职业行为风险等级为
@@ -34,9 +31,7 @@
       ]
     },
     {
-      pages: [
-        6
-      ],
+      pages: [ 6 ],
       labelTexts: [
         {
           label: 共计
@@ -124,11 +119,11 @@
   evals: [
     {
       expr: startDate+' '+startTime
-      name: 开始时间
+      name: 测试开始时间
     },
     {
       expr: endDate+' '+endTime
-      name: 结束时间
+      name: 测试完成时间
     },
     {
       expr: minutes+seconds

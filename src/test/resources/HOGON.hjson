@@ -1,0 +1,17 @@
+# 验证https://hjson.org/try.html
+{
+  rules: [
+    {
+      pages: [ 1 ],
+      searchPatterns: [
+        {
+          pattern: (\S+)\s+(\d+)
+          nameIndex: 1
+          valueIndex: 2
+          endAnchor: ©
+        }
+      ]
+    }
+  ]
+}
+

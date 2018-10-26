@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.apache.commons.io.output.NullWriter;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.mvel2.MVEL;
@@ -210,11 +211,14 @@ public class PdfStripper {
                 if (rule.getLineLabelTexts() == null) return;
 
                 for (val l : rule.getLineLabelTexts()) {
-                    val value = textMatcher.findLineLabelText(l.getLabel(), TextMatcherOption.builder()
+                    String value = textMatcher.findLineLabelText(l.getLabel(), TextMatcherOption.builder()
                             .startAnchor(l.getStartAnchor())
                             .endAnchor(l.getEndAnchor())
                             .stripChars(config.getStripChars())
                             .build());
+                    if (StringUtils.contains(l.getOptions(), "compactBlanks")) {
+                        value = compactBlanks(value);
+                    }
                     if (l.isTemp()) {
                         temps.put(l.getName(), value);
                     } else {
@@ -224,6 +228,9 @@ public class PdfStripper {
             }
 
         }
+    }
 
+    private static String compactBlanks(String value) {
+        return value.replaceAll("\\s\\s+", " ");
     }
 }

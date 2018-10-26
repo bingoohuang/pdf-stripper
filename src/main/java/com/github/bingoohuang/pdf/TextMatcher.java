@@ -1,5 +1,7 @@
 package com.github.bingoohuang.pdf;
 
+import com.github.bingoohuang.pdf.model.TextItem;
+import com.github.bingoohuang.pdf.model.TextTripperConfig;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -144,12 +146,18 @@ public class TextMatcher {
      *
      * @param pattern 正则模式
      * @param option  匹配选项
+     * @param index   第几个匹配
      * @return 匹配文本
      */
-    public String findPatternText(String pattern, TextMatcherOption option) {
+    public String findPatternText(String pattern, TextMatcherOption option, int index) {
         val range = option.locateRange(text);
         val sub = text.substring(range.getLeft(), range.getRight());
         val matcher = Pattern.compile(pattern).matcher(sub);
+        for (int i = 0; i < index; ++i) {
+            matcher.find();
+        }
         return matcher.find() ? matcher.group() : "";
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.github.bingoohuang.pdf;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.ByteStreams;
+import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
 import lombok.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -9,6 +10,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -40,6 +42,12 @@ public class Util {
     public static File loadClasspathFile(String classpath) {
         val filePath = Util.class.getResource("/").getPath() + classpath;
         return new File(filePath);
+    }
+
+    @SneakyThrows
+    public static String loadClasspathResAsString(String classpath) {
+        @Cleanup val is = loadClassPathRes(classpath);
+        return CharStreams.toString(new InputStreamReader(is, StandardCharsets.UTF_8));
     }
 
     /**

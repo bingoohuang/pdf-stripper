@@ -2,7 +2,6 @@ package com.github.bingoohuang.pdf;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 

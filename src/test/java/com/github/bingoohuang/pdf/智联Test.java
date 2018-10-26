@@ -1,9 +1,13 @@
 package com.github.bingoohuang.pdf;
 
+import com.alibaba.fastjson.JSON;
+import com.github.bingoohuang.pdf.model.TextItem;
+import com.github.bingoohuang.pdf.model.TextTripperConfig;
 import lombok.Cleanup;
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.val;
+import org.hjson.JsonValue;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,7 +20,7 @@ public class 智联Test {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
         val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.offPages(1, 2, 3));
         val textMatcher = new TextMatcher(text);
-        assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
+            assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
         assertThat(textMatcher.findLineLabelText("测试日期：")).isEqualTo("2016-06-12");
 
         val sb = new StringBuilder();
@@ -117,6 +121,7 @@ public class 智联Test {
     public void 职业行为风险测验兵进黄() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/兵进黄_职业行为风险测验.pdf");
         val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.allPages());
+        System.out.println(text);
         val textMatcher = new TextMatcher(text);
 
         assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("兵进黄");
@@ -146,7 +151,7 @@ public class 智联Test {
 
         val t2 = textMatcher.findLabelText("共计", new TextMatcherOption("作答时间", "称许性"));
         assertThat(t2).isEqualTo("4分钟");
-        val t3 = textMatcher.findPatternText("\\d+秒", new TextMatcherOption("作答时间", "称许性"));
+        val t3 = textMatcher.findPatternText("\\d+秒", new TextMatcherOption("作答时间", "称许性"), 0);
         assertThat(t3).isEqualTo("45秒");
 
         val t4 = textMatcher.findLabelText("正常与否", new TextMatcherOption(":：", "称许性", "选项分布"));
@@ -157,7 +162,17 @@ public class 智联Test {
 
         val t6 = textMatcher.findLabelText("完成率", new TextMatcherOption(":：", "作答题数", "%"));
         assertThat(t6).isEqualTo("100.00");
+    }
 
+    @Test @SneakyThrows
+    public void xx() {
+        val hjson = Util.loadClasspathResAsString("智联.职业行为风险测验.hjson");
+        val json = JsonValue.readHjson(hjson).toString();
+        val config = JSON.parseObject(json, TextTripperConfig.class);
+
+        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
+        List<TextItem> items = PdfStripper.strip(Util.loadPdf(is), config);
+        System.out.println(items);
     }
 
     @Test @SneakyThrows
@@ -193,8 +208,18 @@ public class 智联Test {
 
         val t2 = textMatcher.findLabelText("共计", new TextMatcherOption("作答时间", "称许性"));
         assertThat(t2).isEqualTo("16分钟");
-        val t3 = textMatcher.findPatternText("\\d+秒", new TextMatcherOption("作答时间", "称许性"));
+        val t3 = textMatcher.findPatternText("\\d+秒", new TextMatcherOption("作答时间", "称许性"), 0);
         assertThat(t3).isEqualTo("45秒");
+
+        val a2 = textMatcher.findPatternText("\\d\\d\\d\\d-\\d\\d-\\d\\d", new TextMatcherOption("作答时间", "称许性"), 0);
+        assertThat(a2).isEqualTo("2016-06-12");
+        val a3 = textMatcher.findPatternText("\\d\\d\\d\\d-\\d\\d-\\d\\d", new TextMatcherOption("作答时间", "称许性"), 1);
+        assertThat(a3).isEqualTo("2016-06-13");
+
+        val b2 = textMatcher.findPatternText("\\d?\\d:\\d\\d", new TextMatcherOption("作答时间", "称许性"), 0);
+        assertThat(b2).isEqualTo("17:04");
+        val b3 = textMatcher.findPatternText("\\d?\\d:\\d\\d", new TextMatcherOption("作答时间", "称许性"), 1);
+        assertThat(b3).isEqualTo("9:39");
 
         val t4 = textMatcher.findLabelText("正常与否", new TextMatcherOption(":：", "称许性", "选项分布"));
         assertThat(t4).isEqualTo("正常");

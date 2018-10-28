@@ -1,0 +1,378 @@
+{
+  "activity_id": 387249,
+  "testee_list": [
+    {
+      "email": "dingtao@raiyee.com",
+      "sn_list": [
+        {
+          "sn": "1701823904227",
+          "test_report_list": [
+            {
+              "create_time": "2018-10-24T16:23:49.957",
+              "test": {
+                "id": "022422F6-0830-495D-87E6-5183E82BB853",
+                "name": "通用管理技能测验",
+                "cent": "2.5083333333",
+                "subcent": "",
+                "type": "1",
+                "answer_effective": null,
+                "dimension_list": [
+                  {
+                    "id": "D0704EEF-96E2-4BD3-BD0C-1198EB46CD15",
+                    "name": "MS_M_战略理解与执行",
+                    "cent": "2.2000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "9D61B25A-145F-46DF-B5BE-F2B532303328",
+                    "name": "MS_M_目标设置",
+                    "cent": "1.5000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "1DFA0425-0055-442C-A556-EEFB049FD9F6",
+                    "name": "MS_M_规划安排",
+                    "cent": "4.0000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "CC3CDD7A-F4AB-45F2-B00F-D24FEDEDF67B",
+                    "name": "MS_M_时间管理",
+                    "cent": "2.3000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "E84A17C6-234E-4580-B7F3-383349971A45",
+                    "name": "MS_M_任务分配",
+                    "cent": "1.6000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "21470D35-05B4-44C9-9B12-40AFCF49B7DA",
+                    "name": "MS_M_授权管理",
+                    "cent": "1.8000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "D19430CE-E0BA-40FD-B26F-5C80F28EA9C7",
+                    "name": "MS_M_团队管理",
+                    "cent": "2.5000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "C427AA11-F9A5-4135-9AED-BD1B76987561",
+                    "name": "MS_M_决策判断",
+                    "cent": "2.7000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "30C9264B-B5C1-4BA9-A1CA-11BB3B67E71D",
+                    "name": "MS_M_激励推动",
+                    "cent": "4.4000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "7AEA7EE2-6170-4723-A24F-FA4CC12FDDD0",
+                    "name": "MS_M_培养下属",
+                    "cent": "1.5000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "0E3FBA29-5D08-4A9A-8940-8BD2E41EC09C",
+                    "name": "MS_M_沟通协调",
+                    "cent": "3.2000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "1186B224-0418-4C46-AF9D-E3920F72EEBB",
+                    "name": "MS_M_关系管理",
+                    "cent": "1.7000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "A080F1D3-6C6F-4C6D-9AF9-5E8C94A86040",
+                    "name": "MS_M_监查反馈",
+                    "cent": "2.7000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "6C9B626C-7F7C-4A44-8D92-5CAE82ECC3FF",
+                    "name": "MS_M_应变调控",
+                    "cent": "4.4000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "DFB5D431-9607-4F83-805E-DCE45A6B22F5",
+                    "name": "MS_M_绩效管理",
+                    "cent": "1.5000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "9FA63B1B-2B16-4664-8564-A1F2940EE7F0",
+                    "name": "胜任力基础战略执行",
+                    "cent": "2.5000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "E1F4B28C-13CD-4FBC-A4D2-23DE9A3448F6",
+                    "name": "胜任力基础战略理解",
+                    "cent": "5.1000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "828C5277-4324-46DC-85E8-FF7365D39084",
+                    "name": "胜任力基础目标制定",
+                    "cent": "3.9000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "9DD48962-7C62-450B-8755-6D0266E2832D",
+                    "name": "胜任力基础鼓励参与",
+                    "cent": "2.1000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "00E49D12-2C5C-4F78-9E5D-108F40B72C7E",
+                    "name": "胜任力基础适宜目标",
+                    "cent": "2.8000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "4C18F76A-B42A-4B19-80FB-D6F7F0FCC0D9",
+                    "name": "胜任力基础工作安排",
+                    "cent": "2.5000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "F91EA34E-3C8D-42C1-91E2-F6EADFB9ADB3",
+                    "name": "胜任力基础轻重缓急",
+                    "cent": "6.9000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "156ACAD6-3933-484C-8C0E-6E436FDD8C2A",
+                    "name": "胜任力基础时间观念",
+                    "cent": "5.1000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "02795ACF-B42D-471E-A0CE-A94B82C4855B",
+                    "name": "胜任力基础时间监控",
+                    "cent": "2.4000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "10755C53-8D04-4BBD-A092-D5E7765CC166",
+                    "name": "胜任力基础时间效率",
+                    "cent": "3.7000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "52CA7A7B-8B86-4424-93DC-0B49804DFED2",
+                    "name": "胜任力基础交待任务",
+                    "cent": "2.0000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "22F0794A-5C16-46A5-A1D4-B70661C8B8F1",
+                    "name": "胜任力基础合理分配",
+                    "cent": "2.7000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "91DAC49C-3881-44B7-95D4-4DFCA8B65707",
+                    "name": "胜任力基础授权控制",
+                    "cent": "2.0000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "DEDA82C2-EE8B-44A7-B7C6-FCFB0B3B1E2C",
+                    "name": "胜任力基础授权意识",
+                    "cent": "1.5000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "BA0AE7BD-F959-4E0D-98D5-50CDEDC386CB",
+                    "name": "胜任力基础责权分配",
+                    "cent": "6.7000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "9DD035E3-7F7E-468F-BF6C-915306AED797",
+                    "name": "胜任力基础冲突解决",
+                    "cent": "2.7000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "90A1E81F-561B-44B0-B5B5-635F7C011FD3",
+                    "name": "胜任力基础团队氛围",
+                    "cent": "2.6000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "9518D47D-A80A-48E2-8BD2-1B45A887BB3E",
+                    "name": "胜任力基础团队搭配",
+                    "cent": "6.7000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "BB96B9BC-2342-4736-81D2-FC776061C336",
+                    "name": "胜任力基础风险决策",
+                    "cent": "4.8000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "8BB3A1AA-AD0A-483A-BA50-908E1BA939F8",
+                    "name": "胜任力基础方案评估",
+                    "cent": "2.4000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "93D3CFAB-59F1-4383-9C2A-D324A4AB7FA7",
+                    "name": "胜任力基础信息分析",
+                    "cent": "4.9000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "706380B4-7583-4C03-A0C2-6685CD885DEB",
+                    "name": "胜任力基础多元激励",
+                    "cent": "8.3000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "00431466-B001-4FEC-8407-1BDA9347E7D7",
+                    "name": "胜任力基础主人翁精神",
+                    "cent": "6.3000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "23C74706-39F8-4962-B9E7-BFA560764A4E",
+                    "name": "胜任力基础目标强化",
+                    "cent": "1.5000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "C66E25E1-B6CF-4915-8449-BBDDEB111798",
+                    "name": "胜任力基础任务指导",
+                    "cent": "1.7000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "694D8566-6EE2-43B1-A235-F0F24002FDFF",
+                    "name": "胜任力基础个人发展",
+                    "cent": "4.1000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "23EE8C68-F1E7-44D9-960A-8238318BDF1A",
+                    "name": "胜任力基础协调能力",
+                    "cent": "2.8000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "15F3CE67-9D39-4BEF-8940-B9EE4C5167C0",
+                    "name": "胜任力基础沟通能力",
+                    "cent": "5.7000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "10074B4D-E5FB-4CE3-8870-93A5A2AA4D9B",
+                    "name": "胜任力基础关系建立",
+                    "cent": "4.2000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "42DBE1AC-FB1B-4CB7-8668-90C299E3C806",
+                    "name": "胜任力基础关系维护",
+                    "cent": "2.5000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "4C616FC6-0D4A-407D-B046-E7BB1F2AB15D",
+                    "name": "胜任力基础任务监控",
+                    "cent": "4.4000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "973C68E2-D5B1-4E22-9919-E04002D85BC7",
+                    "name": "胜任力基础监督检查",
+                    "cent": "6.1000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "CBF47281-CEA6-4C21-B871-ABD55FCF1CAA",
+                    "name": "胜任力基础反馈技巧",
+                    "cent": "2.3000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "DFC70387-170A-4038-844F-BD1AE93CCBDC",
+                    "name": "胜任力基础压力应对",
+                    "cent": "1.8000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "23490FD4-B41F-410D-9ACC-89CA4F1E8C28",
+                    "name": "胜任力基础突发应对",
+                    "cent": "8.2000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "5975F580-7D61-4232-A30D-12E2152B8C4D",
+                    "name": "胜任力基础考核方法",
+                    "cent": "1.5000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "4F0D734F-3870-4103-8010-F5FCF708CB09",
+                    "name": "胜任力基础绩效指标",
+                    "cent": "5.8000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "460881E6-323E-4D6F-8056-8B7FB9206D02",
+                    "name": "胜任力基础绩效沟通",
+                    "cent": "2.4000000000",
+                    "type": "BasicDimension"
+                  }
+                ],
+                "exampaperinfo_list": null,
+                "examineStatus": 0,
+                "isCanMaunal": 0,
+                "examsubjectivepartcent": null,
+                "examobjectivepartcent": null,
+                "useTime": 396,
+                "consistency": "0.0000000000",
+                "socialCommendation": "0.0000000000",
+                "interuptCount": 0
+              },
+              "report_list": [
+                {
+                  "name": "管理技能测评报告",
+                  "url": "http://dfiles.tms.beisen.com/report2/107551/1540369480/bcec196c_5518_4021_bd38_c3d5fe72dfe7_emmnu2g4mhqx.pdf?sig_d=1&sig_e=jiekou%40hanergy-hr.com&sig_t=1540369668&sig_v=1&sig=996b00154b2a1a98d2a40ef571fa3c03ef12e5fd",
+                  "type": "All",
+                  "report_no": "bcec196c-5518-4021-bd38-c3d5fe72dfe7"
+                }
+              ]
+            }
+          ],
+          "summaryreport": {
+            "name": null,
+            "Id": null,
+            "type": null,
+            "url": null
+          },
+          "composite_report_list": [
+            {
+              "name": "锐途管理人员自我发展报告",
+              "url": "http://dfiles.tms.beisen.com/report2/107551/1540369447/71a7f51b_06b3_45b2_87ab_1bfb274720e8_gdfkpbmxvzb3.pdf?sig_d=1&sig_e=jiekou%40hanergy-hr.com&sig_t=1540369668&sig_v=1&sig=921bae03509bd0da241f169e86cce92ad140a1f0",
+              "type": "Personal",
+              "report_no": "71a7f51b-06b3-45b2-87ab-1bfb274720e8"
+            }
+          ]
+        }
+      ],
+      "remark": ""
+    }
+  ]
+}

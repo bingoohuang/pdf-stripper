@@ -1,10 +1,11 @@
 package com.github.bingoohuang.pdf;
 
 import com.alibaba.fastjson.JSON;
-import com.github.bingoohuang.pdf.model.TextItem;
-import com.github.bingoohuang.pdf.model.TextTripperConfig;
+import com.github.bingoohuang.text.TextMatcher;
+import com.github.bingoohuang.text.TextMatcherOption;
+import com.github.bingoohuang.text.model.TextItem;
+import com.github.bingoohuang.text.model.TextTripperConfig;
 import lombok.Cleanup;
-import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.hjson.JsonValue;
@@ -22,7 +23,8 @@ public class 智联Test {
         val config = JSON.parseObject(json, TextTripperConfig.class);
 
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
-        List<TextItem> items = PdfStripper.strip(Util.loadPdf(is), config);
+        @Cleanup val pdDoc = Util.loadPdf(is);
+        List<TextItem> items = PdfStripper.strip(pdDoc, config);
         assertThat(items.toString()).isEqualTo("[" +
                 "TextItem(name=有效性, value=比较可信, desc=null), " +
                 "TextItem(name=测试开始时间, value=2016/6/12 16:39:06, desc=null), " +
@@ -46,9 +48,10 @@ public class 智联Test {
     @Test @SneakyThrows
     public void 职业价值观测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
-        val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.offPages(1, 2, 3));
+        @Cleanup val pdDoc = Util.loadPdf(is);
+        val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.offPages(1, 2, 3));
         val textMatcher = new TextMatcher(text);
-            assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
+        assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
         assertThat(textMatcher.findLineLabelText("测试日期：")).isEqualTo("2016-06-12");
 
         val sb = new StringBuilder();
@@ -111,7 +114,8 @@ public class 智联Test {
         val config = JSON.parseObject(json, TextTripperConfig.class);
 
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
-        List<TextItem> items = PdfStripper.strip(Util.loadPdf(is), config);
+        @Cleanup val pdDoc = Util.loadPdf(is);
+        List<TextItem> items = PdfStripper.strip(pdDoc, config);
         assertThat(items.toString()).isEqualTo("[TextItem(name=有效性, value=比较可信, desc=null), " +
                 "TextItem(name=测试开始时间, value=2016/5/25 14:54:20, desc=null), " +
                 "TextItem(name=测试完成时间, value=2016/5/25 15:01:45, desc=null)]");
@@ -120,7 +124,8 @@ public class 智联Test {
     @Test @SneakyThrows
     public void 情绪管理能力测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
-        val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.allPages());
+        @Cleanup val pdDoc = Util.loadPdf(is);
+        val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.allPages());
 
         val textMatcher = new TextMatcher(text);
         assertThat(textMatcher.findLineLabelText("Respondent", new TextMatcherOption("："))).isEqualTo("张晓平");
@@ -158,7 +163,8 @@ public class 智联Test {
     @Test @SneakyThrows
     public void 职业行为风险测验兵进黄() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/兵进黄_职业行为风险测验.pdf");
-        val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.allPages());
+        @Cleanup val pdDoc = Util.loadPdf(is);
+        val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.allPages());
         val textMatcher = new TextMatcher(text);
 
         assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("兵进黄");
@@ -166,22 +172,22 @@ public class 智联Test {
 
         List<RiskItem> riskItems = textMatcher.searchPattern("(\\S+)：([高中低])\\s*(-?\\d+)", RiskItem.class);
         assertThat(riskItems.toString()).isEqualTo("[" +
-                "智联Test.RiskItem(name=焦虑不安, level=中, score=-58), " +
-                "智联Test.RiskItem(name=抑郁消沉, level=高, score=-58), " +
-                "智联Test.RiskItem(name=偏执多疑, level=高, score=-71), " +
-                "智联Test.RiskItem(name=冷漠孤僻, level=中, score=-43), " +
-                "智联Test.RiskItem(name=特立独行, level=高, score=-100), " +
-                "智联Test.RiskItem(name=冲动暴躁, level=高, score=-86), " +
-                "智联Test.RiskItem(name=喜怒无常, level=中, score=-44), " +
-                "智联Test.RiskItem(name=社交回避, level=高, score=-71), " +
-                "智联Test.RiskItem(name=僵化固执, level=高, score=-50), " +
-                "智联Test.RiskItem(name=依赖顺从, level=低, score=-38), " +
-                "智联Test.RiskItem(name=夸张做作, level=高, score=-100), " +
-                "智联Test.RiskItem(name=狂妄自恋, level=低, score=-33), " +
-                "智联Test.RiskItem(name=压力耐受, level=低, score=34), " +
-                "智联Test.RiskItem(name=积极乐观, level=高, score=72), " +
-                "智联Test.RiskItem(name=合理自信, level=低, score=48), " +
-                "智联Test.RiskItem(name=坚韧不拔, level=中, score=44)]");
+                "RiskItem(name=焦虑不安, level=中, score=-58), " +
+                "RiskItem(name=抑郁消沉, level=高, score=-58), " +
+                "RiskItem(name=偏执多疑, level=高, score=-71), " +
+                "RiskItem(name=冷漠孤僻, level=中, score=-43), " +
+                "RiskItem(name=特立独行, level=高, score=-100), " +
+                "RiskItem(name=冲动暴躁, level=高, score=-86), " +
+                "RiskItem(name=喜怒无常, level=中, score=-44), " +
+                "RiskItem(name=社交回避, level=高, score=-71), " +
+                "RiskItem(name=僵化固执, level=高, score=-50), " +
+                "RiskItem(name=依赖顺从, level=低, score=-38), " +
+                "RiskItem(name=夸张做作, level=高, score=-100), " +
+                "RiskItem(name=狂妄自恋, level=低, score=-33), " +
+                "RiskItem(name=压力耐受, level=低, score=34), " +
+                "RiskItem(name=积极乐观, level=高, score=72), " +
+                "RiskItem(name=合理自信, level=低, score=48), " +
+                "RiskItem(name=坚韧不拔, level=中, score=44)]");
 
         val t1 = textMatcher.findLabelText("正常与否：", new TextMatcherOption("作答时间", "称许性"));
         assertThat(t1).isEqualTo("正常");
@@ -208,7 +214,8 @@ public class 智联Test {
         val config = JSON.parseObject(json, TextTripperConfig.class);
 
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
-        List<TextItem> items = PdfStripper.strip(Util.loadPdf(is), config);
+        @Cleanup val pdDoc = Util.loadPdf(is);
+        List<TextItem> items = PdfStripper.strip(pdDoc, config);
         assertThat(items.toString()).isEqualTo("[" +
                 "TextItem(name=结果可参考性, value=高, desc=null), " +
                 "TextItem(name=职业行为风险等级, value=低风险低防御, desc=null), " +
@@ -239,7 +246,8 @@ public class 智联Test {
     @Test @SneakyThrows
     public void 职业行为风险测验() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
-        val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.allPages());
+        @Cleanup val pdDoc = Util.loadPdf(is);
+        val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.allPages());
         val textMatcher = new TextMatcher(text);
 
         assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
@@ -247,22 +255,22 @@ public class 智联Test {
 
         List<RiskItem> riskItems = textMatcher.searchPattern("(\\S+)：([高中低])\\s*(-?\\d+)", RiskItem.class);
         assertThat(riskItems.toString()).isEqualTo("[" +
-                "智联Test.RiskItem(name=焦虑不安, level=低, score=0), " +
-                "智联Test.RiskItem(name=抑郁消沉, level=低, score=0), " +
-                "智联Test.RiskItem(name=偏执多疑, level=低, score=0), " +
-                "智联Test.RiskItem(name=冷漠孤僻, level=低, score=-14), " +
-                "智联Test.RiskItem(name=特立独行, level=低, score=0), " +
-                "智联Test.RiskItem(name=冲动暴躁, level=低, score=0), " +
-                "智联Test.RiskItem(name=喜怒无常, level=低, score=0), " +
-                "智联Test.RiskItem(name=社交回避, level=低, score=0), " +
-                "智联Test.RiskItem(name=僵化固执, level=低, score=0), " +
-                "智联Test.RiskItem(name=依赖顺从, level=低, score=-12), " +
-                "智联Test.RiskItem(name=夸张做作, level=低, score=-12), " +
-                "智联Test.RiskItem(name=狂妄自恋, level=低, score=0), " +
-                "智联Test.RiskItem(name=压力耐受, level=低, score=54), " +
-                "智联Test.RiskItem(name=积极乐观, level=低, score=58), " +
-                "智联Test.RiskItem(name=合理自信, level=中, score=68), " +
-                "智联Test.RiskItem(name=坚韧不拔, level=低, score=42)]");
+                "RiskItem(name=焦虑不安, level=低, score=0), " +
+                "RiskItem(name=抑郁消沉, level=低, score=0), " +
+                "RiskItem(name=偏执多疑, level=低, score=0), " +
+                "RiskItem(name=冷漠孤僻, level=低, score=-14), " +
+                "RiskItem(name=特立独行, level=低, score=0), " +
+                "RiskItem(name=冲动暴躁, level=低, score=0), " +
+                "RiskItem(name=喜怒无常, level=低, score=0), " +
+                "RiskItem(name=社交回避, level=低, score=0), " +
+                "RiskItem(name=僵化固执, level=低, score=0), " +
+                "RiskItem(name=依赖顺从, level=低, score=-12), " +
+                "RiskItem(name=夸张做作, level=低, score=-12), " +
+                "RiskItem(name=狂妄自恋, level=低, score=0), " +
+                "RiskItem(name=压力耐受, level=低, score=54), " +
+                "RiskItem(name=积极乐观, level=低, score=58), " +
+                "RiskItem(name=合理自信, level=中, score=68), " +
+                "RiskItem(name=坚韧不拔, level=低, score=42)]");
 
         val t1 = textMatcher.findLabelText("正常与否：", new TextMatcherOption("作答时间", "称许性"));
         assertThat(t1).isEqualTo("正常");
@@ -293,16 +301,4 @@ public class 智联Test {
 
     }
 
-    @Data
-    public static class RiskItem implements PatternApplyAware {
-        private String name;
-        private String level; // 高中低
-        private int score;
-
-        @Override public void apply(String[] groups) {
-            this.name = groups[0];
-            this.level = groups[1];
-            this.score = Integer.parseInt(groups[2]);
-        }
-    }
 }

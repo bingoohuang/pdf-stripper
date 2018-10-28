@@ -1,0 +1,258 @@
+{
+  "activity_id": 404889,
+  "testee_list": [
+    {
+      "email": "dingtao@raiyee.com",
+      "sn_list": [
+        {
+          "sn": "1700933192713",
+          "test_report_list": [
+            {
+              "create_time": "2018-10-24T11:21:11.683",
+              "test": {
+                "id": "20587B3D-D938-4CDC-9DEE-9DDB26325DA0",
+                "name": "管理个性测验V2",
+                "cent": "控制者型",
+                "subcent": "",
+                "type": "1",
+                "answer_effective": null,
+                "dimension_list": [
+                  {
+                    "id": "40B4DDC6-BBB4-4054-B7D7-C2F35E92EC0B",
+                    "name": "MPF注重人际",
+                    "cent": "4.7000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "1655E4F7-0FC6-43EB-9E56-172C904175B2",
+                    "name": "MPF内控力",
+                    "cent": "1.9000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "5E8E716D-CD85-4A66-9A7F-C3C0F7394AED",
+                    "name": "MPF注重达成",
+                    "cent": "3.0000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "66E36F0E-6848-4881-B41A-ED5385884259",
+                    "name": "MPF内驱力",
+                    "cent": "7.6000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "A220018A-1238-4C17-873D-1C5022AC4471",
+                    "name": "FAST践行抱负",
+                    "cent": "4.9000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "1C5B0A03-5F2F-499D-B10C-3D344571BB9A",
+                    "name": "FAST人际通达",
+                    "cent": "7.9000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "1B82A6FB-2463-4B36-9DB4-84155D982DC4",
+                    "name": "FAST敏锐学习",
+                    "cent": "7.6000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "7430576A-446B-4B48-BCD2-9EB74629375C",
+                    "name": "FAST跨界思考",
+                    "cent": "6.2000000000",
+                    "type": "CompoundDimension"
+                  },
+                  {
+                    "id": "3B470CD6-5162-412E-BB09-BA34C13D2E7B",
+                    "name": "MPv2抗压性",
+                    "cent": "5.3000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "E877F56D-0C63-43FC-BBEA-D8F9FADBB30E",
+                    "name": "MPv2影响的",
+                    "cent": "6.4000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "8B867B52-EE31-4245-98A0-6C9D93DB6633",
+                    "name": "MPv2审慎的",
+                    "cent": "2.2000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "78505D37-184F-4717-A2D4-9D7DCE7F532E",
+                    "name": "MPv2适应性",
+                    "cent": "5.4000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "67DD23BA-B41C-4085-9B16-18DD5CF2AD02",
+                    "name": "MPv2意志力",
+                    "cent": "6.1000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "9973930C-4390-49AC-B6E7-5006617D3B21",
+                    "name": "MPv2民主的",
+                    "cent": "3.4000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "A8F417A9-70C0-44C3-BB52-EA0E1ABC44D1",
+                    "name": "MPv2理性的",
+                    "cent": "4.7000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "46884BEA-EB03-478A-9230-E35C559FA42C",
+                    "name": "MPv2独立性",
+                    "cent": "4.9000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "B129E141-C148-4537-BFC8-0022D241F1B8",
+                    "name": "MPv2社交自信",
+                    "cent": "5.7000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "16C5C73A-7311-4C1E-B4A2-67066F0E4F9D",
+                    "name": "MPv2对抗性",
+                    "cent": "4.4000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "65FE9835-50AB-41CC-94B4-5D995FCF4F00",
+                    "name": "MPv2亲和动机",
+                    "cent": "9.8000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "D9E4EF58-AA27-4427-96AF-C9D9AF48C008",
+                    "name": "MPv2创新意识",
+                    "cent": "6.9000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "AD0C6FD3-06E0-4F4C-BE4F-C8DBB5F23FE7",
+                    "name": "MPv2活力",
+                    "cent": "7.9000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "18C226D9-6FFD-4C5F-9850-0647BCB68B6F",
+                    "name": "MPv2支持性",
+                    "cent": "4.3000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "C9402B0A-390A-47DE-AA22-2291A8C46DF0",
+                    "name": "MPv2成功愿望",
+                    "cent": "6.0000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "5F44A3D0-76DA-4957-A5A6-F0683574210D",
+                    "name": "MPv2条理性",
+                    "cent": "3.0000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "D8566D5B-3213-4162-A883-785D6300700D",
+                    "name": "MPv2洞察力",
+                    "cent": "8.0000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "34F26D85-2B30-4649-B793-887EA4B3FD25",
+                    "name": "MPv2同理心",
+                    "cent": "9.6000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "13EFBCE5-D9C0-4CF9-92A9-CBAC8012303A",
+                    "name": "MPv2权力动机",
+                    "cent": "7.8000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "3A15E250-8AEF-4824-BB9C-777212DA3667",
+                    "name": "MPv2信任的",
+                    "cent": "2.6000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "6169491C-06F7-4BBA-9742-8C9F0EDA439B",
+                    "name": "MPv2情绪稳定性",
+                    "cent": "5.4000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "21D1C065-E1E7-4FEF-B4B3-221BD95EB5CD",
+                    "name": "MPv2决断的",
+                    "cent": "3.6000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "88CACAF4-6455-4C65-BA19-0EF6B038CF74",
+                    "name": "MPv2乐观的",
+                    "cent": "4.0000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "2EB27443-FD69-47F2-8041-13972C7253BF",
+                    "name": "MPv2责任感",
+                    "cent": "3.9000000000",
+                    "type": "BasicDimension"
+                  }
+                ],
+                "exampaperinfo_list": null,
+                "examineStatus": 0,
+                "isCanMaunal": 0,
+                "examsubjectivepartcent": null,
+                "examobjectivepartcent": null,
+                "useTime": 114,
+                "consistency": "0.0000000000",
+                "socialCommendation": "0.0000000000",
+                "interuptCount": 0
+              },
+              "report_list": [
+                {
+                  "name": "FAST高潜人才评估报告",
+                  "url": "http://dfiles.tms.beisen.com/report2/107551/1540351281/2d5a515b_b98c_468e_ab93_1ecb9a2ce9aa_hrchgjmtn2k3.pdf?sig_d=1&sig_e=jiekou%40hanergy-hr.com&sig_t=1540351844&sig_v=1&sig=4ed8486a6ed41c7d870bf3424af1b4943ad60ce0",
+                  "type": "HR",
+                  "report_no": "2d5a515b-b98c-468e-ab93-1ecb9a2ce9aa"
+                },
+                {
+                  "name": "管理个性V2测评报告",
+                  "url": "http://dfiles.tms.beisen.com/report2/107551/1540351280/eef42db5_727d_4bf8_9fe4_af18eeb8e702_eau9ymg5k6k1.pdf?sig_d=1&sig_e=jiekou%40hanergy-hr.com&sig_t=1540351844&sig_v=1&sig=e3bb8d200473fba4fc97b66dd32ebfda8502f07e",
+                  "type": "ALL",
+                  "report_no": "eef42db5-727d-4bf8-9fe4-af18eeb8e702"
+                }
+              ]
+            }
+          ],
+          "summaryreport": {
+            "name": null,
+            "Id": null,
+            "type": null,
+            "url": null
+          },
+          "composite_report_list": [
+            {
+              "name": "锐途管理人员自我发展报告",
+              "url": "http://dfiles.tms.beisen.com/report2/107551/1540351279/ad4cdc09_4e9a_42c0_b23c_03532025c7fc_gyaix7bitwd0.pdf?sig_d=1&sig_e=jiekou%40hanergy-hr.com&sig_t=1540351844&sig_v=1&sig=f19e16485b75f3e6df6e72a31107c3cdf21abb86",
+              "type": "Personal",
+              "report_no": "ad4cdc09-4e9a-42c0-b23c-03532025c7fc"
+            }
+          ]
+        }
+      ],
+      "remark": ""
+    }
+  ]
+}

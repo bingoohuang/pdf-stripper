@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import javax.imageio.ImageIO;
@@ -15,8 +16,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class Util {
-
     /**
      * 从输入流装载PDF文档对象。
      *
@@ -97,6 +98,7 @@ public class Util {
         is.read(buffer);
         Files.write(buffer, file);
     }
+
 
     /**
      * 网络下载内容对象

@@ -1,4 +1,4 @@
-package com.github.bingoohuang.pdf;
+package com.github.bingoohuang.text;
 
 /**
  * 正则匹配捕获子分组应用器。

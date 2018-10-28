@@ -1,0 +1,22 @@
+{
+ rules: [
+    {
+        searchPatterns: [
+           {
+             pattern: .Name.:\s*.(.*?).,\s*.Score.:\s*(\d+(?>.\d+)?)
+             nameIndex: 1
+             valueIndex: 2
+             valueFilters: @trimTrailingZeroes
+           }
+        ],
+        patternTexts:[
+           {
+             pattern:.TotalScore.:\s*(\d+(?>.\d+)?)
+             valueIndex: 1
+             name: 总分
+             valueFilters: @trimTrailingZeroes
+           }
+        ]
+    }
+  ]
+}

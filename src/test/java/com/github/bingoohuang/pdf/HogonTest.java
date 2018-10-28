@@ -1,11 +1,14 @@
 package com.github.bingoohuang.pdf;
 
 import com.alibaba.fastjson.JSON;
-import com.github.bingoohuang.pdf.model.TextItem;
-import com.github.bingoohuang.pdf.model.TextTripperConfig;
+import com.github.bingoohuang.text.TextMatcher;
+import com.github.bingoohuang.text.TextMatcherOption;
+import com.github.bingoohuang.text.model.TextItem;
+import com.github.bingoohuang.text.model.TextTripperConfig;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.hjson.JsonValue;
 import org.junit.Test;
 
@@ -21,7 +24,8 @@ public class HogonTest {
         val config = JSON.parseObject(json, TextTripperConfig.class);
 
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/Hogan/Flash_SimpChinese.pdf");
-        List<TextItem> items = PdfStripper.strip(Util.loadPdf(is), config);
+        @Cleanup val pdDoc = Util.loadPdf(is);
+        List<TextItem> items = PdfStripper.strip(pdDoc, config);
         assertThat(items.toString()).isEqualTo("[" +
                 "TextItem(name=调适, value=98, desc=null), " +
                 "TextItem(name=抱负, value=73, desc=null), " +
@@ -56,7 +60,8 @@ public class HogonTest {
     @Test @SneakyThrows
     public void page0Scores() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/Hogan/Flash_SimpChinese.pdf");
-        val text = PdfStripper.stripText(Util.loadPdf(is), PdfPagesSelect.onPages(0));
+        @Cleanup val pdDoc = Util.loadPdf(is);
+        val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.onPages(0));
         val textMatcher = new TextMatcher(text);
 
         List<ValuesItem> items = textMatcher.searchPattern("(\\S+)\\s+(\\d+)", ValuesItem.class,
@@ -97,7 +102,8 @@ public class HogonTest {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/Hogan/HF322468-EcHPIHDSMVPIFR-Global.pdf");
 
         HogonPdfListener pdfListener = new HogonPdfListener();
-        PdfStripper.stripCustom(Util.loadPdf(is), PdfPagesSelect.onPages(1), pdfListener);
+        @Cleanup val pdDoc = Util.loadPdf(is);
+        PdfStripper.stripCustom(pdDoc, PdfPagesSelect.onPages(1), pdfListener);
         assertThat(pdfListener.itemScores()).isEqualTo("效度:4\n" +
                 "调适.同理心:3\n" +
                 "调适.不焦虑:3\n" +
@@ -179,8 +185,9 @@ public class HogonTest {
     public void page1Scores() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/Hogan/Flash_SimpChinese.pdf");
 
-        HogonPdfListener pdfListener = new HogonPdfListener();
-        PdfStripper.stripCustom(Util.loadPdf(is), PdfPagesSelect.onPages(1), pdfListener);
+        val pdfListener = new HogonPdfListener();
+        @Cleanup val pdDoc = Util.loadPdf(is);
+        PdfStripper.stripCustom(pdDoc, PdfPagesSelect.onPages(1), pdfListener);
         assertThat(pdfListener.itemScores()).isEqualTo("效度:4\n" +
                 "调适.同理心:4\n" +
                 "调适.不焦虑:4\n" +

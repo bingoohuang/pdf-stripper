@@ -1,6 +1,8 @@
 package com.github.bingoohuang.mail;
 
 import com.github.bingoohuang.pdf.*;
+import com.github.bingoohuang.text.TextMatcher;
+import com.github.bingoohuang.text.TextMatcherOption;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;

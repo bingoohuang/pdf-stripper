@@ -1,0 +1,82 @@
+{
+  "PaperId": 238,
+  "ReportUrl": "http://eas.zhaopin.com/CompanyPlatform/ReportDetailUI.aspx?eid=fc10fc13-ffbc-4168-a2e6-0e0155018d1e&ac=noLogin",
+  "ShortReportUrl": "http://eas.zhaopin.com/CompanyPlatform/ReportDetailUITwo.aspx?eid=fc10fc13-ffbc-4168-a2e6-0e0155018d1e&ac=noLogin",
+  "PdfReportUrl": "http://eas.zhaopin.com/CompanyPlatform/RedirectToReport.ashx?eid=fc10fc13ffbc4168a2e60e0155018d1e&eaid=12286147&spid=238&type=5",
+  "PdfShortReportUrl": "http://eas.zhaopin.com/CompanyPlatform/RedirectToReport.ashx?eid=fc10fc13ffbc4168a2e60e0155018d1e&eaid=12286147&spid=238&type=6",
+  "TotalScore": 1.0,
+  "DimScores": [
+    {
+      "Name": "自我情绪认知",
+      "Score": 1.0
+    },
+    {
+      "Name": "自我驱动",
+      "Score": 1.0
+    },
+    {
+      "Name": "自我妥协",
+      "Score": 9.1
+    },
+    {
+      "Name": "敏感易变",
+      "Score": 9.0
+    },
+    {
+      "Name": "合理控制",
+      "Score": 1.0
+    },
+    {
+      "Name": "他人情绪感知",
+      "Score": 2.3
+    },
+    {
+      "Name": "个体关怀",
+      "Score": 1.0
+    },
+    {
+      "Name": "团队激励",
+      "Score": 2.9
+    },
+    {
+      "Name": "灵活适应",
+      "Score": 1.0
+    },
+    {
+      "Name": "消极回避",
+      "Score": 9.2
+    },
+    {
+      "Name": "自我情绪认知",
+      "Score": 1.0
+    },
+    {
+      "Name": "自我情绪激励",
+      "Score": 1.0
+    },
+    {
+      "Name": "自我情绪调控",
+      "Score": 1.0
+    },
+    {
+      "Name": "他人情绪感知",
+      "Score": 1.2
+    },
+    {
+      "Name": "他人情绪激励",
+      "Score": 1.3
+    },
+    {
+      "Name": "人际关系处理",
+      "Score": 1.0
+    },
+    {
+      "Name": "自我情绪管理能力",
+      "Score": 1.0
+    },
+    {
+      "Name": "他人情绪管理能力",
+      "Score": 1.0
+    }
+  ]
+}

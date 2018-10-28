@@ -6,6 +6,7 @@ public interface PdfListener {
     default void process(PdfRect rect) {
 
     }
+
     default void process(BoxStyle curstyle, String text) {
 
     }

@@ -1,0 +1,77 @@
+{
+  "activity_id": 401081,
+  "testee_list": [
+    {
+      "email": "dingtao@raiyee.com",
+      "sn_list": [
+        {
+          "sn": "1499943913457",
+          "test_report_list": [
+            {
+              "create_time": "2018-10-24T11:38:16.803",
+              "test": {
+                "id": "A142712E-42B0-4C8F-AAB3-5DBAB3E50DC8",
+                "name": "_CATA",
+                "cent": "38.0000000000",
+                "subcent": "",
+                "type": "1",
+                "answer_effective": null,
+                "dimension_list": [
+                  {
+                    "id": "F72689E2-F799-40FC-BBCF-67AB5FB6BE68",
+                    "name": "言语能力",
+                    "cent": "78.0000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "76F9C154-CDA6-415D-954D-56A9E1530D7B",
+                    "name": "数学能力",
+                    "cent": "50.0000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "98E52935-2CC1-492E-ABBA-E7916482DF0A",
+                    "name": "逻辑推理",
+                    "cent": "18.0000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "3D141EE9-707F-4DD6-AD87-D8B0B32E9C5F",
+                    "name": "空间能力CAT",
+                    "cent": "6.0000000000",
+                    "type": "BasicDimension"
+                  }
+                ],
+                "exampaperinfo_list": null,
+                "examineStatus": 0,
+                "isCanMaunal": 0,
+                "examsubjectivepartcent": null,
+                "examobjectivepartcent": null,
+                "useTime": 0,
+                "consistency": "0.0000000000",
+                "socialCommendation": "0.0000000000",
+                "interuptCount": 0
+              },
+              "report_list": [
+                {
+                  "name": "能力倾向计算机自适应测评报告",
+                  "url": "http://dfiles.tms.beisen.com/report2/107551/1540352306/8422257a_7bf3_4c60_8ebe_0af5b2c95886_gq22wg5jg7q0.pdf?sig_d=1&sig_e=jiekou%40hanergy-hr.com&sig_t=1540352309&sig_v=1&sig=966937c5be164e756173d65d304b1835cb8b4520",
+                  "type": "ALL",
+                  "report_no": "8422257a-7bf3-4c60-8ebe-0af5b2c95886"
+                }
+              ]
+            }
+          ],
+          "summaryreport": {
+            "name": "面试报告",
+            "Id": null,
+            "type": null,
+            "url": "http://assess.tms.beisen.com/Report/SummaryReport?Elink=v4f4yCbaMzxcChina25/9S76I9f2gTqCbaMzxcChina25Sh8dZGSqFaNQk&ElinkID=e9efc43f-078b-472d-8aa8-7540b17f172b"
+          },
+          "composite_report_list": []
+        }
+      ],
+      "remark": ""
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-package com.github.bingoohuang.pdf;
+package com.github.bingoohuang.text;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;

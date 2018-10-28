@@ -1,12 +1,13 @@
-package com.github.bingoohuang.pdf;
+package com.github.bingoohuang.text;
 
-import com.github.bingoohuang.pdf.model.TextItem;
-import com.github.bingoohuang.pdf.model.TextTripperConfig;
+import com.github.bingoohuang.text.model.TextItem;
+import com.github.bingoohuang.text.model.TextTripperConfig;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.objenesis.ObjenesisStd;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -50,16 +51,6 @@ public class TextMatcher {
         val labelText = endPos < 0 ? text.substring(fromIndex) : text.substring(fromIndex, endPos);
 
         return option.strip(labelText);
-    }
-
-    /**
-     * 在文本中搜索指定正则模式的文本。
-     *
-     * @param pattern      正则模式
-     * @param patternApply 模式捕获应用器
-     */
-    public void searchPattern(String pattern, PatternApplyAware patternApply) {
-        searchPattern(pattern, patternApply, TextMatcherOption.builder().build());
     }
 
     /**
@@ -141,23 +132,49 @@ public class TextMatcher {
         return matcher.find() ? matcher.group(1) : "";
     }
 
+
     /**
      * 查找模式匹配的整个文本。
      *
-     * @param pattern 正则模式
-     * @param option  匹配选项
-     * @param index   第几个匹配
+     * @param pattern   正则模式
+     * @param option    匹配选项
+     * @param findIndex 第几个匹配
      * @return 匹配文本
      */
-    public String findPatternText(String pattern, TextMatcherOption option, int index) {
+    public String findPatternText(String pattern, TextMatcherOption option, int findIndex) {
+        return findPatternText(pattern, option, findIndex, 0);
+
+    }
+
+    /**
+     * 查找模式匹配的第几个抓取文本。
+     *
+     * @param pattern    正则模式
+     * @param option     匹配选项
+     * @param findIndex  第几个匹配
+     * @param groupIndex 匹配后抓取的分组值组索引
+     * @return 匹配文本
+     */
+    public String findPatternText(String pattern, TextMatcherOption option, int findIndex, int groupIndex) {
         val range = option.locateRange(text);
         val sub = text.substring(range.getLeft(), range.getRight());
         val matcher = Pattern.compile(pattern).matcher(sub);
-        for (int i = 0; i < index; ++i) {
+        for (int i = 0; i < findIndex; ++i) {
             matcher.find();
         }
-        return matcher.find() ? matcher.group() : "";
+        return matcher.find() ? matcher.group(groupIndex) : "";
     }
 
-
+    /**
+     * 根据文本提取配置，从文本中获取指定属性。
+     *
+     * @param config 文本提取配置
+     * @return 文本对象
+     */
+    public List<TextItem> strip(TextTripperConfig config) {
+        val pagedText = new HashMap<Integer, String>() {{
+            put(0, text);
+        }};
+        return new ConfiguredStripper(pagedText, config).strip();
+    }
 }

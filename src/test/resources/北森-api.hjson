@@ -1,0 +1,31 @@
+{
+ rules: [
+    {
+        searchPatterns: [
+           {
+             pattern: .name.\s*:\s*.(.+).,\s*.cent.:\s*.(.*).,
+             nameIndex: 1
+             valueIndex: 2
+             nameMatchers: @notContains(胜任力基础)
+             nameFilters:
+                '''
+                @unPrefix(MPF,FAST,MPv2,MS_M_)
+                @unPostfix(V2,CAT)
+                @map(通用管理技能测验,管理技能总分)
+                @map(_自定义,综合得分)
+                @map(_CATA,综合得分)
+                '''
+             valueFilters: @trimTrailingZeroes
+           }
+        ],
+        patternTexts:[
+           {
+             pattern:.create_time.:\s*.(\S+\d)?.
+             valueIndex: 1
+             name: 测试完成时间
+             valueFilters: @normalizeDateTime
+           }
+        ]
+    }
+  ]
+}

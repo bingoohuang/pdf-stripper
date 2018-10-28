@@ -1,4 +1,4 @@
-package com.github.bingoohuang.pdf.model;
+package com.github.bingoohuang.text.model;
 
 import lombok.Data;
 

@@ -1,0 +1,65 @@
+{
+  "activity_id": 389051,
+  "testee_list": [
+    {
+      "email": "dingtao@raiyee.com",
+      "sn_list": [
+        {
+          "sn": "1700343259611",
+          "test_report_list": [
+            {
+              "create_time": "2018-10-24T11:49:03.063",
+              "test": {
+                "id": "40262F77-3971-42CC-869F-03EE393E84EF",
+                "name": "_自定义",
+                "cent": "30.0000000000",
+                "subcent": "",
+                "type": "1",
+                "answer_effective": null,
+                "dimension_list": [
+                  {
+                    "id": "F72689E2-F799-40FC-BBCF-67AB5FB6BE68",
+                    "name": "言语能力",
+                    "cent": "48.0000000000",
+                    "type": "BasicDimension"
+                  },
+                  {
+                    "id": "98E52935-2CC1-492E-ABBA-E7916482DF0A",
+                    "name": "逻辑推理",
+                    "cent": "11.0000000000",
+                    "type": "BasicDimension"
+                  }
+                ],
+                "exampaperinfo_list": null,
+                "examineStatus": 0,
+                "isCanMaunal": 0,
+                "examsubjectivepartcent": null,
+                "examobjectivepartcent": null,
+                "useTime": 0,
+                "consistency": "0.0000000000",
+                "socialCommendation": "0.0000000000",
+                "interuptCount": 0
+              },
+              "report_list": [
+                {
+                  "name": "能力倾向计算机自适应测评报告",
+                  "url": "http://dfiles.tms.beisen.com/report2/107551/1540352948/249b5fd3_d12a_4d21_90db_a9027bd8f9e3_d5ajw5tjmal1.pdf?sig_d=1&sig_e=jiekou%40hanergy-hr.com&sig_t=1540353009&sig_v=1&sig=9c499b3fb4970a03f56d605f09f26d9150898786",
+                  "type": "ALL",
+                  "report_no": "249b5fd3-d12a-4d21-90db-a9027bd8f9e3"
+                }
+              ]
+            }
+          ],
+          "summaryreport": {
+            "name": "面试报告",
+            "Id": null,
+            "type": null,
+            "url": "http://assess.tms.beisen.com/Report/SummaryReport?Elink=XrAlmqZ3/tOsRTegPHAATbnMai31OmPq&ElinkID=e9efc43f-078b-472d-8aa8-7540b17f172b"
+          },
+          "composite_report_list": []
+        }
+      ],
+      "remark": ""
+    }
+  ]
+}

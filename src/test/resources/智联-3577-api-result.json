@@ -1,0 +1,9 @@
+{
+  "PaperId": 3577,
+  "ReportUrl": "http://eas.zhaopin.com/CompanyPlatform/ReportDetailUI.aspx?eid=fc10fc13-ffbc-4168-a2e6-0e0155018d1e&ac=noLogin",
+  "ShortReportUrl": "http://eas.zhaopin.com/CompanyPlatform/ReportDetailUITwo.aspx?eid=fc10fc13-ffbc-4168-a2e6-0e0155018d1e&ac=noLogin",
+  "PdfReportUrl": "http://eas.zhaopin.com/CompanyPlatform/RedirectToReport.ashx?eid=fc10fc13ffbc4168a2e60e0155018d1e&eaid=12286145&spid=3577&type=5",
+  "PdfShortReportUrl": "http://eas.zhaopin.com/CompanyPlatform/RedirectToReport.ashx?eid=fc10fc13ffbc4168a2e60e0155018d1e&eaid=12286145&spid=3577&type=6",
+  "TotalScore": 1.0,
+  "DimScores": []
+}

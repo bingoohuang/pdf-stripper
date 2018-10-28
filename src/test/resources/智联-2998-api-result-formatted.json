@@ -1,0 +1,66 @@
+{
+  "PaperId": 2998,
+  "ReportUrl": "http://eas.zhaopin.com/CompanyPlatform/ReportDetailUI.aspx?eid=fc10fc13-ffbc-4168-a2e6-0e0155018d1e&ac=noLogin",
+  "ShortReportUrl": "http://eas.zhaopin.com/CompanyPlatform/ReportDetailUITwo.aspx?eid=fc10fc13-ffbc-4168-a2e6-0e0155018d1e&ac=noLogin",
+  "PdfReportUrl": "http://eas.zhaopin.com/CompanyPlatform/RedirectToReport.ashx?eid=fc10fc13ffbc4168a2e60e0155018d1e&eaid=12286146&spid=2998&type=5",
+  "PdfShortReportUrl": "http://eas.zhaopin.com/CompanyPlatform/RedirectToReport.ashx?eid=fc10fc13ffbc4168a2e60e0155018d1e&eaid=12286146&spid=2998&type=6",
+  "TotalScore": 0.0,
+  "DimScores": [
+    {
+      "Name": "管理他人",
+      "Score": 4.3
+    },
+    {
+      "Name": "获得成就",
+      "Score": 4.2
+    },
+    {
+      "Name": "施展才华",
+      "Score": 4.8
+    },
+    {
+      "Name": "独立自主",
+      "Score": 4.8
+    },
+    {
+      "Name": "他人认可",
+      "Score": 4.3
+    },
+    {
+      "Name": "薪酬福利",
+      "Score": 4.3
+    },
+    {
+      "Name": "培训机会",
+      "Score": 4.6
+    },
+    {
+      "Name": "上级支持",
+      "Score": 4.6
+    },
+    {
+      "Name": "公平公正",
+      "Score": 4.5
+    },
+    {
+      "Name": "晋升机会",
+      "Score": 4.8
+    },
+    {
+      "Name": "工作稳定",
+      "Score": 4.5
+    },
+    {
+      "Name": "服务他人",
+      "Score": 4.3
+    },
+    {
+      "Name": "工作强度",
+      "Score": 4.5
+    },
+    {
+      "Name": "同事关系",
+      "Score": 4.2
+    }
+  ]
+}

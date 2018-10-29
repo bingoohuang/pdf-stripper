@@ -1,9 +1,9 @@
 package com.github.bingoohuang.text;
 
+import com.github.bingoohuang.text.model.TempAware;
 import com.github.bingoohuang.text.model.TextItem;
 import com.github.bingoohuang.text.model.TextTripperConfig;
 import com.github.bingoohuang.text.model.TextTripperRule;
-import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.RequiredArgsConstructor;
@@ -76,14 +76,10 @@ public class ConfiguredStripper {
 
             for (val l : rule.getPatternTexts()) {
                 val value = textMatcher.findPatternText(l.getPattern(), createTextMatcherOption(l), l.getIndex(), l.getValueIndex());
-                val filteredValue = Filter.filter(value, l.getValueFilters());
                 val name = Filter.filter(l.getName(), l.getNameFilters());
+                val filteredValue = Filter.filter(value, l.getValueFilters());
 
-                if (l.isTemp()) {
-                    temps.put(name, filteredValue);
-                } else {
-                    items.add(new TextItem(name, filteredValue, null));
-                }
+                processTemp(l, name, filteredValue, null);
             }
         }
 
@@ -100,25 +96,21 @@ public class ConfiguredStripper {
 
                     val filterName = Filter.filter(name, l.getNameFilters());
                     val filterValue = Filter.filter(value, l.getValueFilters());
+                    val desc = l.getDescIndex() > 0 ? patternGroups[l.getDescIndex() - 1] : null;
 
-                    if (l.isTemp()) {
-                        temps.put(filterName, filterValue);
-                    } else {
-                        val desc = l.getDescIndex() > 0 ? patternGroups[l.getDescIndex() - 1] : null;
-                        items.add(new TextItem(filterName, filterValue, desc));
-                    }
-
-                    if (StringUtils.isNotEmpty(l.getTempVarsMap())) {
-                        val parts = Splitter.onPattern("\\s+").splitToList(l.getTempVarsMap());
-                        for (int i = 0, ii = parts.size(); i + 1 < ii; i += 2) {
-                            if (parts.get(i).equals(filterName)) {
-                                temps.put(parts.get(i + 1), filterValue);
-                                break;
-                            }
-                        }
-                    }
+                    processTemp(l, filterName, filterValue, desc);
 
                 }, createTextMatcherOption(l));
+            }
+        }
+
+        private void processTemp(TempAware l, String filterName, String filterValue, String desc) {
+            if ("temp".equals(l.getTemp()) || "both".equals(l.getTemp())) {
+                temps.put(filterName, filterValue);
+            }
+
+            if ("both".equals(l.getTemp()) || StringUtils.isEmpty(l.getTemp())) {
+                items.add(new TextItem(filterName, filterValue, desc));
             }
         }
 
@@ -129,11 +121,7 @@ public class ConfiguredStripper {
                 val value = textMatcher.findLabelText(l.getLabel(), createTextMatcherOption(l));
                 val filteredValue = Filter.filter(value, l.getValueFilters());
 
-                if (l.isTemp()) {
-                    temps.put(l.getName(), filteredValue);
-                } else {
-                    items.add(new TextItem(l.getName(), filteredValue, null));
-                }
+                processTemp(l, l.getName(), filteredValue, null);
             }
         }
 
@@ -141,16 +129,11 @@ public class ConfiguredStripper {
             if (rule.getLineLabelTexts() == null) return;
 
             for (val l : rule.getLineLabelTexts()) {
-                String value = textMatcher.findLineLabelText(l.getLabel(), createTextMatcherOption(l));
-
                 val name = Filter.filter(l.getName(), l.getNameFilters());
+                String value = textMatcher.findLineLabelText(l.getLabel(), createTextMatcherOption(l));
                 value = Filter.filter(value, l.getValueFilters());
 
-                if (l.isTemp()) {
-                    temps.put(name, value);
-                } else {
-                    items.add(new TextItem(name, value, null));
-                }
+                processTemp(l, name, value, null);
             }
         }
 

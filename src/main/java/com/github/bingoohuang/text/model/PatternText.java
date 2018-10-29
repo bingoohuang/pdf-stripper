@@ -4,13 +4,13 @@ import com.github.bingoohuang.text.AnchorAware;
 import lombok.Data;
 
 @Data
-public class PatternText implements AnchorAware, FiltersAware {
+public class PatternText implements AnchorAware, FiltersAware, TempAware {
     private String pattern;
     private int index;
     private String startAnchor;
     private String endAnchor;
     private String name;
-    private boolean temp;
+    private String temp;
     private int valueIndex;
 
     private String nameFilters;

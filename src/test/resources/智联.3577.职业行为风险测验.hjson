@@ -38,14 +38,14 @@
           startAnchor: 作答时间
           endAnchor: 称许性
           name: minutes
-          temp: true
+          temp: temp
         },
         {
           label: 共计
           startAnchor: 作答时间
           endAnchor: 称许性
           name: minutes
-          temp: true
+          temp: temp
         },
         {
           label: 正常与否
@@ -71,7 +71,7 @@
           startAnchor: 作答时间
           endAnchor: 称许性
           name: seconds
-          temp: true
+          temp: temp
         },
         {
           pattern:\d\d\d\d-\d\d-\d\d
@@ -79,7 +79,7 @@
           startAnchor: 作答时间
           endAnchor: 称许性
           name: startDate
-          temp: true
+          temp: temp
         },
         {
           pattern:\d\d\d\d-\d\d-\d\d
@@ -87,7 +87,7 @@
           startAnchor: 作答时间
           endAnchor: 称许性
           name: endDate
-          temp: true
+          temp: temp
         },
         {
           pattern:\d?\d:\d\d
@@ -95,7 +95,7 @@
           startAnchor: 作答时间
           endAnchor: 称许性
           name: startTime
-          temp: true
+          temp: temp
         },
         {
           pattern:\d?\d:\d\d
@@ -103,7 +103,7 @@
           startAnchor: 作答时间
           endAnchor: 称许性
           name: endTime
-          temp: true
+          temp: temp
         }
       ],
       searchPatterns: [

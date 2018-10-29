@@ -16,13 +16,7 @@
                 @map(_CATA,综合得分)
                 '''
              valueFilters: @trimTrailingZeroes
-             tempVarsMap:
-                '''
-                战略理解与执行 a1 目标设置 a2 规划安排 a3 时间管理 a4
-                任务分配 b1 授权管理 b2 团队管理 b3
-                决策判断 c1 激励推动 c2 培养下属 c3 沟通协调 c4 关系管理 c5
-                监查反馈 d1 应变调控 d2 绩效管理 d3
-                '''
+             temp: both
            }
         ],
         patternTexts:[
@@ -36,7 +30,7 @@
               pattern: .activity_id.:\s*(\S+?),
               valueIndex: 1
               name: activityId
-              temp: true
+              temp: temp
            }
         ]
     }
@@ -44,22 +38,22 @@
   evals: [
     {
       condition: activityId == '387249'
-      expr: ((float)a1 + (float)a2 + (float)a3 + (float)a4) / 4
+      expr: ((float)战略理解与执行 + (float)目标设置 + (float)规划安排 + (float)时间管理) / 4
       name: 计划管理技能
     },
     {
       condition: activityId == '387249'
-      expr: ((float)b1 + (float)b2 + (float)b3) / 3
+      expr: ((float)任务分配 + (float)授权管理 + (float)团队管理) / 3
       name: 组织管理技能
     },
     {
       condition: activityId == '387249'
-      expr: ((float)c1 + (float)c2 + (float)c3 + (float)c4 + (float)c5) / 5
+      expr: ((float)决策判断 + (float)激励推动 + (float)培养下属 + (float)沟通协调 + (float)关系管理) / 5
       name: 领导管理技能
     },
     {
       condition: activityId == '387249'
-      expr: ((float)d1 + (float)d2 + (float)d3) / 3
+      expr: ((float)监查反馈 + (float)应变调控 + (float)绩效管理) / 3
       name: 控制管理技能
     },
   ]

@@ -82,6 +82,10 @@ public class MailFetcher {
             val sendDateTime = new DateTime(message.getSentDate());
             if (!matcher.matchSentDateTime(sendDateTime)) continue;
 
+
+            val content = getTextFromMessage(message);
+            if (!matcher.matchBodyContent(content)) continue;
+
             val attachments = parseAttachments(message);
 
             messages.add(Pop3MailMessage.builder()
@@ -89,7 +93,7 @@ public class MailFetcher {
                     .subject(subject)
                     .from(from)
                     .sendDateTime(sendDateTime)
-                    .content(getTextFromMessage(message))
+                    .content(content)
                     .attachments(attachments)
                     .build());
         }

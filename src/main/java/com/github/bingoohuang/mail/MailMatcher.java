@@ -34,6 +34,16 @@ public interface MailMatcher {
     }
 
     /**
+     * 匹配邮件内容。
+     *
+     * @param content 邮件内容。
+     * @return true 匹配 false 不匹配
+     */
+    default boolean matchBodyContent(String content) {
+        return true;
+    }
+
+    /**
      * 匹配附件文件名。
      *
      * @param fileName 附件文件名
@@ -61,4 +71,6 @@ public interface MailMatcher {
     default int messageEnd() {
         return -1;
     }
+
+
 }

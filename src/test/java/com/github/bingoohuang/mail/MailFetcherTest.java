@@ -47,6 +47,14 @@ public class MailFetcherTest {
             @Override public boolean matchAttachmentFileName(String fileName) {
                 return StringUtils.contains(fileName, "EcHPIHDSMVPIFR-Global");
             }
+
+            @Override public boolean matchBodyContent(String content) {
+                val contentMatcher = new TextMatcher(content);
+                val userId = contentMatcher.findLabelText("User ID",
+                        new TextMatcherOption(":", null, "Group Name"));
+
+                return "HF322468".equals(userId);
+            }
         });
 
         List<Pop3MailMessage> messages = mailFetcher.fetchMails();

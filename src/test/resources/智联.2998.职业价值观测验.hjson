@@ -35,6 +35,7 @@
           pattern: (\S+)[　\s]+(\d+(?>\.\d+)?)
           nameIndex: 1
           valueIndex: 2
+          startAnchor: 详细结果
           endAnchor: ©智联测评版权所有
         }
       ]

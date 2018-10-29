@@ -56,7 +56,11 @@ public class 北森ApiResultTest {
                 "TextItem(name=监查反馈, value=2.7, desc=null), " +
                 "TextItem(name=应变调控, value=4.4, desc=null), " +
                 "TextItem(name=绩效管理, value=1.5, desc=null), " +
-                "TextItem(name=测试完成时间, value=2018-10-24 16:23:49, desc=null)]");
+                "TextItem(name=测试完成时间, value=2018-10-24 16:23:49, desc=null), " +
+                "TextItem(name=计划管理技能, value=2.5, desc=null), " +
+                "TextItem(name=组织管理技能, value=1.9666667, desc=null), " +
+                "TextItem(name=领导管理技能, value=2.7, desc=null), " +
+                "TextItem(name=控制管理技能, value=2.8666668, desc=null)]");
     }
 
     @Test

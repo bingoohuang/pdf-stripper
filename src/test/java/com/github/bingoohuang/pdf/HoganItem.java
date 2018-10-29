@@ -4,7 +4,7 @@ import lombok.Value;
 import org.apache.commons.lang3.StringUtils;
 
 @Value
-public class HogonItem {
+public class HoganItem {
     private final String scope;
     private final String item;
     private final int score;

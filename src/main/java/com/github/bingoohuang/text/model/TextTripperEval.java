@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class TextTripperEval {
+    private String condition;
     private String expr;
     private String name;
 }

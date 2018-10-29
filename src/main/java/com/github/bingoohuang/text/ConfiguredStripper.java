@@ -3,10 +3,12 @@ package com.github.bingoohuang.text;
 import com.github.bingoohuang.text.model.TextItem;
 import com.github.bingoohuang.text.model.TextTripperConfig;
 import com.github.bingoohuang.text.model.TextTripperRule;
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.apache.commons.lang3.StringUtils;
 import org.mvel2.MVEL;
 
 import java.util.List;
@@ -30,6 +32,9 @@ public class ConfiguredStripper {
         if (config.getEvals() == null) return;
 
         for (val e : config.getEvals()) {
+            if (StringUtils.isNotEmpty(e.getCondition())
+                    && !MVEL.evalToBoolean(e.getCondition(), temps)) break;
+
             val value = MVEL.evalToString(e.getExpr(), temps);
             items.add(new TextItem(e.getName(), value, null));
         }
@@ -102,6 +107,17 @@ public class ConfiguredStripper {
                         val desc = l.getDescIndex() > 0 ? patternGroups[l.getDescIndex() - 1] : null;
                         items.add(new TextItem(filterName, filterValue, desc));
                     }
+
+                    if (StringUtils.isNotEmpty(l.getTempVarsMap())) {
+                        val parts = Splitter.onPattern("\\s+").splitToList(l.getTempVarsMap());
+                        for (int i = 0, ii = parts.size(); i + 1 < ii; i += 2) {
+                            if (parts.get(i).equals(filterName)) {
+                                temps.put(parts.get(i + 1), filterValue);
+                                break;
+                            }
+                        }
+                    }
+
                 }, createTextMatcherOption(l));
             }
         }

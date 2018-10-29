@@ -18,7 +18,7 @@ import static com.google.common.truth.Truth.assertThat;
 public class 智联Test {
     @Test @SneakyThrows
     public void 职业价值观测验hjson() {
-        val hjson = Util.loadClasspathResAsString("智联.职业价值观测验.hjson");
+        val hjson = Util.loadClasspathResAsString("智联.2998.职业价值观测验.hjson");
         val json = JsonValue.readHjson(hjson).toString();
         val config = JSON.parseObject(json, TextTripperConfig.class);
 
@@ -109,7 +109,7 @@ public class 智联Test {
 
     @Test @SneakyThrows
     public void 情绪管理能力测验hjson() {
-        val hjson = Util.loadClasspathResAsString("智联.情绪管理能力测验.hjson");
+        val hjson = Util.loadClasspathResAsString("智联.238.情绪管理能力测验.hjson");
         val json = JsonValue.readHjson(hjson).toString();
         val config = JSON.parseObject(json, TextTripperConfig.class);
 
@@ -209,7 +209,7 @@ public class 智联Test {
 
     @Test @SneakyThrows
     public void 职业行为风险测验hjson() {
-        val hjson = Util.loadClasspathResAsString("智联.职业行为风险测验.hjson");
+        val hjson = Util.loadClasspathResAsString("智联.3577.职业行为风险测验.hjson");
         val json = JsonValue.readHjson(hjson).toString();
         val config = JSON.parseObject(json, TextTripperConfig.class);
 

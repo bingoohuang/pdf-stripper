@@ -8,7 +8,6 @@ import com.github.bingoohuang.text.model.TextTripperConfig;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.hjson.JsonValue;
 import org.junit.Test;
 
@@ -16,10 +15,10 @@ import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 
-public class HogonTest {
+public class HoganTest {
     @Test @SneakyThrows
     public void page0ScoresHjson() {
-        val hjson = Util.loadClasspathResAsString("HOGON.hjson");
+        val hjson = Util.loadClasspathResAsString("Hogan.hjson");
         val json = JsonValue.readHjson(hjson).toString();
         val config = JSON.parseObject(json, TextTripperConfig.class);
 
@@ -64,7 +63,7 @@ public class HogonTest {
         val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.onPages(0));
         val textMatcher = new TextMatcher(text);
 
-        List<ValuesItem> items = textMatcher.searchPattern("(\\S+)\\s+(\\d+)", ValuesItem.class,
+        val items = textMatcher.searchPattern("(\\S+)\\s+(\\d+)", ValuesItem.class,
                 TextMatcherOption.builder().startAnchor("简报").endAnchor("©").build());
         assertThat(items.toString()).isEqualTo("[" +
                 "ValuesItem(name=调适, score=98), " +
@@ -101,7 +100,7 @@ public class HogonTest {
     public void page1Scores0() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/Hogan/HF322468-EcHPIHDSMVPIFR-Global.pdf");
 
-        HogonPdfListener pdfListener = new HogonPdfListener();
+        HoganPdfListener pdfListener = new HoganPdfListener();
         @Cleanup val pdDoc = Util.loadPdf(is);
         PdfStripper.stripCustom(pdDoc, PdfPagesSelect.onPages(1), pdfListener);
         assertThat(pdfListener.itemScores()).isEqualTo("效度:4\n" +
@@ -185,7 +184,7 @@ public class HogonTest {
     public void page1Scores() {
         @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/Hogan/Flash_SimpChinese.pdf");
 
-        val pdfListener = new HogonPdfListener();
+        val pdfListener = new HoganPdfListener();
         @Cleanup val pdDoc = Util.loadPdf(is);
         PdfStripper.stripCustom(pdDoc, PdfPagesSelect.onPages(1), pdfListener);
         assertThat(pdfListener.itemScores()).isEqualTo("效度:4\n" +

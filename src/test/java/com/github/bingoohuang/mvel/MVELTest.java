@@ -29,6 +29,22 @@ public class MVELTest {
     }
 
     @Test
+    public void activityId() {
+        Map<String, Object> vars = new HashMap<>();
+        vars.put("activityId", "3872149");
+        val result = (Boolean) MVEL.eval("activityId == '387249'", vars);
+        System.out.println(result);
+
+        vars.put("a", "1");
+        vars.put("b", "2");
+        vars.put("c", "3");
+        vars.put("d", "4");
+        // (typename) value
+        // Here typename is the name of the primitive data type to which you’re converting, such as short, int, or float.
+        System.out.println(MVEL.eval("((float)a+(float)b+(float)c+(float)d)/4", vars));
+    }
+
+    @Test
     public void compile() {
         val compiled = MVEL.compileExpression("foobar > 99");
         Map<String, Object> vars = new HashMap<>();

@@ -8,10 +8,10 @@ import org.fit.pdfdom.BoxStyle;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HogonPdfListener implements PdfListener {
+public class HoganPdfListener implements PdfListener {
     private String lastText = null;
     private String preText = null;
-    private List<HogonItem> itemScores = Lists.newArrayList();
+    private List<HoganItem> itemScores = Lists.newArrayList();
     private List<PdfRect> pdfRects = Lists.newArrayList();
     private boolean complete = false;
 
@@ -25,7 +25,7 @@ public class HogonPdfListener implements PdfListener {
                 val scope = lastText == null ? "" : lastText;
                 val item = (preText == null ? "" : preText) + text;
                 val scores = pdfRects.stream().filter(x -> !Str.anyOf(x.getFcolor(), "#e6e7e8", "#e5e6e7")).count();
-                itemScores.add(new HogonItem(scope, item, (int) scores));
+                itemScores.add(new HoganItem(scope, item, (int) scores));
                 preText = null;
                 if ("顺从依赖".equals(item)) {
                     complete = true;
@@ -43,7 +43,7 @@ public class HogonPdfListener implements PdfListener {
     }
 
     public String itemScores() {
-        return itemScores.stream().map(HogonItem::toString).collect(Collectors.joining("\n"));
+        return itemScores.stream().map(HoganItem::toString).collect(Collectors.joining("\n"));
     }
 
 

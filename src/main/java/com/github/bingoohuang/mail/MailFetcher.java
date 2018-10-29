@@ -70,9 +70,7 @@ public class MailFetcher {
         val inboxMessages = inbox.getMessages(matcher.messageStart(), end);
 
         List<Pop3MailMessage> messages = Lists.newArrayList();
-        for (int i = 0; i < inboxMessages.length; i++) {
-            val message = inboxMessages[i];
-
+        for (val message : inboxMessages) {
             val subject = message.getSubject();
             if (!matcher.matchSubject(subject)) continue;
 
@@ -142,7 +140,8 @@ public class MailFetcher {
     @SneakyThrows
     private String getTextFromMimeMultipart(MimeMultipart mimeMultipart) {
         val result = new StringBuilder();
-        for (int i = 0, ii = mimeMultipart.getCount(); i < ii; i++) {
+        val count = mimeMultipart.getCount();
+        for (int i = 0; i < count; i++) {
             val bodyPart = mimeMultipart.getBodyPart(i);
             if (bodyPart.isMimeType("text/plain")) {
                 result.append("\n").append(bodyPart.getContent());

@@ -17,4 +17,5 @@ public class SearchPattern implements AnchorAware, FiltersAware {
     private String valueFilters;
 
     private String nameMatchers;
+    private String tempVarsMap;
 }

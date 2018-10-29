@@ -18,7 +18,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 public class MailFetcherTest {
     @Test @SneakyThrows @Ignore
-    public void hogon() {
+    public void hogan() {
         val mailFetcher = new MailFetcher(new MailMatcher() {
         });
 
@@ -74,7 +74,7 @@ public class MailFetcherTest {
 
         assertThat(message.getAttachments()).hasSize(1);
 
-        val pdf = message.getAttachments().get(0);
+        @Cleanup val pdf = message.getAttachments().get(0);
         assertThat(pdf.getFileName()).contains("EcHPIHDSMVPIFR-Global");
         @Cleanup val pdDoc = Util.loadPdf(pdf.getInputStream());
         val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.onPages(0));
@@ -112,7 +112,7 @@ public class MailFetcherTest {
                 "ValuesItem(name=美感, score=92), " +
                 "ValuesItem(name=科学, score=93)]");
 
-        val pdfListener = new HogonPdfListener();
+        val pdfListener = new HoganPdfListener();
         PdfStripper.stripCustom(pdDoc, PdfPagesSelect.onPages(1), pdfListener);
 
         assertThat(pdfListener.itemScores()).isEqualTo("效度:4\n" +

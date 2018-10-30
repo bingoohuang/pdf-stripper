@@ -25,8 +25,8 @@
         {
           pattern: (\S+)：([高中低])\s*(-?\d+)
           nameIndex: 1
-          descIndex: 2
-          valueIndex: 3
+          descIndex: 3
+          valueIndex: 2
         }
       ]
     },
@@ -104,14 +104,6 @@
           endAnchor: 称许性
           name: endTime
           temp: temp
-        }
-      ],
-      searchPatterns: [
-        {
-          pattern: (\S+)：([高中低])\s*(-?\d+)
-          nameIndex: 1
-          descIndex: 2
-          valueIndex: 3
         }
       ]
     }

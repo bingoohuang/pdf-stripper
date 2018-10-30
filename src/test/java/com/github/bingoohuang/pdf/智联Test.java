@@ -219,22 +219,22 @@ public class 智联Test {
         assertThat(items.toString()).isEqualTo("[" +
                 "TextItem(name=结果可参考性, value=高, desc=null), " +
                 "TextItem(name=职业行为风险等级, value=低风险低防御, desc=null), " +
-                "TextItem(name=焦虑不安, value=0, desc=低), " +
-                "TextItem(name=抑郁消沉, value=0, desc=低), " +
-                "TextItem(name=偏执多疑, value=0, desc=低), " +
-                "TextItem(name=冷漠孤僻, value=-14, desc=低), " +
-                "TextItem(name=特立独行, value=0, desc=低), " +
-                "TextItem(name=冲动暴躁, value=0, desc=低), " +
-                "TextItem(name=喜怒无常, value=0, desc=低), " +
-                "TextItem(name=社交回避, value=0, desc=低), " +
-                "TextItem(name=僵化固执, value=0, desc=低), " +
-                "TextItem(name=依赖顺从, value=-12, desc=低), " +
-                "TextItem(name=夸张做作, value=-12, desc=低), " +
-                "TextItem(name=狂妄自恋, value=0, desc=低), " +
-                "TextItem(name=压力耐受, value=54, desc=低), " +
-                "TextItem(name=积极乐观, value=58, desc=低), " +
-                "TextItem(name=合理自信, value=68, desc=中), " +
-                "TextItem(name=坚韧不拔, value=42, desc=低), " +
+                "TextItem(name=焦虑不安, value=低, desc=0), " +
+                "TextItem(name=抑郁消沉, value=低, desc=0), " +
+                "TextItem(name=偏执多疑, value=低, desc=0), " +
+                "TextItem(name=冷漠孤僻, value=低, desc=-14), " +
+                "TextItem(name=特立独行, value=低, desc=0), " +
+                "TextItem(name=冲动暴躁, value=低, desc=0), " +
+                "TextItem(name=喜怒无常, value=低, desc=0), " +
+                "TextItem(name=社交回避, value=低, desc=0), " +
+                "TextItem(name=僵化固执, value=低, desc=0), " +
+                "TextItem(name=依赖顺从, value=低, desc=-12), " +
+                "TextItem(name=夸张做作, value=低, desc=-12), " +
+                "TextItem(name=狂妄自恋, value=低, desc=0), " +
+                "TextItem(name=压力耐受, value=低, desc=54), " +
+                "TextItem(name=积极乐观, value=低, desc=58), " +
+                "TextItem(name=合理自信, value=中, desc=68), " +
+                "TextItem(name=坚韧不拔, value=低, desc=42), " +
                 "TextItem(name=称许性, value=正常, desc=null), " +
                 "TextItem(name=选项分布, value=正常, desc=null), " +
                 "TextItem(name=完成率, value=100%, desc=null), " +

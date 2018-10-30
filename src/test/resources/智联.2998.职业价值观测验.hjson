@@ -18,13 +18,13 @@
           label: 开始时间
           startAnchor: 作答时间
           name: 测试开始时间
-          valueFilters:@compactBlanks
+          valueFilters:@compactBlanks @regularDateTime
         },
         {
           label: 结束时间
           startAnchor: 作答时间
           name: 测试完成时间
-          valueFilters:@compactBlanks
+          valueFilters:@compactBlanks @regularDateTime
         }
       ]
     },

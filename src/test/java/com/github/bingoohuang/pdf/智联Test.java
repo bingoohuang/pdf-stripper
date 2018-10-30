@@ -27,8 +27,8 @@ public class 智联Test {
         List<TextItem> items = PdfStripper.strip(pdDoc, config);
         assertThat(items.toString()).isEqualTo("[" +
                 "TextItem(name=有效性, value=比较可信, desc=null), " +
-                "TextItem(name=测试开始时间, value=2016/6/12 16:39:06, desc=null), " +
-                "TextItem(name=测试完成时间, value=2016/6/12 16:56:33, desc=null), " +
+                "TextItem(name=测试开始时间, value=2016-06-12 16:39:06, desc=null), " +
+                "TextItem(name=测试完成时间, value=2016-06-12 16:56:33, desc=null), " +
                 "TextItem(name=薪酬福利, value=8.3, desc=null), " +
                 "TextItem(name=工作稳定, value=6.1, desc=null), " +
                 "TextItem(name=公平公正, value=3.5, desc=null), " +
@@ -117,8 +117,8 @@ public class 智联Test {
         @Cleanup val pdDoc = Util.loadPdf(is);
         List<TextItem> items = PdfStripper.strip(pdDoc, config);
         assertThat(items.toString()).isEqualTo("[TextItem(name=有效性, value=比较可信, desc=null), " +
-                "TextItem(name=测试开始时间, value=2016/5/25 14:54:20, desc=null), " +
-                "TextItem(name=测试完成时间, value=2016/5/25 15:01:45, desc=null)]");
+                "TextItem(name=测试开始时间, value=2016-05-25 14:54:20, desc=null), " +
+                "TextItem(name=测试完成时间, value=2016-05-25 15:01:45, desc=null)]");
     }
 
     @Test @SneakyThrows
@@ -238,8 +238,8 @@ public class 智联Test {
                 "TextItem(name=称许性, value=正常, desc=null), " +
                 "TextItem(name=选项分布, value=正常, desc=null), " +
                 "TextItem(name=完成率, value=100%, desc=null), " +
-                "TextItem(name=测试开始时间, value=2016-06-12 17:04, desc=null), " +
-                "TextItem(name=测试完成时间, value=2016-06-13 9:39, desc=null), " +
+                "TextItem(name=测试开始时间, value=2016-06-12 17:04:00, desc=null), " +
+                "TextItem(name=测试完成时间, value=2016-06-13 09:39:00, desc=null), " +
                 "TextItem(name=作答时间, value=16分钟45秒, desc=null)]");
     }
 
@@ -298,7 +298,5 @@ public class 智联Test {
 
         val t6 = textMatcher.findLabelText("完成率", new TextMatcherOption(":：", "作答题数", "%"));
         assertThat(t6).isEqualTo("100");
-
     }
-
 }

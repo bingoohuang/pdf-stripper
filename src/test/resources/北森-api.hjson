@@ -24,7 +24,7 @@
               pattern: .create_time.:\s*.(\S+\d)?.
               valueIndex: 1
               name: 测试完成时间
-              valueFilters: @normalizeDateTime
+              valueFilters: @regularDateTime
            },
            {
               pattern: .activity_id.:\s*(\S+?),

@@ -6,7 +6,9 @@ import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.joda.time.DateTime;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -19,6 +21,19 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class Util {
+    /**
+     * 规整时间日期表示字符串（例如：2018-10-23 21:47，2018/10/23 21:48:15，2018-10-23T21:48:15.235）。
+     *
+     * @param dateTimeStr 日期表示字符串
+     * @return DateTime对象
+     */
+
+    public static DateTime regular(String dateTimeStr) {
+        if (StringUtils.isEmpty(dateTimeStr)) return null;
+
+        return new DateTimeRegular(dateTimeStr).regular();
+    }
+
     /**
      * 四舍五入到指定小数位数。
      *

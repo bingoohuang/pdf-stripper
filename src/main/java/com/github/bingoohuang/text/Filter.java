@@ -27,9 +27,7 @@ public class Filter {
         });
 
         // 归整化日期时间，例如：2018-10-24T11:21:11.683-> 2018-10-24 11:21:11
-        predefinedFilters.put("normalizeDateTime", (s, args) ->
-                s.replace('T', ' ')
-                        .replaceAll("\\.\\d{3}", ""));
+        predefinedFilters.put("regularDateTime", (s, args) -> Util.regular(s).toString(args.isEmpty() ? "yyyy-MM-dd HH:mm:ss" : args.get(0)));
 
         // 去除指定前缀
         predefinedFilters.put("unPrefix", (s, args) -> {

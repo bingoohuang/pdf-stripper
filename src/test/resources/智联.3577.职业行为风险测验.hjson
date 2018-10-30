@@ -120,10 +120,12 @@
     {
       expr: startDate+' '+startTime
       name: 测试开始时间
+      valueFilters: @regularDateTime
     },
     {
       expr: endDate+' '+endTime
       name: 测试完成时间
+      valueFilters: @regularDateTime
     },
     {
       expr: minutes+seconds

@@ -29,7 +29,7 @@ public class Filter {
         // 归整化日期时间，例如：2018-10-24T11:21:11.683-> 2018-10-24 11:21:11
         predefinedFilters.put("normalizeDateTime", (s, args) ->
                 s.replace('T', ' ')
-                .replaceAll("\\.\\d{3}", ""));
+                        .replaceAll("\\.\\d{3}", ""));
 
         // 去除指定前缀
         predefinedFilters.put("unPrefix", (s, args) -> {
@@ -69,17 +69,15 @@ public class Filter {
         if (StringUtils.isEmpty(filersOptions)) return s;
 
         String filtered = s;
-
-        Spec[] specs = SpecParser.parseSpecs(filersOptions);
+        val specs = SpecParser.parseSpecs(filersOptions);
 
         for (val spec : specs) {
-            String optionName = spec.getName();
-            if (predefinedFilters.containsKey(optionName)) {
-                filtered = predefinedFilters.get(optionName).apply(filtered, spec.getParams());
+            val func = predefinedFilters.get(spec.getName());
+            if (func != null) {
+                filtered = func.apply(filtered, spec.getParams());
             } else {
-                log.warn("Unknown filter name @{}", optionName);
+                log.warn("Unknown filter name @{}", spec.getName());
             }
-
         }
 
         return filtered;

@@ -77,9 +77,8 @@ public class MailFetcher {
             val from = ((InternetAddress) message.getFrom()[0]).getAddress();
             if (!matcher.matchFrom(from)) continue;
 
-            val sendDateTime = new DateTime(message.getSentDate());
-            if (!matcher.matchSentDateTime(sendDateTime)) continue;
-
+            val sentDate = new DateTime(message.getSentDate());
+            if (!matcher.matchSentDate(sentDate)) continue;
 
             val content = getTextFromMessage(message);
             if (!matcher.matchBodyContent(content)) continue;
@@ -90,7 +89,7 @@ public class MailFetcher {
                     .messageNumber(message.getMessageNumber())
                     .subject(subject)
                     .from(from)
-                    .sendDateTime(sendDateTime)
+                    .sentDate(sentDate)
                     .content(content)
                     .attachments(attachments)
                     .build());
@@ -142,15 +141,15 @@ public class MailFetcher {
         val result = new StringBuilder();
         val count = mimeMultipart.getCount();
         for (int i = 0; i < count; i++) {
-            val bodyPart = mimeMultipart.getBodyPart(i);
-            if (bodyPart.isMimeType("text/plain")) {
-                result.append("\n").append(bodyPart.getContent());
+            val p = mimeMultipart.getBodyPart(i);
+            if (p.isMimeType("text/plain")) {
+                result.append("\n").append(p.getContent());
                 break; // without break same text appears twice in my tests
-            } else if (bodyPart.isMimeType("text/html")) {
-                String html = (String) bodyPart.getContent();
+            } else if (p.isMimeType("text/html")) {
+                val html = (String) p.getContent();
                 result.append("\n").append(Jsoup.parse(html).text());
-            } else if (bodyPart.getContent() instanceof MimeMultipart) {
-                result.append(getTextFromMimeMultipart((MimeMultipart) bodyPart.getContent()));
+            } else if (p.getContent() instanceof MimeMultipart) {
+                result.append(getTextFromMimeMultipart((MimeMultipart) p.getContent()));
             }
         }
 

@@ -11,7 +11,7 @@ public class Pop3MailMessage {
     private final int messageNumber;
     private final String subject;
     private final String from;
-    private final DateTime sendDateTime;
+    private final DateTime sentDate;
     private final String content;
     private final List<Pop3MailMessageAttachment> attachments;
 }

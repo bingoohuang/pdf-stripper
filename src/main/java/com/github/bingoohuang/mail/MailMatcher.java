@@ -29,7 +29,7 @@ public interface MailMatcher {
      * @param sentDateTime 发送时间
      * @return true 匹配 false 不匹配
      */
-    default boolean matchSentDateTime(DateTime sentDateTime) {
+    default boolean matchSentDate(DateTime sentDateTime) {
         return true;
     }
 

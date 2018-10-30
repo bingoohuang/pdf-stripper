@@ -64,7 +64,7 @@ public class MailFetcherTest {
         assertThat(message.getFrom()).isNotEmpty();
         assertThat(message.getSubject()).isNotEmpty();
         assertThat(message.getMessageNumber()).isEqualTo(3);
-        assertThat(message.getSendDateTime()).isLessThan(DateTime.now());
+        assertThat(message.getSentDate()).isLessThan(DateTime.now());
 
         val contentMatcher = new TextMatcher(message.getContent());
         val userId = contentMatcher.findLabelText("User ID",

@@ -15,7 +15,7 @@
                 @map(_自定义,综合得分)
                 @map(_CATA,综合得分)
                 '''
-             valueFilters: @trimTrailingZeroes
+             valueFilters: @roundup(1) @trimTrailingZeroes
              temp: both
            }
         ],

@@ -42,7 +42,12 @@ public class Util {
      * @return 四舍五入后的结果
      */
     public static String roundHalfUp(String value, int scale) {
-        return new BigDecimal(value).setScale(1, BigDecimal.ROUND_HALF_UP).toString();
+        try {
+            return new BigDecimal(value).setScale(scale, BigDecimal.ROUND_HALF_UP).toString();
+        } catch (NumberFormatException e) {
+            log.warn("bad number format for {}", value);
+            return value;
+        }
     }
 
     /**

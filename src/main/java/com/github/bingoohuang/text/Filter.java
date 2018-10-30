@@ -57,11 +57,10 @@ public class Filter {
         predefinedFilters.put("map", (s, args) ->
                 args.size() == 2 && StringUtils.equals(s, args.get(0)) ? args.get(1) : s);
 
-        // 规整处理
+        // 浮点数规整处理
         predefinedFilters.put("roundup", (s, args) ->
-                args.size() == 1 ? Util.roundHalfUp(s, Integer.parseInt(args.get(0))) : s);
+                Util.roundHalfUp(s, args.isEmpty() ? 1 : Integer.parseInt(args.get(0))));
     }
-
 
     public static String filter(String s, String filersOptions) {
         if (StringUtils.isEmpty(filersOptions)) return s;

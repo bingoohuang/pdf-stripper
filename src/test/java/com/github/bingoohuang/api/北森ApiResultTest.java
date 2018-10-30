@@ -42,7 +42,7 @@ public class 北森ApiResultTest {
         val textMatcher1 = new TextMatcher(Util.loadClasspathResAsString("北森-387249-管理技能测试.json"));
         val items1 = textMatcher1.strip(getStripConfig());
         assertThat(items1.toString()).isEqualTo("[" +
-                "TextItem(name=管理技能总分, value=2.5083333333, desc=null), " +
+                "TextItem(name=管理技能总分, value=2.5, desc=null), " +
                 "TextItem(name=战略理解与执行, value=2.2, desc=null), " +
                 "TextItem(name=目标设置, value=1.5, desc=null), " +
                 "TextItem(name=规划安排, value=4, desc=null), " +

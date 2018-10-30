@@ -40,21 +40,25 @@
       condition: activityId == '387249'
       expr: ((float)战略理解与执行 + (float)目标设置 + (float)规划安排 + (float)时间管理) / 4
       name: 计划管理技能
+      valueFilters: @roundup(1) @trimTrailingZeroes
     },
     {
       condition: activityId == '387249'
       expr: ((float)任务分配 + (float)授权管理 + (float)团队管理) / 3
       name: 组织管理技能
+      valueFilters: @roundup(1) @trimTrailingZeroes
     },
     {
       condition: activityId == '387249'
       expr: ((float)决策判断 + (float)激励推动 + (float)培养下属 + (float)沟通协调 + (float)关系管理) / 5
       name: 领导管理技能
+      valueFilters: @roundup(1) @trimTrailingZeroes
     },
     {
       condition: activityId == '387249'
       expr: ((float)监查反馈 + (float)应变调控 + (float)绩效管理) / 3
       name: 控制管理技能
+      valueFilters: @roundup(1) @trimTrailingZeroes
     },
   ]
 }

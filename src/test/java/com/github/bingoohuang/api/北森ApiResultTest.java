@@ -8,6 +8,8 @@ import lombok.val;
 import org.hjson.JsonValue;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static com.google.common.truth.Truth.assertThat;
 
 public class 北森ApiResultTest {
@@ -58,9 +60,15 @@ public class 北森ApiResultTest {
                 "TextItem(name=绩效管理, value=1.5, desc=null), " +
                 "TextItem(name=测试完成时间, value=2018-10-24 16:23:49, desc=null), " +
                 "TextItem(name=计划管理技能, value=2.5, desc=null), " +
-                "TextItem(name=组织管理技能, value=1.9666667, desc=null), " +
+                "TextItem(name=组织管理技能, value=2, desc=null), " +
                 "TextItem(name=领导管理技能, value=2.7, desc=null), " +
-                "TextItem(name=控制管理技能, value=2.8666668, desc=null)]");
+                "TextItem(name=控制管理技能, value=2.9, desc=null)]");
+    }
+
+    @Test
+    public void roundup() {
+        assertThat(new BigDecimal("1.9666667").setScale(1, BigDecimal.ROUND_HALF_UP).toString()).isEqualTo("2.0");
+        assertThat(new BigDecimal("2.8666668").setScale(1, BigDecimal.ROUND_HALF_UP).toString()).isEqualTo("2.9");
     }
 
     @Test

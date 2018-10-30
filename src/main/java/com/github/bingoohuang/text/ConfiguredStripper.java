@@ -36,7 +36,9 @@ public class ConfiguredStripper {
                     && !MVEL.evalToBoolean(e.getCondition(), temps)) break;
 
             val value = MVEL.evalToString(e.getExpr(), temps);
-            items.add(new TextItem(e.getName(), value, null));
+            val filteredValue = Filter.filter(value, e.getValueFilters());
+
+            items.add(new TextItem(e.getName(), filteredValue, null));
         }
     }
 

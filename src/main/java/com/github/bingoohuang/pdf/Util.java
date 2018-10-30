@@ -12,12 +12,24 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class Util {
+    /**
+     * 四舍五入到指定小数位数。
+     *
+     * @param value 数值字符串
+     * @param scale 指定小数位数
+     * @return 四舍五入后的结果
+     */
+    public static String roundHalfUp(String value, int scale) {
+        return new BigDecimal(value).setScale(1, BigDecimal.ROUND_HALF_UP).toString();
+    }
+
     /**
      * 从输入流装载PDF文档对象。
      *

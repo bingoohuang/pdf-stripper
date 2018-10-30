@@ -1,5 +1,6 @@
 package com.github.bingoohuang.text;
 
+import com.github.bingoohuang.pdf.Util;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -26,7 +27,8 @@ public class Filter {
         });
 
         // 归整化日期时间，例如：2018-10-24T11:21:11.683-> 2018-10-24 11:21:11
-        predefinedFilters.put("normalizeDateTime", (s, args) -> s.replace('T', ' ')
+        predefinedFilters.put("normalizeDateTime", (s, args) ->
+                s.replace('T', ' ')
                 .replaceAll("\\.\\d{3}", ""));
 
         // 去除指定前缀
@@ -54,13 +56,12 @@ public class Filter {
         });
 
         // 映射处理
-        predefinedFilters.put("map", (s, args) -> {
-            if (args.size() == 2) {
-                if (StringUtils.equals(s, args.get(0))) return args.get(1);
-            }
+        predefinedFilters.put("map", (s, args) ->
+                args.size() == 2 && StringUtils.equals(s, args.get(0)) ? args.get(1) : s);
 
-            return s;
-        });
+        // 规整处理
+        predefinedFilters.put("roundup", (s, args) ->
+                args.size() == 1 ? Util.roundHalfUp(s, Integer.parseInt(args.get(0))) : s);
     }
 
 

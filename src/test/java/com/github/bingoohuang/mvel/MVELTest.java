@@ -1,6 +1,7 @@
 package com.github.bingoohuang.mvel;
 
 import com.github.bingoohuang.pdf.Util;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.junit.Test;
 import org.mvel2.MVEL;
@@ -10,6 +11,9 @@ import org.mvel2.integration.impl.MapVariableResolverFactory;
 import org.mvel2.templates.TemplateCompiler;
 import org.mvel2.templates.TemplateRuntime;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,23 +59,49 @@ public class MVELTest {
         }
     }
 
-    @Test
+
+    @RequiredArgsConstructor
+    static class MapInvocationHandler implements InvocationHandler {
+        private final Map<String, Object> map;
+
+        @Override public Object invoke(Object proxy, Method method, Object[] args) {
+            final String name = method.getName();
+
+            final Object arg = args[0];
+            System.out.println(name + "(" + arg + ")");
+
+            if (name.equals("containsKey")) return true;
+
+            val isGet = name.equals("get");
+            if (!isGet) { // 有其他方法调用时，退回到预先准备所有property的模式
+                return null;
+            }
+
+            val key = (String) arg;
+            return map.getOrDefault(key, 0);
+        }
+    }
+
+    @Test @SuppressWarnings("unchecked")
     public void processBuilder() {
-        String exp = "foobar > 99";
         Map<String, Object> vars = new HashMap<>();
         vars.put("foobar", 100);
-        val resolver = new MapVariableResolverFactory(vars);
-        val script = (ExecutableStatement) MVEL.compileExpression(exp);
+
+        val proxy = (Map<String, Object>) Proxy.newProxyInstance(
+                MVELTest.class.getClassLoader(),
+                new Class[]{Map.class},
+                new MapInvocationHandler(vars));
+
+        val resolver = new MapVariableResolverFactory(proxy);
+        val script = (ExecutableStatement) MVEL.compileExpression("foobar > 99");
         val result = (Boolean) script.getValue(null, resolver);
-        if (result) {
-            System.out.println("It works!");
-        }
+        System.out.println("result:" + result);
     }
 
     @Test
     public void parse() {
         val pctx = ParserContext.create();
-        MVEL.compileExpression("foobar > 99", pctx);
+        MVEL.compileExpression("基本素质 + Math.sqrt(核心素质)", pctx);
         System.out.println(pctx.getInputs()); // {foobar=class java.lang.Object}
     }
 

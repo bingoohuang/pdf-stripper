@@ -231,10 +231,10 @@ public class 智联Test {
                 "TextItem(name=依赖顺从, value=低, desc=-12), " +
                 "TextItem(name=夸张做作, value=低, desc=-12), " +
                 "TextItem(name=狂妄自恋, value=低, desc=0), " +
-                "TextItem(name=压力耐受, value=低, desc=54), " +
-                "TextItem(name=积极乐观, value=低, desc=58), " +
-                "TextItem(name=合理自信, value=中, desc=68), " +
-                "TextItem(name=坚韧不拔, value=低, desc=42), " +
+                "TextItem(name=压力耐受, value=54, desc=低), " +
+                "TextItem(name=积极乐观, value=58, desc=低), " +
+                "TextItem(name=合理自信, value=68, desc=中), " +
+                "TextItem(name=坚韧不拔, value=42, desc=低), " +
                 "TextItem(name=称许性, value=正常, desc=null), " +
                 "TextItem(name=选项分布, value=正常, desc=null), " +
                 "TextItem(name=完成率, value=100%, desc=null), " +

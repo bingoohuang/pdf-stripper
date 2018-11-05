@@ -24,10 +24,18 @@
       searchPatterns: [
         {
           pattern: (\S+)：([高中低])\s*(-?\d+)
+          endAnchor: 压力耐受
           nameIndex: 1
           descIndex: 3
           valueIndex: 2
-        }
+        },
+        {
+          pattern: (\S+)：([高中低])\s*(-?\d+)
+          startAnchor: 狂妄自恋
+          nameIndex: 1
+          descIndex: 2
+          valueIndex: 3
+        },
       ]
     },
     {

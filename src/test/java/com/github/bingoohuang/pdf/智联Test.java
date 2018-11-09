@@ -1,13 +1,15 @@
 package com.github.bingoohuang.pdf;
 
 import com.alibaba.fastjson.JSON;
-import com.github.bingoohuang.text.TextMatcher;
-import com.github.bingoohuang.text.TextMatcherOption;
-import com.github.bingoohuang.text.model.TextItem;
-import com.github.bingoohuang.text.model.TextTripperConfig;
+import com.github.bingoohuang.utils.text.matcher.TextMatcher;
+import com.github.bingoohuang.utils.text.matcher.TextMatcherOption;
+import com.github.bingoohuang.utils.text.matcher.model.TextItem;
+import com.github.bingoohuang.utils.text.matcher.model.TextTripperConfig;
+import com.github.bingoohuang.utils.lang.Classpath;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.hjson.JsonValue;
 import org.junit.Test;
 
@@ -18,12 +20,12 @@ import static com.google.common.truth.Truth.assertThat;
 public class 智联Test {
     @Test @SneakyThrows
     public void 职业价值观测验hjson() {
-        val hjson = Util.loadClasspathResAsString("智联.2998.职业价值观测验.hjson");
+        val hjson = Classpath.loadResAsString("智联.2998.职业价值观测验.hjson");
         val json = JsonValue.readHjson(hjson).toString();
         val config = JSON.parseObject(json, TextTripperConfig.class);
 
-        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
-        @Cleanup val pdDoc = Util.loadPdf(is);
+        @Cleanup val is = Classpath.loadRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
+        @Cleanup val pdDoc = PDDocument.load(is);
         List<TextItem> items = PdfStripper.strip(pdDoc, config);
         assertThat(items.toString()).isEqualTo("[" +
                 "TextItem(name=有效性, value=比较可信, desc=null), " +
@@ -47,8 +49,8 @@ public class 智联Test {
 
     @Test @SneakyThrows
     public void 职业价值观测验() {
-        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
-        @Cleanup val pdDoc = Util.loadPdf(is);
+        @Cleanup val is = Classpath.loadRes("原始报告（样本）/智联/职业价值观测验（样本）.pdf");
+        @Cleanup val pdDoc = PDDocument.load(is);
         val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.offPages(1, 2, 3));
         val textMatcher = new TextMatcher(text);
         assertThat(textMatcher.findLineLabelText("测试者：")).isEqualTo("张晓平");
@@ -109,12 +111,12 @@ public class 智联Test {
 
     @Test @SneakyThrows
     public void 情绪管理能力测验hjson() {
-        val hjson = Util.loadClasspathResAsString("智联.238.情绪管理能力测验.hjson");
+        val hjson = Classpath.loadResAsString("智联.238.情绪管理能力测验.hjson");
         val json = JsonValue.readHjson(hjson).toString();
         val config = JSON.parseObject(json, TextTripperConfig.class);
 
-        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
-        @Cleanup val pdDoc = Util.loadPdf(is);
+        @Cleanup val is = Classpath.loadRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
+        @Cleanup val pdDoc = PDDocument.load(is);
         List<TextItem> items = PdfStripper.strip(pdDoc, config);
         assertThat(items.toString()).isEqualTo("[TextItem(name=有效性, value=比较可信, desc=null), " +
                 "TextItem(name=测试开始时间, value=2016-05-25 14:54:20, desc=null), " +
@@ -123,8 +125,8 @@ public class 智联Test {
 
     @Test @SneakyThrows
     public void 情绪管理能力测验() {
-        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
-        @Cleanup val pdDoc = Util.loadPdf(is);
+        @Cleanup val is = Classpath.loadRes("原始报告（样本）/智联/情绪管理能力测验（样本）.pdf");
+        @Cleanup val pdDoc = PDDocument.load(is);
         val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.allPages());
 
         val textMatcher = new TextMatcher(text);
@@ -162,8 +164,8 @@ public class 智联Test {
 
     @Test @SneakyThrows
     public void 职业行为风险测验兵进黄() {
-        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/兵进黄_职业行为风险测验.pdf");
-        @Cleanup val pdDoc = Util.loadPdf(is);
+        @Cleanup val is = Classpath.loadRes("原始报告（样本）/智联/兵进黄_职业行为风险测验.pdf");
+        @Cleanup val pdDoc = PDDocument.load(is);
         val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.allPages());
         val textMatcher = new TextMatcher(text);
 
@@ -209,12 +211,12 @@ public class 智联Test {
 
     @Test @SneakyThrows
     public void 职业行为风险测验hjson() {
-        val hjson = Util.loadClasspathResAsString("智联.3577.职业行为风险测验.hjson");
+        val hjson = Classpath.loadResAsString("智联.3577.职业行为风险测验.hjson");
         val json = JsonValue.readHjson(hjson).toString();
         val config = JSON.parseObject(json, TextTripperConfig.class);
 
-        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
-        @Cleanup val pdDoc = Util.loadPdf(is);
+        @Cleanup val is = Classpath.loadRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
+        @Cleanup val pdDoc = PDDocument.load(is);
         List<TextItem> items = PdfStripper.strip(pdDoc, config);
         assertThat(items.toString()).isEqualTo("[" +
                 "TextItem(name=结果可参考性, value=高, desc=null), " +
@@ -245,8 +247,8 @@ public class 智联Test {
 
     @Test @SneakyThrows
     public void 职业行为风险测验() {
-        @Cleanup val is = Util.loadClassPathRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
-        @Cleanup val pdDoc = Util.loadPdf(is);
+        @Cleanup val is = Classpath.loadRes("原始报告（样本）/智联/职业行为风险测验（样本）.pdf");
+        @Cleanup val pdDoc = PDDocument.load(is);
         val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.allPages());
         val textMatcher = new TextMatcher(text);
 

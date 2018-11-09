@@ -1,12 +1,17 @@
 package com.github.bingoohuang.mail;
 
 import com.github.bingoohuang.pdf.*;
-import com.github.bingoohuang.text.TextMatcher;
-import com.github.bingoohuang.text.TextMatcherOption;
+import com.github.bingoohuang.utils.text.matcher.TextMatcher;
+import com.github.bingoohuang.utils.text.matcher.TextMatcherOption;
+import com.github.bingoohuang.utils.mail.MailFetcher;
+import com.github.bingoohuang.utils.mail.MailMatcher;
+import com.github.bingoohuang.utils.mail.Pop3MailMessage;
+import com.google.common.truth.Truth;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.joda.time.DateTime;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -70,13 +75,13 @@ public class MailFetcherTest {
         val userId = contentMatcher.findLabelText("User ID",
                 new TextMatcherOption(":", null, "Group Name"));
 
-        assertThat(userId).isEqualTo("HF322468");
+        Truth.assertThat(userId).isEqualTo("HF322468");
 
         assertThat(message.getAttachments()).hasSize(1);
 
         @Cleanup val pdf = message.getAttachments().get(0);
         assertThat(pdf.getFileName()).contains("EcHPIHDSMVPIFR-Global");
-        @Cleanup val pdDoc = Util.loadPdf(pdf.getInputStream());
+        @Cleanup val pdDoc = PDDocument.load(pdf.getInputStream());
         val text = PdfStripper.stripText(pdDoc, PdfPagesSelect.onPages(0));
         val textMatcher = new TextMatcher(text);
         val items = textMatcher.searchPattern("(\\S+)\\s+(\\d+)", ValuesItem.class,

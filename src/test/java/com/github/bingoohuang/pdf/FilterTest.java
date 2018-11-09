@@ -1,6 +1,6 @@
 package com.github.bingoohuang.pdf;
 
-import com.github.bingoohuang.text.Filter;
+import com.github.bingoohuang.utils.text.matcher.Filter;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;

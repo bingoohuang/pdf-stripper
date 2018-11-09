@@ -1,9 +1,9 @@
 package com.github.bingoohuang.api;
 
 import com.alibaba.fastjson.JSON;
-import com.github.bingoohuang.pdf.Util;
-import com.github.bingoohuang.text.TextMatcher;
-import com.github.bingoohuang.text.model.TextTripperConfig;
+import com.github.bingoohuang.utils.text.matcher.TextMatcher;
+import com.github.bingoohuang.utils.text.matcher.model.TextTripperConfig;
+import com.github.bingoohuang.utils.lang.Classpath;
 import lombok.val;
 import org.hjson.JsonValue;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import static com.google.common.truth.Truth.assertThat;
 public class 北森ApiResultTest {
     @Test
     public void test401081() {
-        val textMatcher1 = new TextMatcher(Util.loadClasspathResAsString("北森-401081-CATA一轮.json"));
+        val textMatcher1 = new TextMatcher(Classpath.loadResAsString("北森-401081-CATA一轮.json"));
         val items1 = textMatcher1.strip(getStripConfig());
         assertThat(items1.toString()).isEqualTo("[" +
                 "TextItem(name=综合得分, value=38, desc=null), " +
@@ -28,7 +28,7 @@ public class 北森ApiResultTest {
 
     @Test
     public void test389051() {
-        val textMatcher1 = new TextMatcher(Util.loadClasspathResAsString("北森-389051-认知能力测试.json"));
+        val textMatcher1 = new TextMatcher(Classpath.loadResAsString("北森-389051-认知能力测试.json"));
         val items1 = textMatcher1.strip(getStripConfig());
         assertThat(items1.toString()).isEqualTo("[" +
                 "TextItem(name=综合得分, value=30, desc=null), " +
@@ -39,7 +39,7 @@ public class 北森ApiResultTest {
 
     @Test
     public void test387249() {
-        val textMatcher1 = new TextMatcher(Util.loadClasspathResAsString("北森-387249-管理技能测试.json"));
+        val textMatcher1 = new TextMatcher(Classpath.loadResAsString("北森-387249-管理技能测试.json"));
         val items1 = textMatcher1.strip(getStripConfig());
         assertThat(items1.toString()).isEqualTo("[" +
                 "TextItem(name=管理技能总分, value=2.5, desc=null), " +
@@ -73,7 +73,7 @@ public class 北森ApiResultTest {
 
     @Test
     public void test404889() {
-        val textMatcher1 = new TextMatcher(Util.loadClasspathResAsString("北森-404889-高潜.json"));
+        val textMatcher1 = new TextMatcher(Classpath.loadResAsString("北森-404889-高潜.json"));
         val items1 = textMatcher1.strip(getStripConfig());
         assertThat(items1.toString()).isEqualTo("[" +
                 "TextItem(name=管理个性测验, value=控制者型, desc=null), " +
@@ -113,7 +113,7 @@ public class 北森ApiResultTest {
     }
 
     private TextTripperConfig getStripConfig() {
-        val hjson = Util.loadClasspathResAsString("北森-api.hjson");
+        val hjson = Classpath.loadResAsString("北森-api.hjson");
         val json = JsonValue.readHjson(hjson).toString();
         return JSON.parseObject(json, TextTripperConfig.class);
     }

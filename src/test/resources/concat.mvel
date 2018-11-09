@@ -1,4 +1,0 @@
-def stringcon(input){
-	return ($.firstName+$.lastName in input);
-}
-stringcon(employees);

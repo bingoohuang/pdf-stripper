@@ -1,8 +1,8 @@
 package com.github.bingoohuang.pdf;
 
-import com.github.bingoohuang.text.ConfiguredStripper;
-import com.github.bingoohuang.text.model.TextItem;
-import com.github.bingoohuang.text.model.TextTripperConfig;
+import com.github.bingoohuang.utils.text.matcher.ConfiguredStripper;
+import com.github.bingoohuang.utils.text.matcher.model.TextItem;
+import com.github.bingoohuang.utils.text.matcher.model.TextTripperConfig;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;

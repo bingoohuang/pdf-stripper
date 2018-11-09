@@ -1,6 +1,6 @@
 package com.github.bingoohuang.pdf;
 
-import com.github.bingoohuang.text.PatternApplyAware;
+import com.github.bingoohuang.utils.text.matcher.PatternApplyAware;
 import lombok.Data;
 
 @Data

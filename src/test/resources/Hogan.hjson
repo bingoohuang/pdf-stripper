@@ -9,6 +9,10 @@
           nameIndex: 1
           valueIndex: 2
           endAnchor: ©
+          nameFilters:
+            '''
+            @map(通用管理技能测验,管理技能总分)
+            '''
         }
       ]
     }
